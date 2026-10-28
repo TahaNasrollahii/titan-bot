@@ -132,7 +132,7 @@ function Intro({ name, onUseAnother, onNeedsCode }: { name?: string; onUseAnothe
 
       <div className="link__actions">
         <Button size="lg" block loading={busy} onClick={share} icon={<Phone size={20} />}>
-          اشتراک شماره و ورود
+          ورود با حساب تلگرام
         </Button>
         <button className="link__alt" onClick={onUseAnother}>
           <MessageSquareText size={16} />
