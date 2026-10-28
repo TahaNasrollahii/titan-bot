@@ -26,7 +26,7 @@ function Brand() {
   );
 }
 
-/** The wallet balance in a cream clay pill, then round clay buttons for search and alerts. */
+/** The wallet balance in a cream clay pill, then round buttons with the website's icons for search and alerts. */
 function BrandActions() {
   const wallet = useWallet();
   const unread = useUnread();
@@ -38,7 +38,7 @@ function BrandActions() {
         {wallet.data ? compactToman(wallet.data.balance) : '…'}
       </Link>
       <Link to="/search" className="icon-btn" aria-label="جستجو" onClick={() => haptic.tap()}>
-        <Icon3D name="magnifying-glass-tilted-left" size={24} />
+        <img src="/icons/search.webp" alt="" className="topbar__nav-icon" width={21} height={21} draggable={false} />
       </Link>
       <Link
         to="/notifications"
@@ -46,7 +46,7 @@ function BrandActions() {
         aria-label={count ? `${count} اعلان خوانده‌نشده` : 'اعلان‌ها'}
         onClick={() => haptic.tap()}
       >
-        <Icon3D name="bell" size={26} />
+        <img src="/icons/notif.webp" alt="" className="topbar__nav-icon" width={22} height={22} draggable={false} />
         {count > 0 && <span className="dot-badge">{faDigits(Math.min(count, 99))}</span>}
       </Link>
     </>

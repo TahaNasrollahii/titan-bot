@@ -24,7 +24,7 @@ export function ProductGrid({ query }: { query: Omit<ProductQuery, 'page'> }) {
     return (
       <div className="product-grid">
         {Array.from({ length: 6 }, (_, i) => (
-          <Skeleton key={i} h={250} r={22} />
+          <Skeleton key={i} h={292} r={22} />
         ))}
       </div>
     );
@@ -38,7 +38,7 @@ export function ProductGrid({ query }: { query: Omit<ProductQuery, 'page'> }) {
         {items.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
-        {products.isFetchingNextPage && [0, 1].map(i => <Skeleton key={`more${i}`} h={250} r={22} />)}
+        {products.isFetchingNextPage && [0, 1].map(i => <Skeleton key={`more${i}`} h={292} r={22} />)}
       </div>
       <div ref={sentinel} style={{ height: 1 }} />
     </>

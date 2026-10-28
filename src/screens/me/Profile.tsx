@@ -8,7 +8,6 @@ import { useMe } from '@/auth/session';
 import { faDigits, money, num, toman } from '@/lib/format';
 import { useUnread, useWallet } from '@/lib/queries';
 import { haptic } from '@/lib/telegram';
-import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { PlayerCard } from '@/ui/PlayerCard';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
@@ -75,21 +74,27 @@ export default function Profile() {
 
       <section className="section stack" style={{ '--gap': '14px' } as CSSProperties}>
         <div className="list">
-          <Row to="/wallet" icon="money-bag" title="کیف پول" sub={wallet.data ? toman(wallet.data.balance) : undefined} />
-          <Row to="/orders" icon="package" title="سفارش‌ها" />
-          <Row to="/wishlist" icon="red-heart" title="علاقه‌مندی‌ها" />
-          <Row to="/me/accounts" icon="video-game" title="اکانت‌های بازی" />
+          <Row
+            to="/wallet"
+            icon="/icons/dashboard.webp"
+            tone="255 196 75"
+            title="کیف پول"
+            sub={wallet.data ? toman(wallet.data.balance) : undefined}
+          />
+          <Row to="/orders" icon="/icons/cart.webp" tone="255 146 64" title="سفارش‌ها" />
+          <Row to="/wishlist" icon="/icons/favorite.webp" tone="255 92 138" title="علاقه‌مندی‌ها" />
+          <Row to="/me/accounts" icon="/icons/accounts.webp" tone="56 200 232" title="اکانت‌های بازی" />
         </div>
         <div className="list">
-          <Row to="/tournaments" icon="trophy" title="تورنمنت‌ها" />
-          <Row to="/teams" icon="shield" title="تیم‌های من" />
-          <Row to="/invitations" icon="envelope-with-arrow" title="دعوت‌نامه‌ها" count={pendingInvites} />
-          <Row to="/friends" icon="busts-in-silhouette" title="دوستان" />
+          <Row to="/tournaments" icon="/icons/tournament.webp" tone="240 193 75" title="تورنمنت‌ها" />
+          <Row to="/teams" icon="/icons/team.webp" tone="91 140 255" title="تیم‌های من" />
+          <Row to="/invitations" icon="/icons/email.webp" tone="45 212 191" title="دعوت‌نامه‌ها" count={pendingInvites} />
+          <Row to="/friends" icon="/icons/account.webp" tone="139 124 255" title="دوستان" />
         </div>
         <div className="list">
-          <Row to="/notifications" icon="bell" title="اعلان‌ها" count={unread.data?.count} />
-          <Row to="/support" icon="headphone" title="پشتیبانی آنلاین" />
-          <Row to="/settings" icon="gear" title="تنظیمات" />
+          <Row to="/notifications" icon="/icons/notif.webp" tone="47 210 122" title="اعلان‌ها" count={unread.data?.count} />
+          <Row to="/support" icon="/icons/support.svg" tone="226 69 63" title="پشتیبانی آنلاین" />
+          <Row to="/settings" icon="/icons/about-us.webp" tone="196 160 255" title="تنظیمات" />
         </div>
       </section>
     </Screen>
@@ -105,11 +110,25 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-function Row({ to, icon, title, sub, count }: { to: string; icon: Icon3DName; title: string; sub?: string; count?: number }) {
+function Row({
+  to,
+  icon,
+  tone,
+  title,
+  sub,
+  count,
+}: {
+  to: string;
+  icon: string;
+  tone: string;
+  title: string;
+  sub?: string;
+  count?: number;
+}) {
   return (
     <Link to={to} className="list-row" onClick={() => haptic.tap()}>
-      <span className="list-row__icon">
-        <Icon3D name={icon} size={26} />
+      <span className="tone-icon list-row__icon" style={{ '--tone': tone } as CSSProperties}>
+        <img src={icon} alt="" width={21} height={21} draggable={false} />
       </span>
       <div className="list-row__body">
         <div className="list-row__title">{title}</div>

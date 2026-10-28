@@ -18,13 +18,11 @@
     .btn--glass,
     .wallet-chip,
     .wallet-chip__icon,
-    .tabbar,
-    .tabbar__bubble,
     .action-bar,
     .toast,
     .stat,
     .empty__art,
-    .list-row__icon,
+    .list-row__icon:not(.tone-icon),
     .segmented .segmented__pill,
     .badge-tile,
     .bracket__name,
@@ -75,7 +73,7 @@
 }
 
 /* Brand-coloured clay: brighter fills need a softer shadow edge to stay round, not dirty. */
-:where(.clay--red, .btn--primary, .tabbar__bubble, .chip[aria-pressed='true'], .segmented .segmented__pill) {
+:where(.clay--red, .btn--primary, .chip[aria-pressed='true'], .segmented .segmented__pill) {
   --c: var(--red);
   --hi: 32%;
   --lo: 28%;
@@ -104,14 +102,14 @@
 }
 
 /* Dark clay: the bottom bars and sheets sit one step deeper than the page. */
-:where(.clay--dark, .tabbar, .action-bar) {
+:where(.clay--dark, .action-bar) {
   --c: var(--surface);
   --hi: 10%;
   --lo: 50%;
 }
 
 /* Small inner pieces sit on raised surfaces: less shadow so they read as part of them. */
-:where(.list-row__icon, .wallet-chip__icon) {
+:where(.list-row__icon:not(.tone-icon), .wallet-chip__icon) {
   box-shadow:
     inset 3px 4px 8px color-mix(in srgb, var(--c), var(--clay-light) var(--hi, 16%)),
     inset -3px -5px 9px color-mix(in srgb, var(--c), var(--clay-dark) var(--lo, 45%));
@@ -119,15 +117,6 @@
 
 .wallet-chip__icon {
   --c: #ffe28a;
-}
-
-/* The bubble keeps a ring of page colour so it looks cut into the bar. */
-.tabbar__bubble {
-  box-shadow:
-    0 0 0 6px var(--bg),
-    0 14px 22px -8px rgba(226, 69, 63, 0.9),
-    inset 5px 7px 10px color-mix(in srgb, var(--c), var(--clay-light) var(--hi)),
-    inset -5px -7px 12px color-mix(in srgb, var(--c), var(--clay-dark) var(--lo));
 }
 
 /* ================================================================ wells: the same light, pressed in */

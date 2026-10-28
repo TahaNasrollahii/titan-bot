@@ -7,6 +7,7 @@ import { errorText } from '@/api/client';
 import { cartApi, catalogApi } from '@/api/endpoints';
 import type { Product as ProductType, ProductVariant } from '@/api/types';
 import { faDigits, num, timeAgo } from '@/lib/format';
+import { productImage } from '@/lib/media';
 import { keys } from '@/lib/queries';
 import { haptic } from '@/lib/telegram';
 import { Avatar } from '@/ui/Avatar';
@@ -108,7 +109,8 @@ function ProductView({ product }: { product: ProductType }) {
   });
 
   const accent = { '--accent': productAccent(product) } as CSSProperties;
-  const images = [product.image, ...product.gallery.map(g => g.image)].filter(Boolean) as string[];
+  const primaryImg = productImage(product);
+  const images = Array.from(new Set([primaryImg, ...product.gallery.map(g => g.image)].filter(Boolean))) as string[];
   const [shown, setShown] = useState(0);
 
   return (

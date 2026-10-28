@@ -1,146 +1,346 @@
-/* Cards are clay surfaces (see clay.css); these rules only lay them out. */
+/* Cards and tiles across the Mini App. */
 
-/* ================================================================ product card */
+/* ================================================================ product card (matching titan-front store.css .card) */
 .pcard {
+  --accent: #ff7a2f;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-  border-radius: var(--r-lg);
-  transition: transform 0.18s var(--ease-out);
-}
-
-.rail > .pcard {
-  width: 158px;
-}
-
-/* The website's product backdrop (titan-front store.css .card .bg/.glow): the game's colour as soft light,
-   a faint sheen and a blurred glow, with the artwork fading into the card instead of a cut edge. */
-.pcard__media {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 1;
-  border-radius: 20px;
+  display: block;
+  height: 292px;
+  border-radius: 22px;
   isolation: isolate;
-  background:
-    radial-gradient(95% 55% at 50% 36%, color-mix(in srgb, var(--accent) 46%, transparent), transparent 78%),
-    linear-gradient(165deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.015) 45%),
-    var(--surface-2);
+  direction: rtl;
+  transition: transform 0.2s var(--ease-out);
 }
 
-.pcard__media::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  left: 50%;
-  top: 46%;
-  width: 82%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent), transparent 68%);
-  opacity: 0.68;
-  filter: blur(18px);
+.rail > .pcard,
+.rail--products > .pcard {
+  width: 172px;
 }
 
-.pcard__media .img {
-  position: absolute;
-  inset: 6% 10% 4%;
-  background: none;
-}
-
-.pcard__media .img img {
-  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 98%);
-  mask-image: linear-gradient(to bottom, #000 68%, transparent 98%);
-}
-
-.pcard__fallback {
+.pcard__bg {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 0;
+  background:
+    radial-gradient(95% 58% at 50% 34%, color-mix(in srgb, var(--accent) 48%, transparent), transparent 78%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.015) 45%),
+    #3a121b;
+  box-shadow:
+    0 14px 30px -10px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
-.pcard__off {
+.pcard__bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, rgba(255, 255, 255, 0.1));
+  pointer-events: none;
+}
+
+.pcard__glow {
+  position: absolute;
+  left: 50%;
+  top: 88px;
+  width: 168px;
+  height: 168px;
+  margin: -84px 0 0 -84px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent), transparent 68%);
+  opacity: 0.62;
+  filter: blur(16px);
+}
+
+/* Floating Character / Artwork Stage */
+.pcard__stage {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  left: 0;
+  height: 192px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.pcard__stage .img {
+  width: 84%;
+  height: 96%;
+  background: none;
+  overflow: visible;
+}
+
+.pcard__stage .img img {
+  object-fit: contain;
+  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 68%, transparent 98%);
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
+  animation: pcardFloat 5s ease-in-out infinite;
+}
+
+@keyframes pcardFloat {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Top Badges and Rating */
+.pcard__top {
   position: absolute;
   top: 8px;
   right: 8px;
-  padding: 2px 9px;
-  border-radius: 999px;
-  font-size: var(--fs-xs);
-  font-weight: 900;
+  left: 8px;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
 }
 
-.pcard__hot {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
+.pcard__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: calc(100% - 46px);
+}
+
+.pcard__pill {
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  padding: 2px 8px 2px 6px;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 2.5px 7.5px;
   border-radius: 999px;
-  font-size: 10.5px;
-  font-weight: 900;
+  white-space: nowrap;
 }
 
-.pcard__body {
+.pcard__pill svg {
+  width: 10px;
+  height: 10px;
+}
+
+.pcard__pill--sale {
+  position: relative;
+  overflow: hidden;
+  background: #d4474a;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(212, 71, 74, 0.45);
+}
+
+.pcard__sale-txt {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(60, 10, 10, 0.45);
+}
+
+.pcard__pill--sale::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 214, 64, 0.85), transparent);
+  transform: skewX(-20deg);
+  animation: pcardShine 3.2s ease-in-out infinite;
+}
+
+@keyframes pcardShine {
+  0%,
+  55% {
+    left: -60%;
+  }
+  100% {
+    left: 140%;
+  }
+}
+
+.pcard__flame {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  color: #ffd23f;
+  filter: drop-shadow(0 0 4px rgba(255, 200, 40, 0.9));
+}
+
+.pcard__flame svg {
+  fill: rgba(255, 210, 63, 0.35);
+  width: 11px;
+  height: 11px;
+}
+
+.pcard__pill--hot {
+  background: #fff1a8;
+  color: #3b2a00;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.pcard__pill--new {
+  background: #fff;
+  color: #2a0b12;
+}
+
+.pcard__pill--rate {
+  background: rgba(10, 4, 8, 0.52);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 10px;
+}
+
+.pcard__pill--rate i {
+  color: #ffc83d;
+  font-style: normal;
+  font-size: 10px;
+}
+
+/* Glass Bottom Info Panel */
+.pcard__panel {
+  position: absolute;
+  right: 5px;
+  left: 5px;
+  bottom: 5px;
+  z-index: 3;
+  padding: 11px 10px 10px;
+  min-height: 104px;
+  border-radius: 17px;
+  background: linear-gradient(180deg, rgba(34, 10, 16, 0.84), rgba(18, 4, 8, 0.96));
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  backdrop-filter: blur(18px) saturate(1.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 10px 6px 4px;
-  flex: 1;
-}
-
-.pcard__game {
-  font-size: 10.5px;
-  font-weight: 800;
-  color: var(--muted);
-}
-
-.pcard__title {
-  font-size: var(--fs-sm);
-  font-weight: 900;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  justify-content: space-between;
   overflow: hidden;
-  min-height: 2.9em;
+  text-align: right;
 }
 
-.pcard__foot {
-  margin-top: auto;
+.pcard__meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 6px;
+  margin-bottom: 4px;
+}
+
+.pcard__cat {
+  flex: 1;
+  min-width: 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: #b98f96;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pcard__stock {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #6af0a8;
+  padding: 1.5px 6px;
+  border-radius: 999px;
+  background: rgba(53, 208, 127, 0.1);
+  border: 1px solid rgba(53, 208, 127, 0.24);
+}
+
+.pcard__stock::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #35d07f;
+  box-shadow: 0 0 6px #35d07f;
+}
+
+.pcard__stock--off {
+  color: #ff8585;
+  background: rgba(255, 77, 77, 0.1);
+  border-color: rgba(255, 77, 77, 0.24);
+}
+
+.pcard__stock--off::before {
+  background: #ff4d4d;
+  box-shadow: 0 0 6px #ff4d4d;
+}
+
+.pcard__title {
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 0 6px;
+}
+
+.pcard__price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px;
 }
 
 .pcard__price {
+  font-size: 14.5px;
   font-weight: 900;
-  font-size: var(--fs-md);
+  color: #fff;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
 }
 
 .pcard__price small {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--muted);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #b98f96;
+  margin-inline-start: 2px;
 }
 
-.pcard__rating {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  font-size: var(--fs-xs);
-  font-weight: 800;
-  color: var(--gold);
+.pcard__from {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #b98f96;
+  margin-inline-end: 2px;
+}
+
+.pcard__old {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #b98f96;
+  text-decoration: line-through;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+.pcard--sold .pcard__stage .img img {
+  filter: saturate(0.3);
+}
+
+.pcard--sold .pcard__glow {
+  opacity: 0.2;
 }
 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 16px 10px;
 }
 
 /* ================================================================ game tile: art in a clay bezel, character stepping out */

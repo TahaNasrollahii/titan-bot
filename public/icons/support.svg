@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none">
+  <!-- Headband -->
+  <path d="M4 13.5V11a8 8 0 0 1 16 0v2.5" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round"/>
+  <!-- Left earpad -->
+  <rect x="2" y="11" width="4.5" height="7" rx="2" fill="#ffffff"/>
+  <!-- Right earpad -->
+  <rect x="17.5" y="11" width="4.5" height="7" rx="2" fill="#ffffff"/>
+  <!-- Mic boom -->
+  <path d="M19.5 16.5v1a5 5 0 0 1-5 5h-2.5" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Mic tip -->
+  <rect x="9.5" y="21" width="3" height="2" rx="1" fill="#ffffff"/>
+</svg>

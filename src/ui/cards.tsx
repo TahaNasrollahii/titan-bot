@@ -1,9 +1,10 @@
-import { Radio, Star, Users } from 'lucide-react';
+import { Radio, Users } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
 
 import type { Game, ProductSummary, TournamentSummary } from '@/api/types';
 import { compactToman, date, faDigits, money, num } from '@/lib/format';
+import { gameBackground, gameCharacter, gameIcon, productImage } from '@/lib/media';
 import { haptic } from '@/lib/telegram';
 
 import { Icon3D } from './Icon3D';
@@ -12,7 +13,7 @@ import { Img } from './Img';
 const accent = (color: string | undefined) => ({ '--accent': color || '#e2453f' }) as CSSProperties;
 
 /** Same colour choice as the website's product cards (titan-front StoreClient GAME_ACCENTS / ACCENT_COLORS). */
-const GAME_ACCENTS: Record<string, string> = {
+export const GAME_ACCENTS: Record<string, string> = {
   fortnite: '#35c6ff',
   'call-of-duty': '#f59e0b',
   'clash-of-clans': '#38bdf8',
@@ -30,46 +31,91 @@ export function productAccent(product: Pick<ProductSummary, 'id' | 'game'>): str
 // ------------------------------------------------------------------ products
 export function ProductCard({ product, wide }: { product: ProductSummary; wide?: boolean }) {
   const from = product.hasVariants && product.priceMax && product.priceMax !== product.price;
+  const artSrc = productImage(product);
+
+  const discountPercent =
+    product.discountPercent > 0
+      ? product.discountPercent
+      : product.originalPrice && product.price && product.originalPrice > product.price
+        ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+        : 0;
+
+  const hasDiscount = discountPercent > 0 || product.badges.includes('discount');
+  const isHot = product.badges.includes('bestseller') || (product.popularity ?? 0) > 80;
+  const isNew = product.badges.includes('new');
+  const categoryLabel = product.game?.title || product.subtitle || product.category.name;
+
   return (
     <Link
       to={`/product/${product.slug}`}
-      className={`clay pcard card--press ${wide ? 'pcard--wide' : ''}`}
+      className={`pcard card--press ${product.inStock ? '' : 'pcard--sold'} ${wide ? 'pcard--wide' : ''}`}
       style={accent(productAccent(product))}
       onClick={() => haptic.tap()}
     >
-      <div className="pcard__media">
-        {product.image ? (
-          <Img src={product.image} alt={product.imageAlt || product.title} contain />
-        ) : (
-          <span className="pcard__fallback" aria-hidden>
-            <Icon3D name="wrapped-gift" size={72} />
-          </span>
-        )}
-        {product.discountPercent > 0 && <span className="clay clay--red pcard__off num">٪{faDigits(product.discountPercent)}</span>}
-        {product.badges.includes('bestseller') && (
-          <span className="clay clay--cream pcard__hot">
-            <Icon3D name="fire" size={14} /> پرفروش
+      <div className="pcard__bg" aria-hidden>
+        <div className="pcard__glow" />
+      </div>
+
+      <div className="pcard__top">
+        <div className="pcard__tags">
+          {hasDiscount && discountPercent > 0 && (
+            <span className="pcard__pill pcard__pill--sale num">
+              <span className="pcard__flame" aria-hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3c1 3.5 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 .3 1.2 1 2 2 2 0-3-1-5 1-8z" />
+                </svg>
+              </span>
+              <span className="pcard__sale-txt">{faDigits(discountPercent)}٪ تخفیف</span>
+            </span>
+          )}
+          {isHot && (
+            <span className="pcard__pill pcard__pill--hot">
+              پرفروش
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H4v1a3 3 0 0 0 4 3M16 6h4v1a3 3 0 0 1-4 3M12 13v4M8 20h8" />
+              </svg>
+            </span>
+          )}
+          {isNew && !hasDiscount && !isHot && <span className="pcard__pill pcard__pill--new">جدید</span>}
+        </div>
+        {product.rating > 0 && (
+          <span className="pcard__pill pcard__pill--rate num">
+            <i>★</i>
+            {faDigits(Number(product.rating.toFixed(1)))}
           </span>
         )}
       </div>
-      <div className="pcard__body">
-        {product.game && <span className="pcard__game">{product.game.title}</span>}
-        <h3 className="pcard__title">{product.title}</h3>
-        <div className="pcard__foot">
-          {product.price === null || !product.inStock ? (
-            <span className="muted text-sm">ناموجود</span>
+
+      <div className="pcard__stage">
+        <Img src={artSrc} alt={product.imageAlt || product.title} contain />
+      </div>
+
+      <div className="pcard__panel">
+        <div className="pcard__meta">
+          <span className="pcard__cat" title={categoryLabel}>
+            {categoryLabel}
+          </span>
+          <span className={`pcard__stock ${product.inStock ? '' : 'pcard__stock--off'}`}>
+            {product.inStock ? 'موجود' : 'ناموجود'}
+          </span>
+        </div>
+
+        <h3 className="pcard__title" title={product.title}>
+          {product.title}
+        </h3>
+
+        <div className="pcard__price-row">
+          {product.price === null ? (
+            <span className="muted text-xs">تماس بگیرید</span>
           ) : (
             <span className="pcard__price num">
-              {from && <small>از </small>}
+              {from && <span className="pcard__from">از</span>}
               {num(product.price)}
-              <small> تومان</small>
+              <small>تومان</small>
             </span>
           )}
-          {product.rating > 0 && (
-            <span className="pcard__rating num">
-              <Star size={11} fill="currentColor" />
-              {faDigits(product.rating.toFixed(1))}
-            </span>
+          {product.originalPrice != null && product.price != null && product.originalPrice > product.price && (
+            <span className="pcard__old num">{num(product.originalPrice)}</span>
           )}
         </div>
       </div>
@@ -79,22 +125,25 @@ export function ProductCard({ product, wide }: { product: ProductSummary; wide?:
 
 // ------------------------------------------------------------------ games
 export function GameTile({ game, size = 'md' }: { game: Game; size?: 'md' | 'lg' }) {
+  const icon = gameIcon(game.slug, game.iconImage);
+  const bg = gameBackground(game.slug, game.backgroundImage || game.coverImage);
+  const char = gameCharacter(game.slug, game.characterImage);
   return (
     <Link
       to={`/store/${game.slug}`}
       className={`clay gtile gtile--${size} card--press`}
-      style={accent(game.accentColor)}
+      style={accent(game.accentColor || GAME_ACCENTS[game.slug])}
       onClick={() => haptic.tap()}
     >
-      {game.backgroundImage || game.coverImage ? (
-        <Img className="gtile__bg" src={game.backgroundImage || game.coverImage} alt="" />
+      {bg ? (
+        <Img className="gtile__bg" src={bg} alt="" />
       ) : (
         <span className="gtile__plain" aria-hidden />
       )}
-      {game.characterImage ? (
-        <Img className="gtile__char" src={game.characterImage} alt="" contain />
-      ) : game.iconImage ? (
-        <Img className="gtile__icon" src={game.iconImage} alt="" contain />
+      {char ? (
+        <Img className="gtile__char" src={char} alt="" contain />
+      ) : icon ? (
+        <Img className="gtile__icon" src={icon} alt="" contain />
       ) : (
         <span className="gtile__mono ltr" aria-hidden>
           {game.titleEn.slice(0, 2).toUpperCase()}
@@ -131,6 +180,7 @@ export function StatusBadge({ status }: { status: TournamentSummary['status'] })
 
 export function TournamentCard({ t, compact }: { t: TournamentSummary; compact?: boolean }) {
   const fill = Math.min(100, Math.round((t.participantsCount / Math.max(1, t.maxParticipants)) * 100));
+  const icon = gameIcon(t.game.slug, t.game.iconImage);
   return (
     <Link
       to={`/tournaments/${t.slug}`}
@@ -152,7 +202,7 @@ export function TournamentCard({ t, compact }: { t: TournamentSummary; compact?:
       </div>
       <div className="tcard__body">
         <div className="tcard__game">
-          <Img className="tcard__icon" src={t.game.iconImage} alt="" contain />
+          <Img className="tcard__icon" src={icon} alt="" contain />
           {t.game.title}، {t.formatLabel}
         </div>
         <h3 className="tcard__title">{t.title}</h3>

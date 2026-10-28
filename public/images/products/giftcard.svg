@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280" width="420" height="280">
+  <defs>
+    <!-- Card Surface Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3d121b" />
+      <stop offset="40%" stop-color="#240a11" />
+      <stop offset="85%" stop-color="#140408" />
+      <stop offset="100%" stop-color="#2b0d15" />
+    </linearGradient>
+
+    <!-- Glowing Border Gradient -->
+    <linearGradient id="neonBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9a44" />
+      <stop offset="35%" stop-color="#ff3b4e" />
+      <stop offset="70%" stop-color="#ff7a2f" />
+      <stop offset="100%" stop-color="#ff2a55" />
+    </linearGradient>
+
+    <!-- Glass Specular Highlight -->
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35" />
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.08" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Gold Chip Gradient -->
+    <linearGradient id="goldChip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe699" />
+      <stop offset="50%" stop-color="#f5b842" />
+      <stop offset="100%" stop-color="#b8811d" />
+    </linearGradient>
+
+    <!-- Neon Glow Filter -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="softShadow" x="-25%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.65" />
+    </filter>
+
+    <!-- Carbon pattern -->
+    <pattern id="carbon" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="none" />
+      <circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.04" />
+      <circle cx="6" cy="6" r="1" fill="#ffffff" fill-opacity="0.04" />
+      <path d="M0,4 L8,4 M4,0 L4,8" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.02" />
+    </pattern>
+  </defs>
+
+  <!-- Ambient Glow Behind Card -->
+  <ellipse cx="210" cy="140" rx="170" ry="105" fill="#ff4d3d" opacity="0.22" filter="blur(25px)" />
+  <ellipse cx="210" cy="140" rx="120" ry="75" fill="#ff7a2f" opacity="0.3" filter="blur(18px)" />
+
+  <!-- Main Card Body with Perspective Tilt -->
+  <g transform="rotate(-4 210 140)" filter="url(#softShadow)">
+    <!-- Outer Neon Frame -->
+    <rect x="25" y="25" width="370" height="230" rx="26" fill="url(#neonBorder)" filter="url(#neonGlow)" opacity="0.5" />
+    <rect x="25" y="25" width="370" height="230" rx="26" fill="none" stroke="url(#neonBorder)" stroke-width="3" />
+
+    <!-- Inner Card Background -->
+    <rect x="28" y="28" width="364" height="224" rx="23" fill="url(#cardGrad)" />
+    <!-- Carbon Texture Overlay -->
+    <rect x="28" y="28" width="364" height="224" rx="23" fill="url(#carbon)" />
+
+    <!-- Cyber Circuit Traces -->
+    <path d="M 45,60 L 95,60 L 115,80 L 160,80" fill="none" stroke="#ff4d4d" stroke-width="1.2" opacity="0.35" stroke-dasharray="3,3" />
+    <circle cx="160" cy="80" r="2.5" fill="#ff7a2f" opacity="0.6" />
+    
+    <path d="M 375,220 L 325,220 L 305,200 L 260,200" fill="none" stroke="#ff7a2f" stroke-width="1.2" opacity="0.35" stroke-dasharray="3,3" />
+    <circle cx="260" cy="200" r="2.5" fill="#ff3b4e" opacity="0.6" />
+
+    <!-- Smart Chip -->
+    <g transform="translate(52, 105)">
+      <rect width="44" height="34" rx="6" fill="url(#goldChip)" />
+      <rect x="1" y="1" width="42" height="32" rx="5" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.4" />
+      <!-- Chip lines -->
+      <path d="M 0,17 L 44,17 M 15,0 L 15,34 M 29,0 L 29,34 M 15,11 L 29,11 M 15,23 L 29,23" fill="none" stroke="#6b4609" stroke-width="0.8" opacity="0.5" />
+    </g>
+
+    <!-- Top Corner Badge: TITAN VIP -->
+    <g transform="translate(52, 46)">
+      <rect width="84" height="20" rx="10" fill="rgba(255,255,255,0.08)" stroke="rgba(255,122,47,0.4)" stroke-width="1" />
+      <text x="42" y="14" fill="#ffc83d" font-family="'Vazirmatn', sans-serif, system-ui" font-size="9.5" font-weight="800" text-anchor="middle" letter-spacing="1">★ TITAN VIP</text>
+    </g>
+
+    <!-- Top Right: Denomination -->
+    <g transform="translate(310, 46)">
+      <text x="45" y="17" fill="#ffffff" font-family="'Vazirmatn', sans-serif, system-ui" font-size="16" font-weight="900" text-anchor="end" letter-spacing="0.5">50$</text>
+      <text x="45" y="28" fill="#b98f96" font-family="'Vazirmatn', sans-serif, system-ui" font-size="8" font-weight="600" text-anchor="end">CREDIT</text>
+    </g>
+
+    <!-- Official Titan Logo (Embedded Image) -->
+    <g transform="translate(145, 55)">
+      <image href="/titan-logo.png" x="0" y="0" width="130" height="95" preserveAspectRatio="xMidYMid meet" />
+    </g>
+
+    <!-- Card Brand Text -->
+    <g transform="translate(210, 182)">
+      <text x="0" y="0" fill="#ffffff" font-family="'Vazirmatn', sans-serif, system-ui" font-size="17" font-weight="900" text-anchor="middle" letter-spacing="4">TITAN</text>
+      <text x="0" y="15" fill="#ff7a2f" font-family="'Vazirmatn', sans-serif, system-ui" font-size="8.5" font-weight="800" text-anchor="middle" letter-spacing="2.5">GIFT CARD</text>
+    </g>
+
+    <!-- Bottom Holographic strip -->
+    <g transform="translate(52, 218)">
+      <text x="0" y="8" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="8" letter-spacing="2">****  ****  ****  8829</text>
+    </g>
+
+    <!-- Diagonal Glass Shine -->
+    <path d="M 28,28 L 190,28 L 50,252 L 28,252 Z" fill="url(#glassShine)" opacity="0.8" />
+  </g>
+</svg>

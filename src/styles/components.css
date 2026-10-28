@@ -150,6 +150,12 @@
   background: var(--surface-2);
 }
 
+.topbar__nav-icon {
+  object-fit: contain;
+  opacity: 0.92;
+  filter: drop-shadow(0 2px 4px rgba(20, 2, 6, 0.45));
+}
+
 .dot-badge {
   position: absolute;
   top: -3px;
@@ -195,10 +201,19 @@
   right: 14px;
   bottom: calc(var(--safe-bottom) + 12px);
   height: var(--tabbar-h);
-  border-radius: 26px;
+  border-radius: 24px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   align-items: center;
+  background:
+    radial-gradient(60% 140% at 50% 120%, rgba(226, 69, 63, 0.24), transparent 70%),
+    linear-gradient(180deg, rgba(58, 15, 23, 0.88), rgba(22, 5, 9, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 22px 44px -8px rgba(0, 0, 0, 0.72);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
 }
 
 .tabbar__item {
@@ -209,26 +224,50 @@
   align-items: center;
   justify-content: center;
   gap: 3px;
-  color: var(--muted-2);
+  color: rgba(255, 228, 230, 0.62);
   font-size: 10.5px;
   font-weight: 800;
   transition: color 0.2s;
 }
 
 .tabbar__item[aria-current='page'] {
-  color: var(--text);
+  color: #fff;
 }
 
-/* The active tab rises into the site's red circle. */
+.tabbar__icon {
+  object-fit: contain;
+  opacity: 0.58;
+  transition: opacity 0.25s, transform 0.25s var(--ease-out), filter 0.25s;
+}
+
+.tabbar__item:active .tabbar__icon {
+  transform: scale(0.88);
+}
+
+/* The active tab rises into the site's glowing red circle. */
 .tabbar__bubble {
-  width: 56px;
-  height: 56px;
+  width: 54px;
+  height: 54px;
   margin-top: -32px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   color: #fff;
+  background:
+    radial-gradient(90% 80% at 32% 18%, rgba(255, 255, 255, 0.5), transparent 55%),
+    linear-gradient(150deg, #ff8a78 0%, #ec4b41 45%, #a8202a 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -5px 12px rgba(90, 0, 10, 0.4),
+    0 0 0 5px var(--bg),
+    0 12px 26px -6px rgba(226, 69, 63, 0.9),
+    0 0 30px rgba(255, 90, 80, 0.35);
   animation: bubble-in 0.35s var(--spring);
+}
+
+.tabbar__bubble .tabbar__icon {
+  opacity: 1;
+  filter: drop-shadow(0 2px 4px rgba(90, 0, 10, 0.55));
 }
 
 @keyframes bubble-in {
@@ -538,13 +577,33 @@ a.list-row:active {
 }
 
 .list-row__icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
   flex-shrink: 0;
   color: var(--red-2);
+}
+
+/* The website's tinted squircle icon (titan-front appTile.module.css .icon). */
+.tone-icon {
+  --tone: 255 99 88;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(90% 70% at 30% 0%, rgb(255 255 255 / 0.24), transparent 70%),
+    linear-gradient(150deg, rgb(var(--tone) / 0.45), rgb(var(--tone) / 0.12) 75%);
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--tone) / 0.4),
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    0 10px 22px -10px rgb(var(--tone) / 0.72);
+}
+
+.tone-icon img {
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.32));
 }
 
 .list-row__body {

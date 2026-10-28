@@ -14,6 +14,15 @@
   gap: 6px 14px;
 }
 
+.section-count {
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.62);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
 /* ================================================================ Fortnite banner */
 .fn-banner {
@@ -54,78 +63,283 @@
   color: #c9d6ff;
 }
 
-/* ================================================================ game store header */
-.game-hero {
+.fn-banner__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 900;
+}
+
+.fn-banner__art {
   position: relative;
-  height: 250px;
-  margin: calc((var(--safe-top) + var(--topbar-h) + 4px) * -1) calc(var(--gutter) * -1) 0;
-  overflow: hidden;
+}
+
+/* ================================================================ game store hero */
+.game-hero {
+  --accent: #e2453f;
+  position: relative;
+  padding-top: 20px;
+  margin-top: -6px;
   isolation: isolate;
+}
+
+.game-hero__card {
+  position: relative;
+  min-height: 188px;
+  padding: 18px 18px 18px 42%;
+  border-radius: 26px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(120% 95% at 15% 15%, color-mix(in srgb, var(--accent) 42%, transparent), transparent 62%),
+    linear-gradient(155deg, rgba(24, 15, 26, 0.96) 0%, rgba(12, 9, 16, 0.98) 100%);
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, rgba(255, 255, 255, 0.14));
+  box-shadow:
+    0 22px 46px rgba(0, 0, 0, 0.56),
+    0 8px 24px color-mix(in srgb, var(--accent) 18%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .game-hero__bg {
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: 0;
+  opacity: 0.44;
+  transform: scale(1.04);
+  filter: saturate(1.18) contrast(1.06);
 }
 
-.game-hero::after {
-  content: '';
+.game-hero__shade {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 1;
   background:
-    linear-gradient(180deg, rgba(23, 4, 9, 0.5) 0%, transparent 35%, var(--bg) 100%),
-    linear-gradient(90deg, transparent 40%, color-mix(in srgb, var(--accent) 25%, transparent));
+    linear-gradient(270deg, rgba(11, 8, 15, 0.92) 0%, rgba(11, 8, 15, 0.72) 52%, rgba(11, 8, 15, 0.22) 100%),
+    linear-gradient(180deg, rgba(11, 8, 15, 0.18) 0%, rgba(11, 8, 15, 0.82) 100%);
+}
+
+.game-hero__glow {
+  position: absolute;
+  left: -12%;
+  bottom: -28%;
+  width: 66%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 52%, transparent) 0%, transparent 70%);
+  filter: blur(18px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.game-hero__shine {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.12) 0%, transparent 36%);
+  pointer-events: none;
 }
 
 .game-hero__char {
   position: absolute;
-  left: -2%;
+  left: 2px;
   bottom: 0;
-  width: 58%;
-  height: 92%;
+  width: 45%;
+  height: calc(100% + 18px);
+  z-index: 3;
   background: none;
+  pointer-events: none;
 }
 
 .game-hero__char img {
-  object-position: bottom;
-  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.7));
+  object-position: bottom center;
+  filter:
+    drop-shadow(0 16px 26px rgba(0, 0, 0, 0.78))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 32%, transparent));
 }
 
-.game-hero__info {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 18px;
-  max-width: 52%;
+.game-hero__content {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-.game-hero__info h1 {
-  font-size: var(--fs-2xl);
-  font-weight: 900;
-  line-height: 1.25;
-  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+.game-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
-.game-hero__info p {
-  font-size: var(--fs-xs);
-  color: var(--text-2);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.game-hero__icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-hero__icon .img-wrap {
+  width: 100%;
+  height: 100%;
+  background: none;
 }
 
 .game-hero__en {
-  font-size: var(--fs-xs);
-  font-weight: 800;
-  color: color-mix(in srgb, var(--accent) 70%, #fff);
-  letter-spacing: 1px;
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 72%, #ffffff);
 }
 
+.game-hero__genre {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.game-hero__title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-hero__content h1 {
+  font-size: clamp(21px, 5.8vw, 26px);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.85);
+}
+
+.game-hero__logo {
+  width: 28px;
+  height: 28px;
+  background: none;
+  flex-shrink: 0;
+}
+
+.game-hero__logo img {
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+}
+
+.game-hero__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.game-hero__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.game-hero__pill svg {
+  color: color-mix(in srgb, var(--accent) 75%, #fff);
+}
+
+.game-hero__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #35d07f;
+  box-shadow: 0 0 8px #35d07f;
+}
+
+.game-hero__cta {
+  margin-top: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #ffffff;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 85%, #2563eb), color-mix(in srgb, var(--accent) 55%, #1d4ed8));
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 36%, transparent);
+}
+
+/* ================================================================ game switcher rail */
+.game-switcher {
+  gap: 8px;
+  margin-top: -2px;
+  scroll-snap-type: none;
+}
+
+.game-switch {
+  --accent: #e2453f;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 13px 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  transition: transform 0.16s ease, border-color 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.game-switch:active {
+  transform: scale(0.96);
+}
+
+.game-switch.is-active {
+  color: #ffffff;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 28%, rgba(255, 255, 255, 0.1)), rgba(255, 255, 255, 0.05));
+  border-color: color-mix(in srgb, var(--accent) 58%, rgba(255, 255, 255, 0.24));
+  box-shadow:
+    0 8px 20px color-mix(in srgb, var(--accent) 22%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.game-switch__icon {
+  width: 22px;
+  height: 22px;
+  background: none;
+  flex-shrink: 0;
+}
+
+.game-switch__icon img {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+}
+
+/* ================================================================ search box */
 .search-box {
   display: flex;
   align-items: center;
@@ -152,18 +366,4 @@
 
 .search-box input::-webkit-search-cancel-button {
   display: none;
-}
-
-.fn-banner__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 10px 3px 8px;
-  border-radius: 999px;
-  font-size: 11.5px;
-  font-weight: 900;
-}
-
-.fn-banner__art {
-  position: relative;
 }
