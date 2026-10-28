@@ -5,8 +5,6 @@
   gap: 12px;
   padding: 12px;
   border-radius: var(--r-lg);
-  background: var(--grad-surface);
-  border: 1px solid var(--line);
   overflow: hidden;
 }
 
@@ -16,7 +14,6 @@
   flex-shrink: 0;
   border-radius: 16px;
   padding: 8px;
-  background: radial-gradient(circle, rgba(226, 69, 63, 0.25), rgba(42, 11, 18, 0.9));
 }
 
 .cart-item__media .img {
@@ -108,16 +105,10 @@
   gap: 12px;
   padding: 14px;
   border-radius: 18px;
-  background: var(--surface);
-  border: 1.5px solid var(--line);
   text-align: right;
   transition: border-color 0.2s, background 0.2s;
 }
 
-.pick[aria-checked='true'] {
-  border-color: var(--red-2);
-  background: linear-gradient(160deg, rgba(226, 69, 63, 0.16), rgba(226, 69, 63, 0.04));
-}
 
 .pick:disabled {
   opacity: 0.55;
@@ -135,7 +126,7 @@
 }
 
 .pick[aria-checked='true'] .pick__radio {
-  border-color: var(--red-2);
+  border-color: #fff;
 }
 
 .pick[aria-checked='true'] .pick__radio::after {
@@ -143,8 +134,12 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--red-2);
-  box-shadow: 0 0 8px var(--red);
+  background: #fff;
+}
+
+/* On the selected (red clay) option, secondary text turns light. */
+.pick[aria-checked='true'] .pick__body span {
+  color: rgba(255, 240, 236, 0.9);
 }
 
 .pick__icon {
@@ -154,7 +149,6 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  background: rgba(76, 195, 255, 0.12);
   color: var(--blue);
 }
 
@@ -212,10 +206,6 @@
   gap: 6px;
   padding: 26px 18px;
   border-radius: var(--r-xl);
-  background:
-    radial-gradient(100% 120% at 50% 0%, color-mix(in srgb, var(--tone) 30%, transparent), transparent 65%),
-    var(--grad-surface);
-  border: 1px solid color-mix(in srgb, var(--tone) 30%, transparent);
 }
 
 .order-status__icon {
@@ -284,8 +274,6 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--surface-2);
-  border: 2px solid var(--line-strong);
 }
 
 .timeline__step[data-done='true'] {
@@ -306,8 +294,6 @@
   margin-top: 8px;
   padding: 10px 12px;
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px dashed rgba(255, 240, 179, 0.35);
   font-family: ui-monospace, 'SF Mono', Menlo, monospace;
   font-size: var(--fs-sm);
   color: var(--cream);
@@ -325,8 +311,6 @@
   gap: 12px;
   padding: 14px;
   border-radius: var(--r-lg);
-  background: var(--grad-surface);
-  border: 1px solid var(--line);
 }
 
 .order-row__stack {

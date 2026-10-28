@@ -1,18 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  BadgeCheck,
-  Clock,
-  Flame,
-  Heart,
-  MessageCircle,
-  Minus,
-  Plus,
-  ShieldCheck,
-  ShoppingCart,
-  Star,
-  Truck,
-  Zap,
-} from 'lucide-react';
+import { BadgeCheck, Heart, Minus, Plus, ShoppingCart, Star, Zap } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
@@ -26,6 +13,7 @@ import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
 import { ProductCard } from '@/ui/cards';
 import { ErrorState } from '@/ui/Empty';
+import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { Img } from '@/ui/Img';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
@@ -33,13 +21,13 @@ import { toast } from '@/ui/Toast';
 
 import './product.css';
 
-const FEATURE_ICONS: Record<string, typeof Zap> = {
-  flame: Flame,
-  shield: ShieldCheck,
-  chat: MessageCircle,
-  clock: Clock,
-  zap: Zap,
-  truck: Truck,
+const FEATURE_ICONS: Record<string, Icon3DName> = {
+  flame: 'fire',
+  shield: 'shield',
+  chat: 'speech-balloon',
+  clock: 'hourglass-not-done',
+  zap: 'high-voltage',
+  truck: 'package',
 };
 
 export default function Product() {
@@ -141,9 +129,9 @@ function ProductView({ product }: { product: ProductType }) {
     >
       <div className="pd" style={accent}>
         <div className="pd__media">
-          <div className="pd__halo" aria-hidden />
+          <div className="well pd__plinth" aria-hidden />
           <Img src={images[shown]} alt={product.imageAlt || product.title} contain priority />
-          {product.discountPercent > 0 && <span className="pcard__off num">٪{faDigits(product.discountPercent)} تخفیف</span>}
+          {product.discountPercent > 0 && <span className="clay clay--red pd__off num">٪{faDigits(product.discountPercent)} تخفیف</span>}
         </div>
         {images.length > 1 && (
           <div className="pd__thumbs">
@@ -219,10 +207,10 @@ function ProductView({ product }: { product: ProductType }) {
         {product.features.length > 0 && (
           <div className="pd__features">
             {product.features.map(f => {
-              const Icon = FEATURE_ICONS[f.icon] ?? BadgeCheck;
+              const icon = FEATURE_ICONS[f.icon] ?? 'check-mark-button';
               return (
                 <div key={f.title} className="pd__feature">
-                  <Icon size={20} />
+                  <Icon3D name={icon} size={30} />
                   <strong>{f.title}</strong>
                   <span>{f.description}</span>
                 </div>
@@ -233,7 +221,7 @@ function ProductView({ product }: { product: ProductType }) {
 
         {product.deliveryInfo && (
           <div className="pd__delivery">
-            <Truck size={18} /> {product.deliveryInfo}
+            <Icon3D name="high-voltage" size={24} /> {product.deliveryInfo}
           </div>
         )}
 

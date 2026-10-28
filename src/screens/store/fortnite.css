@@ -4,10 +4,6 @@
   justify-content: space-between;
   padding: 16px;
   border-radius: var(--r-lg);
-  background:
-    radial-gradient(120% 160% at 0% 0%, rgba(0, 212, 255, 0.28), transparent 55%),
-    linear-gradient(135deg, #1a1440, #2a0b3a);
-  border: 1px solid rgba(0, 212, 255, 0.25);
 }
 
 .fn-head > div {
@@ -26,7 +22,6 @@
   gap: 6px;
   padding: 6px 12px;
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.35);
   font-weight: 900;
   color: #8ee8ff;
   letter-spacing: 1px;
@@ -119,8 +114,6 @@
 .fn-detail {
   height: 260px;
   border-radius: 20px;
-  background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--rarity) 50%, transparent), #120a24 75%);
-  border: 1px solid color-mix(in srgb, var(--rarity) 50%, transparent);
 }
 
 .fn-detail .img {

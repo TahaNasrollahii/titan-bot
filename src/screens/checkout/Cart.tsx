@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
+import { ArrowLeft, Minus, Plus, Trash2 } from 'lucide-react';
 import { AnimatePresence, m } from 'motion/react';
 import { Link, useNavigate } from 'react-router';
 
@@ -12,6 +12,7 @@ import { haptic } from '@/lib/telegram';
 import { Button } from '@/ui/Button';
 import { Empty, ErrorState } from '@/ui/Empty';
 import { Img } from '@/ui/Img';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { SkeletonList } from '@/ui/Skeleton';
 import { toast } from '@/ui/Toast';
@@ -39,7 +40,7 @@ export default function Cart() {
         <SkeletonList count={3} h={96} />
       ) : cart.data.items.length === 0 ? (
         <Empty
-          icon={<ShoppingCart size={36} />}
+          icon={<Icon3D name="shopping-cart" size={52} />}
           title="سبد خرید خالی است"
           text="آیتم‌ها و ارز بازی‌ها را از فروشگاه اضافه کن."
           action={

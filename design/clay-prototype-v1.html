@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Titan Clay — direction</title>
+<link rel="stylesheet" href="../node_modules/@fontsource/lalezar/index.css" />
+<link rel="stylesheet" href="../node_modules/@fontsource-variable/vazirmatn/index.css" />
+<style>
+  /* ============================================================ tokens */
+  .theme-candy {
+    --base: #e8e2ff;
+    --base-2: #ddd5ff;
+    --surface: #f8f6ff;
+    --ink: #2a1e4f;
+    --ink-2: #5b4f86;
+    --muted: #8a80b3;
+    --hi: 62%;
+    --lo: 16%;
+    --drop: rgba(76, 48, 160, 0.30);
+    --page: radial-gradient(420px 300px at 90% 0%, #fde3ff 0%, transparent 70%),
+            radial-gradient(380px 360px at 0% 100%, #d3f4ff 0%, transparent 70%), var(--base);
+  }
+  .theme-midnight {
+    --base: #241b3b;
+    --base-2: #2d2349;
+    --surface: #352a56;
+    --ink: #f6f2ff;
+    --ink-2: #cfc6f2;
+    --muted: #9c90c8;
+    --hi: 22%;
+    --lo: 30%;
+    --drop: rgba(5, 0, 20, 0.55);
+    --page: radial-gradient(420px 300px at 90% 0%, rgba(255, 90, 95, 0.22) 0%, transparent 70%),
+            radial-gradient(380px 360px at 0% 100%, rgba(91, 184, 255, 0.16) 0%, transparent 70%), var(--base);
+  }
+  :root {
+    --coral: #ff5a5f;
+    --mint: #3fd6a8;
+    --sun: #ffc542;
+    --sky: #5bb8ff;
+    --grape: #8b6cff;
+    --display: 'Lalezar', 'Vazirmatn Variable', sans-serif;
+    --body: 'Vazirmatn Variable', system-ui, sans-serif;
+  }
+
+  /* The clay recipe: a fill colour, a soft tinted drop, and two inner lights that make it look inflated. */
+  .clay {
+    --c: var(--surface);
+    background: var(--c);
+    border-radius: var(--r, 28px);
+    box-shadow:
+      0 14px 26px -10px var(--drop),
+      0 4px 8px -4px var(--drop),
+      inset 7px 9px 14px color-mix(in srgb, var(--c), white var(--hi)),
+      inset -7px -10px 16px color-mix(in srgb, var(--c), black var(--lo));
+  }
+  .clay--pressed {
+    box-shadow:
+      inset 6px 8px 14px color-mix(in srgb, var(--c), black var(--lo)),
+      inset -5px -6px 12px color-mix(in srgb, var(--c), white var(--hi));
+  }
+
+  /* ============================================================ page */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--body);
+    background: #cfc8e8;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .col h2 { font-family: var(--display); font-weight: 400; font-size: 26px; color: #2a1e4f; }
+  .col p { color: #5b4f86; font-size: 14px; }
+  .phones { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+  .phone {
+    position: relative;
+    width: 390px;
+    height: 844px;
+    border-radius: 46px;
+    overflow: hidden;
+    background: var(--page);
+    color: var(--ink);
+    box-shadow: 0 30px 60px -20px rgba(40, 20, 90, 0.45), 0 0 0 10px #1c1530;
+  }
+  .scroll { height: 100%; overflow: hidden; padding: 18px 18px 120px; }
+  img { display: block; max-width: 100%; }
+
+  /* ============================================================ top */
+  .top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .me { --c: var(--grape); --r: 50%; width: 52px; height: 52px; display: grid; place-items: center; color: #fff; font-family: var(--display); font-size: 24px; }
+  .hello { flex: 1; line-height: 1.25; }
+  .hello strong { font-family: var(--display); font-weight: 400; font-size: 26px; display: block; }
+  .rank { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 800; color: var(--ink-2); }
+  .rank i { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, #f2b27c, #b0632d); display: inline-block; }
+  .wallet { --c: var(--sun); --r: 999px; display: flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; color: #4a2d00; font-weight: 900; font-size: 14px; }
+  .coin { width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff6c8, #f5a623 70%); box-shadow: inset -2px -3px 4px rgba(150, 80, 0, 0.45); display: grid; place-items: center; font-family: var(--display); font-size: 15px; color: #8a4b00; }
+
+  /* ============================================================ hero */
+  .hero { --c: var(--coral); --r: 34px; position: relative; height: 196px; padding: 20px; color: #fff; overflow: visible; margin-top: 64px; }
+  .hero .char { position: absolute; left: -6px; bottom: 0; height: 318px; width: 58%; object-fit: contain; object-position: bottom center; filter: drop-shadow(0 10px 14px rgba(120, 0, 20, 0.35)); }
+  .hero-body { position: relative; width: 58%; display: flex; flex-direction: column; gap: 6px; height: 100%; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip-glass { font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: rgba(255, 255, 255, 0.24); box-shadow: inset 1px 1px 2px rgba(255,255,255,.5); }
+  .chip-live { background: #fff; color: var(--coral); display: inline-flex; align-items: center; gap: 4px; }
+  .chip-live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+  .hero h1 { font-family: var(--display); font-weight: 400; font-size: 27px; line-height: 1.25; }
+  .prize { display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 15px; }
+  .prize .coin { width: 24px; height: 24px; font-size: 12px; }
+  .cta { --c: #fff; --r: 999px; margin-top: auto; align-self: flex-start; padding: 9px 18px; color: var(--coral); font-weight: 900; font-size: 14px; border: 0; font-family: var(--body); }
+
+  /* ============================================================ quick actions */
+  .quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
+  .q { display: flex; flex-direction: column; align-items: center; gap: 7px; font-size: 12px; font-weight: 800; color: var(--ink-2); }
+  .q .clay { --r: 22px; width: 64px; height: 64px; display: grid; place-items: center; color: #fff; }
+  .q svg { width: 28px; height: 28px; filter: drop-shadow(0 2px 2px rgba(0,0,0,.18)); }
+
+  /* ============================================================ sections */
+  .sec { margin-top: 26px; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+  .sec-head h3 { font-family: var(--display); font-weight: 400; font-size: 22px; }
+  .sec-head a { font-size: 13px; font-weight: 800; color: var(--muted); text-decoration: none; }
+
+  /* Game pillows: the signature. Characters step out over the top edge. */
+  .games { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; row-gap: 40px; padding-top: 30px; }
+  .game { --r: 30px; position: relative; height: 150px; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; color: #fff; }
+  .game .art { position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%); height: 136px; max-width: 120%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 8px 10px rgba(0,0,0,.28)); }
+  .game .label { --c: color-mix(in srgb, var(--g), black 14%); --r: 0 0 30px 30px; position: relative; padding: 8px 14px 10px; display: flex; flex-direction: column; box-shadow: inset 0 6px 10px color-mix(in srgb, var(--g), black 28%); background: color-mix(in srgb, var(--g), black 12%); border-radius: 0 0 30px 30px; }
+  .game strong { font-family: var(--display); font-weight: 400; font-size: 19px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,.18); }
+  .game span { font-size: 11px; font-weight: 700; opacity: .85; direction: ltr; text-align: right; }
+
+  /* Games without artwork get their initials as a raised clay emblem instead of an empty tile. */
+  .game .mono { height: auto; bottom: 74px; font-family: var(--display); font-size: 40px; color: #fff; text-shadow: 0 4px 0 color-mix(in srgb, var(--g), black 25%), 0 10px 16px rgba(0,0,0,.25); filter: none; }
+
+  /* ============================================================ product rail */
+  .rail { display: flex; gap: 14px; overflow: hidden; margin: 0 -18px; padding: 6px 18px 16px; }
+  .prod { --r: 26px; flex: 0 0 150px; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .prod .pic { --r: 20px; height: 112px; display: grid; place-items: center; }
+  .prod .pic img { height: 92px; filter: drop-shadow(0 8px 8px rgba(40,20,90,.25)); }
+  .prod b { font-size: 13px; font-weight: 800; line-height: 1.5; }
+  .price { display: flex; align-items: center; justify-content: space-between; }
+  .price strong { font-family: var(--display); font-weight: 400; font-size: 17px; }
+  .price small { font-size: 10px; color: var(--muted); font-weight: 700; }
+  .off { --c: var(--coral); --r: 999px; font-size: 11px; font-weight: 900; color: #fff; padding: 2px 8px; }
+
+  /* ============================================================ tab bar */
+  .tabbar { --c: var(--surface); --r: 30px; position: absolute; left: 14px; right: 14px; bottom: 18px; height: 74px; display: flex; align-items: center; justify-content: space-around; padding: 0 8px; }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 800; color: var(--muted); width: 58px; }
+  .tab svg { width: 24px; height: 24px; }
+  .tab.on { color: var(--ink); }
+  .tab.on .blob { --c: var(--coral); --r: 18px; width: 50px; height: 40px; display: grid; place-items: center; color: #fff; margin-top: -18px; }
+  .badge { position: absolute; top: -6px; left: -6px; min-width: 20px; height: 20px; border-radius: 10px; background: var(--coral); color: #fff; font-size: 11px; font-weight: 900; display: grid; place-items: center; box-shadow: 0 0 0 3px var(--surface); }
+
+  /* ============================================================ product screen */
+  .bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .round { --c: var(--surface); --r: 50%; width: 46px; height: 46px; display: grid; place-items: center; color: var(--ink); }
+  .bar .t { flex: 1; font-weight: 800; font-size: 15px; color: var(--ink-2); text-align: center; }
+  .stage { --c: var(--sky); --r: 38px; height: 270px; position: relative; display: grid; place-items: center; }
+  .stage img { height: 210px; filter: drop-shadow(0 18px 20px rgba(0, 60, 120, .35)); position: relative; top: -16px; }
+  .plinth { position: absolute; bottom: 26px; width: 170px; height: 30px; border-radius: 50%; background: color-mix(in srgb, var(--sky), black 12%); box-shadow: inset 0 6px 10px rgba(255,255,255,.35); }
+  .pt { margin-top: 18px; display: flex; flex-direction: column; gap: 4px; }
+  .pt h1 { font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.2; }
+  .pt p { color: var(--ink-2); font-size: 14px; }
+  .facts { display: flex; gap: 8px; margin-top: 8px; }
+  .fact { --c: var(--surface); --r: 16px; font-size: 12px; font-weight: 800; padding: 6px 10px; display: flex; align-items: center; gap: 5px; color: var(--ink-2); }
+  .fact i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .packs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .pack { --r: 24px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
+  .pack strong { font-family: var(--display); font-weight: 400; font-size: 20px; }
+  .pack span { font-size: 13px; font-weight: 700; color: var(--ink-2); }
+  .pack.sel { --c: var(--coral); color: #fff; }
+  .pack.sel span { color: rgba(255,255,255,.85); }
+  .buy { position: absolute; left: 14px; right: 14px; bottom: 18px; --c: var(--surface); --r: 30px; display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 18px; }
+  .buy .total { flex: 1; line-height: 1.2; }
+  .buy .total small { display: block; font-size: 11px; color: var(--muted); font-weight: 700; }
+  .buy .total strong { font-family: var(--display); font-weight: 400; font-size: 24px; }
+  .big { --c: var(--coral); --r: 22px; padding: 14px 22px; color: #fff; font-weight: 900; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 7H6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/></symbol>
+</svg>
+
+<template id="home">
+  <div class="scroll">
+    <div class="top">
+      <div class="clay me">ط</div>
+      <div class="hello">
+        <strong>سلام طاها</strong>
+        <span class="rank"><i></i> برنز، سطح ۱</span>
+      </div>
+      <div class="clay wallet"><span class="coin">ت</span>۱٫۴۵ میلیون</div>
+    </div>
+
+    <div class="clay hero">
+      <img class="char" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-fortnite-character.png" alt="" />
+      <div class="hero-body">
+        <div class="chips"><span class="chip-glass chip-live">زنده</span><span class="chip-glass">فورتنایت</span></div>
+        <h1>جام زیرو بیلد تایتان</h1>
+        <div class="prize"><span class="coin">$</span>۱۰٬۰۰۰ دلار جایزه</div>
+        <button class="clay cta">ببین چه خبره</button>
+      </div>
+    </div>
+
+    <div class="quick">
+      <div class="q"><div class="clay" style="--c:var(--sky)"><svg><use href="#i-box"/></svg></div>سفارش‌ها</div>
+      <div class="q"><div class="clay" style="--c:var(--grape)"><svg><use href="#i-shield"/></svg></div>تیم من</div>
+      <div class="q"><div class="clay" style="--c:var(--sun)"><svg><use href="#i-wallet"/></svg></div>کیف پول</div>
+      <div class="q"><div class="clay" style="--c:var(--mint)"><svg><use href="#i-chat"/></svg></div>پشتیبانی</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head"><h3>بازی‌ها</h3><a href="#">همه</a></div>
+      <div class="games">
+        <div class="clay game" style="--c:#ff5f6d;--g:#ff5f6d"><img class="art" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-valorant-character.png" alt="" /><div class="label"><strong>ولورنت</strong><span>Valorant</span></div></div>
+        <div class="clay game" style="--c:#38b6f5;--g:#38b6f5"><img class="art" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/callof-character-v2.webp" alt="" /><div class="label"><strong>کال آو دیوتی</strong><span>Call of Duty Mobile</span></div></div>
+        <div class="clay game" style="--c:#ffb238;--g:#ffb238"><img class="art" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/clash-character.webp" alt="" /><div class="label"><strong>کلش آف کلنز</strong><span>Clash of Clans</span></div></div>
+        <div class="clay game" style="--c:#3fd6a8;--g:#3fd6a8"><div class="art mono">PUBG</div><div class="label"><strong>پابجی</strong><span>PUBG Mobile</span></div></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="product">
+  <div class="scroll">
+    <div class="bar">
+      <div class="t" style="text-align:right">فورتنایت</div>
+      <div class="clay round" style="color:var(--coral)"><svg width="22" height="22"><use href="#i-heart"/></svg></div>
+    </div>
+    <div class="clay stage">
+      <div class="plinth"></div>
+      <img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/products/products-vbucks.png" alt="" />
+    </div>
+    <div class="pt">
+      <h1>وی‌باکس فورتنایت</h1>
+      <p>شارژ مستقیم روی اکانت اپیک، معمولاً زیر ۱۵ دقیقه.</p>
+      <div class="facts">
+        <span class="clay fact"><i style="background:var(--mint)"></i>تحویل آنی</span>
+        <span class="clay fact"><i style="background:var(--sun)"></i>۴٫۷ از ۵</span>
+        <span class="clay fact"><i style="background:var(--sky)"></i>همه پلتفرم‌ها</span>
+      </div>
+    </div>
+    <div class="packs">
+      <div class="clay pack sel"><strong>۱٬۰۰۰ وی‌باکس</strong><span>۲۹۹٬۰۰۰ تومان</span></div>
+      <div class="clay pack"><strong>۲٬۸۰۰ وی‌باکس</strong><span>۷۴۹٬۰۰۰ تومان</span></div>
+      <div class="clay pack"><strong>۵٬۰۰۰ وی‌باکس</strong><span>۱٬۱۹۹٬۰۰۰ تومان</span></div>
+      <div class="clay pack"><strong>۱۳٬۵۰۰ وی‌باکس</strong><span>۲٬۹۹۹٬۰۰۰ تومان</span></div>
+    </div>
+  </div>
+  <div class="clay buy">
+    <div class="total"><small>جمع</small><strong>۲۹۹٬۰۰۰ تومان</strong></div>
+    <div class="clay big"><svg width="20" height="20"><use href="#i-cart"/></svg>افزودن به سبد</div>
+  </div>
+</template>
+
+<template id="tabbar">
+  <nav class="clay tabbar">
+    <div class="tab"><svg><use href="#i-user"/></svg>پروفایل</div>
+    <div class="tab" style="position:relative"><span class="badge">۲</span><svg><use href="#i-cart"/></svg>سبد</div>
+    <div class="tab"><svg><use href="#i-trophy"/></svg>مسابقه</div>
+    <div class="tab"><svg><use href="#i-bag"/></svg>فروشگاه</div>
+    <div class="tab on"><span class="clay blob"><svg><use href="#i-home"/></svg></span>خانه</div>
+  </nav>
+</template>
+
+<section class="col">
+  <h2>Candy Clay</h2>
+  <p>پس‌زمینه‌ی روشن یاسی؛ شاد، نرم، خیلی «اسباب‌بازی».</p>
+  <div class="phones">
+    <div class="phone theme-candy" data-screen="home"></div>
+    <div class="phone theme-candy" data-screen="product"></div>
+  </div>
+</section>
+<section class="col">
+  <h2>Midnight Clay</h2>
+  <p>پس‌زمینه‌ی بنفش تیره؛ همان حجم و نرمی، با حس گیمینگ شب.</p>
+  <div class="phones">
+    <div class="phone theme-midnight" data-screen="home"></div>
+    <div class="phone theme-midnight" data-screen="product"></div>
+  </div>
+</section>
+
+<script>
+  for (const phone of document.querySelectorAll('.phone')) {
+    phone.append(document.getElementById(phone.dataset.screen).content.cloneNode(true));
+    if (phone.dataset.screen === 'home') phone.append(document.getElementById('tabbar').content.cloneNode(true));
+  }
+</script>
+</body>
+</html>

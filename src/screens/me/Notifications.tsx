@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { BellOff, CheckCheck } from 'lucide-react';
+import { CheckCheck } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 import { notificationsApi } from '@/api/endpoints';
@@ -8,6 +8,7 @@ import { timeAgo } from '@/lib/format';
 import { keys } from '@/lib/queries';
 import { haptic } from '@/lib/telegram';
 import { Empty, ErrorState } from '@/ui/Empty';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { SkeletonList } from '@/ui/Skeleton';
 
@@ -56,7 +57,7 @@ export default function Notifications() {
       ) : !list.data ? (
         <SkeletonList count={5} h={70} />
       ) : list.data.results.length === 0 ? (
-        <Empty icon={<BellOff size={36} />} title="اعلانی نداری" text="خبرهای سفارش، تورنمنت و تیم این‌جا جمع می‌شوند." />
+        <Empty icon={<Icon3D name="bell-with-slash" size={52} />} title="اعلانی نداری" text="خبرهای سفارش، تورنمنت و تیم این‌جا جمع می‌شوند." />
       ) : (
         <div className="list">
           {list.data.results.map(n => (

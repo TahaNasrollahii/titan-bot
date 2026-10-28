@@ -1,44 +1,39 @@
-import { Crown, Sparkles } from 'lucide-react';
 import { m } from 'motion/react';
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import type { Me } from '@/api/types';
 import { faDigits, num } from '@/lib/format';
+import { media } from '@/lib/media';
 
-import { Avatar } from './Avatar';
+import { Icon3D } from './Icon3D';
 
-/** The gamer identity card: avatar in the rank's colors, level and XP progress. */
+/** The player's identity: avatar, rank, points and progress to the next level. */
 export function PlayerCard({ user, children }: { user: Me; children?: ReactNode }) {
-  const rank = user.rank;
-  const ring = rank ? `linear-gradient(135deg, ${rank.colorFrom}, ${rank.colorTo})` : undefined;
-  const progress = user.maxXp ? Math.min(100, Math.round((user.xp / user.maxXp) * 100)) : 0;
   const name = user.username || user.fullName || 'گیمر تایتان';
+  const avatar = media(user.avatar);
+  const progress = user.maxXp ? Math.min(100, Math.round((user.xp / user.maxXp) * 100)) : 0;
   return (
-    <div className="player" style={{ '--rank-a': rank?.colorFrom ?? '#f0645a', '--rank-b': rank?.colorTo ?? '#7a50e6' } as CSSProperties}>
-      <div className="player__glow" aria-hidden />
-      <div className="row" style={{ '--gap': '14px' } as CSSProperties}>
-        <Avatar name={name} src={user.avatar} seed={user.avatarSeed} size={62} ring={ring} />
+    <div className="clay player">
+      <div className="player__who">
+        <span className="clay clay--red player__avatar">{avatar ? <img src={avatar} alt="" /> : name.trim()[0]?.toUpperCase()}</span>
         <div className="player__id">
-          <strong className="ltr">{name}</strong>
-          <div className="row" style={{ '--gap': '6px' } as CSSProperties}>
-            <span className="player__rank">
-              <Crown size={12} /> {rank?.name ?? 'بدون رنک'}
-            </span>
-            <span className="player__level num">سطح {faDigits(user.level)}</span>
-          </div>
+          <strong>{name}</strong>
+          <span className="player__tier">
+            <Icon3D name="crown" size={18} />
+            {user.rank?.name ?? 'بدون رنک'}، سطح {faDigits(user.level)}
+          </span>
         </div>
         <div className="player__points">
-          <Sparkles size={14} />
           <span className="num">{num(user.points)}</span>
           <small>امتیاز</small>
         </div>
       </div>
-      <div className="player__xp" aria-label={`پیشرفت سطح ${progress} درصد`}>
-        <div className="player__xp-bar">
+      <div className="player__xp">
+        <div className="well player__track" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-label="پیشرفت سطح">
           <m.span initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ duration: 1.1, ease: [0.2, 0.8, 0.2, 1] }} />
         </div>
-        <span className="text-xs muted num ltr">
-          {faDigits(user.xp)} / {faDigits(user.maxXp)} XP
+        <span className="num">
+          {faDigits(user.xp)} از {faDigits(user.maxXp)}
         </span>
       </div>
       {children}

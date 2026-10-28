@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CircleCheck, CreditCard, Gamepad2, Lock, Plus, Wallet } from 'lucide-react';
+import { Gamepad2, Lock, Plus } from 'lucide-react';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Link, useNavigate } from 'react-router';
 
@@ -12,6 +12,7 @@ import { haptic, openExternal } from '@/lib/telegram';
 import { Button } from '@/ui/Button';
 import { Empty } from '@/ui/Empty';
 import { Img } from '@/ui/Img';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Sheet } from '@/ui/Sheet';
 import { SkeletonList } from '@/ui/Skeleton';
@@ -63,7 +64,7 @@ export default function Checkout() {
   if (cart.data && cart.data.items.length === 0 && !pay.isSuccess)
     return (
       <Screen title="تسویه حساب" fallback="/cart" noTabs>
-        <Empty icon={<CircleCheck size={36} />} title="سبد خرید خالی است" action={<Link to="/store" className="btn btn--primary btn--sm">فروشگاه</Link>} />
+        <Empty icon={<Icon3D name="shopping-cart" size={52} />} title="سبد خرید خالی است" action={<Link to="/store" className="btn btn--primary btn--sm">فروشگاه</Link>} />
       </Screen>
     );
 
@@ -152,8 +153,8 @@ export default function Checkout() {
                 }}
               >
                 <span className="pick__radio" />
-                <span className="pick__icon pick__icon--cream">
-                  <Wallet size={20} />
+                <span className="pick__icon">
+                  <Icon3D name="money-bag" size={28} />
                 </span>
                 <span className="pick__body">
                   <strong>کیف پول تایتان</strong>
@@ -172,7 +173,7 @@ export default function Checkout() {
               >
                 <span className="pick__radio" />
                 <span className="pick__icon">
-                  <CreditCard size={20} />
+                  <Icon3D name="credit-card" size={28} />
                 </span>
                 <span className="pick__body">
                   <strong>درگاه بانکی</strong>

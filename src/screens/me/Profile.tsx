@@ -1,20 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  Bell,
-  ChevronLeft,
-  Gamepad2,
-  Headset,
-  Heart,
-  Mail,
-  PackageCheck,
-  Pencil,
-  Settings,
-  Shield,
-  Trophy,
-  UsersRound,
-  Wallet,
-} from 'lucide-react';
-import type { CSSProperties, ReactNode } from 'react';
+import { ChevronLeft, Pencil, Settings } from 'lucide-react';
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
 
 import { meApi } from '@/api/endpoints';
@@ -22,6 +8,7 @@ import { useMe } from '@/auth/session';
 import { faDigits, money, num, toman } from '@/lib/format';
 import { useUnread, useWallet } from '@/lib/queries';
 import { haptic } from '@/lib/telegram';
+import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { PlayerCard } from '@/ui/PlayerCard';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
@@ -88,21 +75,21 @@ export default function Profile() {
 
       <section className="section stack" style={{ '--gap': '14px' } as CSSProperties}>
         <div className="list">
-          <Row to="/wallet" icon={<Wallet size={18} />} title="کیف پول" sub={wallet.data ? toman(wallet.data.balance) : undefined} tone="#ffcb5c" />
-          <Row to="/orders" icon={<PackageCheck size={18} />} title="سفارش‌ها" tone="#4cc3ff" />
-          <Row to="/wishlist" icon={<Heart size={18} />} title="علاقه‌مندی‌ها" tone="#f0645a" />
-          <Row to="/me/accounts" icon={<Gamepad2 size={18} />} title="اکانت‌های بازی" tone="#3ddc84" />
+          <Row to="/wallet" icon="money-bag" title="کیف پول" sub={wallet.data ? toman(wallet.data.balance) : undefined} />
+          <Row to="/orders" icon="package" title="سفارش‌ها" />
+          <Row to="/wishlist" icon="red-heart" title="علاقه‌مندی‌ها" />
+          <Row to="/me/accounts" icon="video-game" title="اکانت‌های بازی" />
         </div>
         <div className="list">
-          <Row to="/tournaments" icon={<Trophy size={18} />} title="تورنمنت‌ها" tone="#ffcb5c" />
-          <Row to="/teams" icon={<Shield size={18} />} title="تیم‌های من" tone="#a78bfa" />
-          <Row to="/invitations" icon={<Mail size={18} />} title="دعوت‌نامه‌ها" count={pendingInvites} tone="#a78bfa" />
-          <Row to="/friends" icon={<UsersRound size={18} />} title="دوستان" tone="#4cc3ff" />
+          <Row to="/tournaments" icon="trophy" title="تورنمنت‌ها" />
+          <Row to="/teams" icon="shield" title="تیم‌های من" />
+          <Row to="/invitations" icon="envelope-with-arrow" title="دعوت‌نامه‌ها" count={pendingInvites} />
+          <Row to="/friends" icon="busts-in-silhouette" title="دوستان" />
         </div>
         <div className="list">
-          <Row to="/notifications" icon={<Bell size={18} />} title="اعلان‌ها" count={unread.data?.count} tone="#f0645a" />
-          <Row to="/support" icon={<Headset size={18} />} title="پشتیبانی آنلاین" tone="#3ddc84" />
-          <Row to="/settings" icon={<Settings size={18} />} title="تنظیمات" tone="#c98d92" />
+          <Row to="/notifications" icon="bell" title="اعلان‌ها" count={unread.data?.count} />
+          <Row to="/support" icon="headphone" title="پشتیبانی آنلاین" />
+          <Row to="/settings" icon="gear" title="تنظیمات" />
         </div>
       </section>
     </Screen>
@@ -118,11 +105,11 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-function Row({ to, icon, title, sub, count, tone }: { to: string; icon: ReactNode; title: string; sub?: string; count?: number; tone: string }) {
+function Row({ to, icon, title, sub, count }: { to: string; icon: Icon3DName; title: string; sub?: string; count?: number }) {
   return (
     <Link to={to} className="list-row" onClick={() => haptic.tap()}>
-      <span className="list-row__icon" style={{ color: tone, background: `color-mix(in srgb, ${tone} 14%, transparent)` }}>
-        {icon}
+      <span className="list-row__icon">
+        <Icon3D name={icon} size={26} />
       </span>
       <div className="list-row__body">
         <div className="list-row__title">{title}</div>

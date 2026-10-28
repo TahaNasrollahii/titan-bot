@@ -1,26 +1,27 @@
+/* Cards are clay surfaces (see clay.css); these rules only lay them out. */
+
 /* ================================================================ product card */
 .pcard {
   position: relative;
   display: flex;
   flex-direction: column;
+  padding: 8px;
   border-radius: var(--r-lg);
-  background: var(--grad-surface);
-  border: 1px solid var(--line);
-  overflow: hidden;
-  box-shadow: var(--shadow-1);
   transition: transform 0.18s var(--ease-out);
 }
 
 .rail > .pcard {
-  width: 156px;
+  width: 158px;
 }
 
 .pcard__media {
   position: relative;
   aspect-ratio: 1;
+  border-radius: 20px;
   background:
-    radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%),
-    linear-gradient(160deg, color-mix(in srgb, var(--accent) 18%, #2a0b12), #1c060b);
+    radial-gradient(circle at 50% 58%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 68%),
+    var(--surface);
+  box-shadow: inset 4px 6px 12px rgba(20, 2, 6, 0.6), inset -3px -4px 8px rgba(255, 200, 200, 0.05);
 }
 
 .pcard__media .img {
@@ -30,20 +31,17 @@
 }
 
 .pcard__media .img img {
-  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 12px 12px rgba(20, 2, 6, 0.6));
 }
 
 .pcard__off {
   position: absolute;
   top: 8px;
   right: 8px;
-  padding: 2px 8px;
-  border-radius: 8px;
-  background: var(--grad-red);
-  color: #fff;
+  padding: 2px 9px;
+  border-radius: 999px;
   font-size: var(--fs-xs);
   font-weight: 900;
-  box-shadow: 0 4px 12px -4px rgba(226, 69, 63, 0.8);
 }
 
 .pcard__hot {
@@ -53,33 +51,29 @@
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  padding: 2px 7px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.5);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  color: var(--amber);
-  font-size: 10px;
-  font-weight: 800;
+  padding: 2px 8px 2px 6px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 900;
 }
 
 .pcard__body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 10px 12px 12px;
+  padding: 10px 6px 4px;
   flex: 1;
 }
 
 .pcard__game {
   font-size: 10.5px;
-  font-weight: 700;
-  color: color-mix(in srgb, var(--accent) 70%, #fff);
+  font-weight: 800;
+  color: var(--muted);
 }
 
 .pcard__title {
   font-size: var(--fs-sm);
-  font-weight: 800;
+  font-weight: 900;
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -103,7 +97,7 @@
 
 .pcard__price small {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--muted);
 }
 
@@ -112,134 +106,134 @@
   align-items: center;
   gap: 2px;
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--gold);
-}
-
-.pcard--wide {
-  flex-direction: row;
-}
-
-.pcard--wide .pcard__media {
-  width: 112px;
-  flex-shrink: 0;
 }
 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
 }
 
-/* ================================================================ game tile */
+/* ================================================================ game tile: art in a clay bezel, character stepping out */
 .gtile {
   position: relative;
   display: block;
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  isolation: isolate;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-  box-shadow: 0 16px 30px -18px color-mix(in srgb, var(--accent) 80%, transparent);
+  padding: 6px;
+  border-radius: var(--r-xl);
   transition: transform 0.2s var(--ease-out);
 }
 
 .gtile--md {
-  width: 132px;
-  height: 172px;
+  width: 150px;
+  height: 184px;
+  margin-top: 30px;
 }
 
 .gtile--lg {
   width: 100%;
-  height: 150px;
+  height: 176px;
+  margin-top: 30px;
 }
 
-.gtile__bg {
+.gtile__bg,
+.gtile__plain {
   position: absolute;
-  inset: 0;
-  z-index: -2;
+  inset: 6px;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.gtile__plain {
+  background:
+    radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--accent) 60%, transparent), transparent 70%),
+    var(--surface);
 }
 
 .gtile__shade {
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(180deg, transparent 30%, rgba(10, 2, 4, 0.92)),
-    linear-gradient(135deg, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%);
+  inset: 6px;
+  border-radius: 25px;
+  background: linear-gradient(180deg, transparent 48%, rgba(40, 6, 12, 0.92));
+  pointer-events: none;
 }
 
 .gtile__char {
   position: absolute;
-  bottom: 18px;
-  left: -6%;
-  width: 92%;
-  height: 92%;
+  left: 50%;
+  bottom: 36px;
+  transform: translateX(-50%);
+  width: 112%;
+  height: 200px;
   background: none;
-  z-index: 0;
-}
-
-.gtile--lg .gtile__char {
-  left: 0;
-  width: 55%;
-  height: 120%;
-  bottom: -6px;
+  overflow: visible;
+  z-index: 1;
 }
 
 .gtile__char img {
   object-position: bottom;
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 10px 10px rgba(20, 2, 6, 0.55));
+}
+
+.gtile__icon {
+  position: absolute;
+  left: 50%;
+  top: 36%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: none;
+}
+
+.gtile__mono {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  font-size: 38px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 4px 0 rgba(20, 2, 6, 0.4), 0 10px 18px rgba(20, 2, 6, 0.5);
 }
 
 .gtile__info {
   position: absolute;
-  inset: auto 12px 10px;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  line-height: 1.3;
+  right: 18px;
+  left: 14px;
+  bottom: 15px;
+  z-index: 2;
 }
 
 .gtile__info strong {
-  font-weight: 900;
+  display: block;
   font-size: var(--fs-md);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-}
-
-.gtile__info span {
-  font-size: 10.5px;
-  color: color-mix(in srgb, var(--accent) 60%, #fff);
-  font-weight: 700;
-  text-align: right;
-}
-
-.gtile--lg .gtile__info {
-  inset: auto 16px 14px auto;
-  max-width: 50%;
-}
-
-.gtile--lg .gtile__info strong {
-  font-size: var(--fs-xl);
+  font-weight: 900;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ================================================================ tournament card */
 .tcard {
   display: flex;
   flex-direction: column;
+  padding: 6px;
   border-radius: var(--r-lg);
-  overflow: hidden;
-  background: var(--grad-surface);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-1);
   transition: transform 0.18s var(--ease-out);
 }
 
 .rail > .tcard {
-  width: 280px;
+  width: 282px;
 }
 
 .tcard__cover {
   position: relative;
   aspect-ratio: 16 / 8;
+  border-radius: 21px;
+  overflow: hidden;
 }
 
 .tcard__cover .img {
@@ -251,7 +245,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(34, 8, 14, 0.95));
+  background: linear-gradient(180deg, transparent 50%, rgba(40, 6, 12, 0.75));
 }
 
 .tcard__badges {
@@ -271,21 +265,18 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.55);
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(30, 4, 9, 0.6);
   font-size: var(--fs-xs);
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .tcard__body {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 0 14px 14px;
-  margin-top: -14px;
-  position: relative;
-  z-index: 1;
+  gap: 7px;
+  padding: 12px 10px 8px;
 }
 
 .tcard__game {
@@ -293,8 +284,8 @@
   align-items: center;
   gap: 6px;
   font-size: var(--fs-xs);
-  color: color-mix(in srgb, var(--accent) 65%, #fff);
-  font-weight: 700;
+  color: var(--muted);
+  font-weight: 800;
 }
 
 .tcard__icon {
@@ -323,7 +314,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--gold);
+  color: var(--cream);
   font-weight: 900;
 }
 
@@ -341,22 +332,22 @@
 
 .tcard__bar {
   flex: 1;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.08);
-  overflow: hidden;
+  height: 10px;
+  padding: 2px;
+  border-radius: 999px;
 }
 
 .tcard__bar span {
   display: block;
   height: 100%;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 50%, #fff));
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--red-2), var(--red));
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 
 .tcard__free {
   color: var(--green);
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .tcard--compact .tcard__cover {
@@ -365,101 +356,100 @@
 
 /* ================================================================ player card */
 .player {
-  position: relative;
-  overflow: hidden;
   padding: 16px;
   border-radius: var(--r-xl);
-  background:
-    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--rank-a) 30%, transparent), transparent 55%),
-    radial-gradient(100% 120% at 0% 100%, color-mix(in srgb, var(--rank-b) 26%, transparent), transparent 60%),
-    linear-gradient(160deg, #3d1119, #220810);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-2);
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.player__glow {
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  top: -90px;
-  left: -40px;
+.player__who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player__avatar {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--rank-a) 45%, transparent), transparent);
-  filter: blur(8px);
-  pointer-events: none;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  font-weight: 900;
+  font-size: 24px;
+}
+
+.player__avatar img {
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .player__id {
   flex: 1;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  line-height: 1.35;
 }
 
 .player__id strong {
-  font-size: var(--fs-lg);
+  display: block;
+  font-size: 19px;
   font-weight: 900;
-  text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  direction: ltr;
+  text-align: right;
 }
 
-.player__rank {
+.player__tier {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
-  border-radius: 8px;
-  font-size: var(--fs-xs);
+  font-size: 12px;
   font-weight: 800;
-  color: #fff;
-  background: linear-gradient(135deg, var(--rank-a), var(--rank-b));
-}
-
-.player__level {
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  color: var(--text-2);
+  color: var(--cream);
 }
 
 .player__points {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--gold);
   line-height: 1.2;
+  font-size: 18px;
   font-weight: 900;
+  color: var(--cream);
 }
 
 .player__points small {
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .player__xp {
   display: flex;
   align-items: center;
   gap: 10px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
 }
 
-.player__xp-bar {
+.player__track {
   flex: 1;
-  height: 8px;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+  height: 14px;
+  padding: 3px;
+  border-radius: 999px;
 }
 
-.player__xp-bar span {
+.player__track span {
   display: block;
   height: 100%;
-  border-radius: 4px;
-  background: linear-gradient(90deg, var(--rank-a), var(--rank-b));
-  box-shadow: 0 0 12px var(--rank-a);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--red-2), var(--red));
+  box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.35), 0 0 10px rgba(240, 100, 90, 0.6);
 }

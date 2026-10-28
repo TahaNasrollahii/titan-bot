@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Check, CreditCard, Plus, Shield, Trophy, Wallet } from 'lucide-react';
+import { Check, CreditCard, Plus, Trophy, Wallet } from 'lucide-react';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router';
 
@@ -11,6 +11,7 @@ import { keys, useWallet } from '@/lib/queries';
 import { haptic, openExternal } from '@/lib/telegram';
 import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
+import { Icon3D } from '@/ui/Icon3D';
 import { Empty } from '@/ui/Empty';
 import { Sheet } from '@/ui/Sheet';
 import { SkeletonList } from '@/ui/Skeleton';
@@ -94,7 +95,7 @@ export function RegisterSheet({ t, open, onClose }: { t: Tournament; open: boole
               <SkeletonList count={1} h={64} />
             ) : teams.data.length === 0 ? (
               <Empty
-                icon={<Shield size={30} />}
+                icon={<Icon3D name="shield" size={52} />}
                 title="تیمی برای ثبت‌نام نداری"
                 text={`برای این تورنمنت باید کاپیتان یک تیم با حداقل ${faDigits(t.teamSize)} عضو باشی.`}
                 action={

@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { ChevronLeft, Search, Sparkles } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
 import { catalogApi } from '@/api/endpoints';
 import { haptic } from '@/lib/telegram';
 import { GameTile } from '@/ui/cards';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
 
@@ -26,20 +27,16 @@ export default function Store() {
 
   return (
     <Screen>
-      <Link to="/search" className="home-search store-search" onClick={() => haptic.tap()}>
-        <Search size={18} />
-        <span>جستجو در فروشگاه…</span>
-      </Link>
-
       <Link to="/fortnite-shop" className="fn-banner card--press" onClick={() => haptic.tap('medium')}>
         <div className="fn-banner__glow" aria-hidden />
         <div className="fn-banner__text">
-          <span className="badge badge--cream">
-            <Sparkles size={12} /> هر روز تازه
+          <span className="clay clay--cream fn-banner__badge">
+            <Icon3D name="sparkles" size={14} /> هر روز تازه
           </span>
           <strong>آیتم‌شاپ امروز فورتنایت</strong>
           <span>اسکین‌ها و باندل‌های امروز را ببین و وی‌باکس بخر</span>
         </div>
+        <Icon3D name="video-game" size={58} className="fn-banner__art" />
         <ChevronLeft size={22} />
       </Link>
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Search as SearchIcon, SearchX, X } from 'lucide-react';
+import { Search as SearchIcon, X } from 'lucide-react';
 import { useDeferredValue, useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 
@@ -8,6 +8,7 @@ import { haptic } from '@/lib/telegram';
 import { ProductCard, StatusBadge } from '@/ui/cards';
 import { Empty, ErrorState } from '@/ui/Empty';
 import { Img } from '@/ui/Img';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { SkeletonList } from '@/ui/Skeleton';
 
@@ -60,7 +61,7 @@ export default function Search() {
       </div>
 
       {debounced.length < 2 ? (
-        <Empty icon={<SearchIcon size={36} />} title="دنبال چه می‌گردی؟" text="حداقل دو حرف بنویس؛ مثلاً «وی باکس» یا «ولورنت»." />
+        <Empty icon={<Icon3D name="magnifying-glass-tilted-left" size={52} />} title="دنبال چه می‌گردی؟" text="حداقل دو حرف بنویس؛ مثلاً «وی باکس» یا «ولورنت»." />
       ) : results.isError ? (
         <ErrorState error={results.error} onRetry={() => results.refetch()} />
       ) : !data ? (
@@ -68,7 +69,7 @@ export default function Search() {
           <SkeletonList count={4} />
         </div>
       ) : empty ? (
-        <Empty icon={<SearchX size={36} />} title="چیزی پیدا نشد" text={`برای «${debounced}» نتیجه‌ای نداریم.`} />
+        <Empty icon={<Icon3D name="cross-mark" size={52} />} title="چیزی پیدا نشد" text={`برای «${debounced}» نتیجه‌ای نداریم.`} />
       ) : (
         <div style={{ opacity: results.isFetching ? 0.6 : 1, transition: 'opacity .2s' }}>
           {data.games.length > 0 && (

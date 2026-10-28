@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ChevronLeft, Mail, Plus, Shield, Ticket } from 'lucide-react';
+import { ChevronLeft, Mail, Plus, Ticket } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
 import { Link, useNavigate } from 'react-router';
 
@@ -9,6 +9,7 @@ import { haptic } from '@/lib/telegram';
 import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
 import { Empty, ErrorState } from '@/ui/Empty';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Sheet } from '@/ui/Sheet';
 import { SkeletonList } from '@/ui/Skeleton';
@@ -56,7 +57,7 @@ export default function Teams() {
           <SkeletonList count={2} h={76} />
         ) : teams.data.length === 0 ? (
           <Empty
-            icon={<Shield size={36} />}
+            icon={<Icon3D name="shield" size={52} />}
             title="هنوز عضو تیمی نیستی"
             text="یک تیم بساز و دوستانت را دعوت کن، یا با کد دعوت به تیمی بپیوند."
           />

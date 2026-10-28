@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { Heart } from 'lucide-react';
 import { Link } from 'react-router';
 
 import { catalogApi } from '@/api/endpoints';
 import { ProductCard } from '@/ui/cards';
 import { Empty, ErrorState } from '@/ui/Empty';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
 
@@ -22,7 +22,7 @@ export default function Wishlist() {
         </div>
       ) : list.data.results.length === 0 ? (
         <Empty
-          icon={<Heart size={36} />}
+          icon={<Icon3D name="red-heart" size={52} />}
           title="هنوز چیزی نپسندیدی"
           text="روی قلب محصولات بزن تا اینجا جمع شوند."
           action={

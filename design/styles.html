@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Titan Mini App — style options</title>
+<link rel="stylesheet" href="../node_modules/@fontsource-variable/vazirmatn/index.css" />
+<style>
+  :root {
+    --wine: #65232d; --wine-deep: #4d1720; --panel: #3f1119; --card: #4a1620; --ink-wine: #2a0a10;
+    --red: #e2453f; --red-2: #f0645a; --pink: #ee6c8a; --cream: #fff0b3; --purple: #7a50e6;
+    --text: #fdf1f0; --muted: #c98d92; --muted-2: #a86068;
+    --font: 'Vazirmatn Variable', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: #1a0509; color: var(--text); padding: 36px 16px 60px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 44px 34px; justify-content: center; }
+  .opt { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .opt h2 { font-size: 22px; font-weight: 900; }
+  .opt h2 span { color: var(--red-2); margin-left: 6px; }
+  .opt p { font-size: 13px; color: var(--muted); max-width: 390px; text-align: center; line-height: 1.7; }
+  .phone { position: relative; width: 390px; height: 844px; border-radius: 46px; overflow: hidden; box-shadow: 0 30px 60px -20px #000, 0 0 0 10px #0e0204; }
+  .scroll { height: 100%; overflow: hidden; }
+  img { display: block; max-width: 100%; }
+  svg.i { width: 22px; height: 22px; flex-shrink: 0; }
+
+  /* =====================================================================================
+     1. TITAN CLASSIC: the website's own components, tuned for a phone
+     ===================================================================================== */
+  .s1 { background: radial-gradient(420px 300px at 100% 0%, rgba(240,100,90,.18), transparent 70%), linear-gradient(180deg, #6a2430, #4d1720); }
+  .s1 .scroll { padding: 16px 16px 120px; }
+  .s1 .top { display: flex; align-items: center; gap: 8px; }
+  .s1 .logo { width: 44px; margin-left: auto; filter: drop-shadow(0 4px 10px rgba(226,69,63,.45)); }
+  .s1 .rb { width: 44px; height: 44px; border-radius: 50%; background: var(--panel); display: grid; place-items: center; position: relative; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+  .s1 .rb .n { position: absolute; top: -2px; left: -2px; min-width: 18px; height: 18px; border-radius: 9px; background: var(--red); font-size: 10px; font-weight: 900; display: grid; place-items: center; box-shadow: 0 0 0 3px #6a2430; }
+  .s1 .wal { height: 44px; border-radius: 22px; background: var(--panel); display: flex; align-items: center; gap: 8px; padding: 0 6px 0 14px; font-weight: 900; font-size: 14px; }
+  .s1 .wal b { width: 32px; height: 32px; border-radius: 50%; background: var(--cream); color: #5b3500; display: grid; place-items: center; }
+  .s1 .hero { position: relative; margin-top: 16px; height: 232px; border-radius: 28px; overflow: hidden; background: linear-gradient(120deg, #d94262 0%, #f07a8e 100%); }
+  .s1 .hero::before { content: ''; position: absolute; width: 300px; height: 300px; left: -80px; top: -40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 0 0 40px rgba(255,255,255,.04), 0 0 0 80px rgba(255,255,255,.03); }
+  .s1 .hero img { position: absolute; left: -16px; bottom: 0; height: 236px; }
+  .s1 .hero .body { position: absolute; right: 18px; top: 20px; bottom: 20px; width: 52%; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .s1 .badge { background: var(--cream); color: #6b3e00; font-size: 12px; font-weight: 900; padding: 4px 10px; border-radius: 999px; }
+  .s1 .hero h1 { font-size: 24px; font-weight: 900; line-height: 1.3; }
+  .s1 .hero p { font-size: 12.5px; opacity: .9; }
+  .s1 .hero .price { font-size: 16px; font-weight: 900; }
+  .s1 .btnw { margin-top: auto; background: #fff; color: #3f1119; font-weight: 900; font-size: 13.5px; padding: 10px 16px; border-radius: 999px; box-shadow: 0 8px 16px -8px rgba(80,0,20,.5); }
+  .s1 .bars { position: absolute; bottom: 14px; left: 18px; display: flex; gap: 5px; }
+  .s1 .bars i { width: 16px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.35); } .s1 .bars i.on { width: 28px; background: #fff; }
+  .s1 .sec { margin-top: 24px; }
+  .s1 .sec h3 { font-size: 19px; font-weight: 900; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .s1 .sec h3::before { content: ''; width: 5px; height: 20px; border-radius: 3px; background: var(--red-2); }
+  .s1 .cats { display: flex; gap: 12px; margin: 0 -16px; padding: 0 16px; }
+  .s1 .cat { position: relative; flex: 0 0 148px; height: 196px; border-radius: 26px; overflow: hidden; }
+  .s1 .cat .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .s1 .cat .ch { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 92%; max-width: none; }
+  .s1 .cat::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(30,4,9,.85)); }
+  .s1 .cat strong { position: absolute; z-index: 1; right: 14px; bottom: 12px; font-size: 16px; font-weight: 900; }
+  .s1 .trust { margin-top: 22px; background: var(--panel); border-radius: 26px; display: grid; grid-template-columns: repeat(3, 1fr); padding: 14px 6px; }
+  .s1 .trust div { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 800; text-align: center; }
+  .s1 .trust span { width: 38px; height: 38px; border-radius: 12px; background: var(--card); display: grid; place-items: center; color: var(--red-2); }
+  .s1 .trust small { font-size: 10px; color: var(--muted); font-weight: 600; }
+  .s1 .nav { position: absolute; left: 14px; right: 14px; bottom: 16px; height: 68px; border-radius: 26px; background: rgba(46,10,17,.92); display: flex; align-items: center; justify-content: space-around; box-shadow: 0 16px 30px -12px #000; }
+  .s1 .nav div { color: var(--muted-2); display: flex; flex-direction: column; align-items: center; font-size: 10px; font-weight: 800; gap: 3px; }
+  .s1 .nav .on { color: #fff; }
+  .s1 .nav .on b { width: 56px; height: 56px; margin-top: -30px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ff8a7e, var(--red) 60%); display: grid; place-items: center; box-shadow: 0 0 0 6px #4d1720, 0 10px 20px -6px rgba(226,69,63,.8); }
+
+  /* =====================================================================================
+     2. AURORA GLASS: frosted panels floating over slow coloured light
+     ===================================================================================== */
+  .s2 { background: #2b0910; }
+  .s2::before { content: ''; position: absolute; inset: -20%; background:
+      radial-gradient(300px 300px at 82% 10%, rgba(240,90,80,.95), transparent 70%),
+      radial-gradient(280px 280px at 6% 44%, rgba(122,80,230,.85), transparent 70%),
+      radial-gradient(260px 220px at 70% 78%, rgba(238,108,138,.5), transparent 70%),
+      radial-gradient(200px 200px at 10% 95%, rgba(255,203,92,.25), transparent 70%);
+    filter: blur(20px); }
+  .s2 .scroll { position: relative; padding: 18px 16px 120px; }
+  .s2 .glass { background: linear-gradient(160deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.16); backdrop-filter: blur(22px) saturate(1.5); -webkit-backdrop-filter: blur(22px) saturate(1.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 20px 40px -24px rgba(0,0,0,.8); }
+  .s2 .top { display: flex; align-items: center; gap: 12px; }
+  .s2 .av { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--red-2), var(--purple)); display: grid; place-items: center; font-weight: 900; font-size: 20px; border: 2px solid rgba(255,255,255,.4); }
+  .s2 .hi { flex: 1; line-height: 1.3; }
+  .s2 .hi small { font-size: 12px; color: rgba(255,240,240,.7); display: block; }
+  .s2 .hi strong { font-size: 19px; font-weight: 900; }
+  .s2 .ib { width: 46px; height: 46px; border-radius: 16px; display: grid; place-items: center; }
+  .s2 .bal { margin-top: 18px; border-radius: 28px; padding: 18px; display: flex; align-items: center; gap: 14px; }
+  .s2 .bal .t { flex: 1; }
+  .s2 .bal small { font-size: 12px; color: rgba(255,240,240,.7); }
+  .s2 .bal strong { display: block; font-size: 28px; font-weight: 900; letter-spacing: -.5px; }
+  .s2 .bal strong em { font-style: normal; font-size: 14px; font-weight: 700; opacity: .75; }
+  .s2 .bal .add { height: 48px; padding: 0 18px; border-radius: 18px; background: var(--cream); color: #5b3500; font-weight: 900; display: flex; align-items: center; gap: 6px; box-shadow: 0 10px 24px -10px rgba(255,220,120,.8); }
+  .s2 .hero { position: relative; margin-top: 16px; height: 220px; border-radius: 30px; overflow: hidden; }
+  .s2 .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .s2 .hero .info { position: absolute; left: 10px; right: 10px; bottom: 10px; border-radius: 22px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+  .s2 .hero .info div { flex: 1; line-height: 1.4; }
+  .s2 .hero .info strong { font-size: 16px; font-weight: 900; display: block; }
+  .s2 .hero .info small { font-size: 12px; color: rgba(255,240,240,.8); }
+  .s2 .hero .go { width: 44px; height: 44px; border-radius: 50%; background: #fff; color: var(--panel); display: grid; place-items: center; }
+  .s2 .live { position: absolute; top: 12px; right: 12px; border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
+  .s2 .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #ff5a5a; box-shadow: 0 0 8px #ff5a5a; }
+  .s2 .acts { margin-top: 16px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .s2 .act { border-radius: 22px; padding: 12px 4px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 800; }
+  .s2 .act img { width: 34px; height: 34px; }
+  .s2 h3 { margin: 22px 4px 12px; font-size: 18px; font-weight: 900; }
+  .s2 .games { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .s2 .game { border-radius: 22px; padding: 8px; display: flex; align-items: center; gap: 10px; }
+  .s2 .game img { width: 48px; height: 48px; border-radius: 15px; object-fit: cover; }
+  .s2 .game strong { font-size: 14px; font-weight: 900; display: block; }
+  .s2 .game small { font-size: 11px; color: rgba(255,240,240,.65); }
+  .s2 .nav { position: absolute; left: 16px; right: 16px; bottom: 16px; height: 66px; border-radius: 26px; display: flex; align-items: center; justify-content: space-around; padding: 0 6px; }
+  .s2 .nav div { width: 58px; height: 50px; border-radius: 18px; display: grid; place-items: center; color: rgba(255,235,235,.6); }
+  .s2 .nav .on { background: linear-gradient(135deg, var(--red-2), var(--red)); color: #fff; box-shadow: 0 8px 18px -6px rgba(226,69,63,.9), inset 0 1px 0 rgba(255,255,255,.35); }
+
+  /* =====================================================================================
+     3. ARENA: esports broadcast graphics; diagonal cuts, big type, characters as heroes
+     ===================================================================================== */
+  .s3 { background: linear-gradient(180deg, #3d0f17 0%, #240609 100%); }
+  .s3::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, transparent 0 22px, rgba(255,255,255,.018) 22px 23px); }
+  .s3 .scroll { position: relative; padding: 16px 16px 120px; }
+  .s3 .top { display: flex; align-items: center; gap: 10px; }
+  .s3 .tag { font-size: 11px; font-weight: 900; letter-spacing: 1.5px; color: var(--cream); direction: ltr; }
+  .s3 .lvl { display: flex; align-items: center; gap: 10px; flex: 1; }
+  .s3 .lvl .ring { width: 46px; height: 46px; clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); background: linear-gradient(135deg, var(--red-2), #8c1d22); display: grid; place-items: center; font-weight: 900; font-size: 18px; }
+  .s3 .lvl strong { font-size: 18px; font-weight: 900; display: block; line-height: 1.2; direction: ltr; text-align: right; }
+  .s3 .wal { clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); background: var(--cream); color: #3f1119; font-weight: 900; font-size: 14px; padding: 10px 18px; }
+  .s3 .hero { position: relative; margin: 18px -16px 0; height: 318px; }
+  .s3 .hero .slab { position: absolute; inset: 40px 0 0; background: linear-gradient(100deg, var(--red) 0%, #a5222b 60%, #6e1219 100%); clip-path: polygon(0 14%, 100% 0, 100% 86%, 0 100%); }
+  .s3 .hero .slab::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, transparent 0 10px, rgba(0,0,0,.08) 10px 12px); }
+  .s3 .hero img { position: absolute; left: -10px; bottom: 6px; height: 300px; filter: drop-shadow(-10px 10px 0 rgba(30,4,9,.35)); }
+  .s3 .hero .body { position: absolute; right: 18px; top: 66px; width: 52%; }
+  .s3 .live { display: inline-flex; align-items: center; gap: 6px; background: #fff; color: var(--red); font-size: 11px; font-weight: 900; padding: 3px 10px; direction: ltr; letter-spacing: 1px; transform: skewX(-12deg); }
+  .s3 .hero h1 { margin-top: 8px; font-size: 30px; font-weight: 900; line-height: 1.12; letter-spacing: -.5px; }
+  .s3 .hero .prize { margin-top: 10px; display: flex; flex-direction: column; line-height: 1.1; }
+  .s3 .hero .prize small { font-size: 11px; font-weight: 800; opacity: .8; }
+  .s3 .hero .prize strong { font-size: 30px; font-weight: 900; color: var(--cream); direction: ltr; text-align: right; }
+  .s3 .cta { position: absolute; right: 18px; bottom: 22px; background: var(--ink-wine); color: #fff; font-weight: 900; font-size: 14px; padding: 12px 20px; clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%); }
+  .s3 .acts { margin-top: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .s3 .act { height: 62px; background: rgba(255,255,255,.05); border-top: 2px solid var(--red-2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11.5px; font-weight: 800; color: var(--text); clip-path: polygon(0 0, 100% 0, 100% 78%, 86% 100%, 0 100%); }
+  .s3 .act svg { color: var(--red-2); }
+  .s3 h3 { margin: 24px 0 12px; display: flex; align-items: baseline; gap: 10px; font-size: 21px; font-weight: 900; }
+  .s3 h3 small { font-size: 11px; color: var(--muted-2); font-weight: 900; letter-spacing: 2px; direction: ltr; }
+  .s3 .cards { display: flex; gap: 10px; margin: 0 -16px; padding: 0 16px; }
+  .s3 .card { position: relative; flex: 0 0 132px; height: 190px; clip-path: polygon(0 0, 100% 0, 100% 88%, 82% 100%, 0 100%); overflow: hidden; }
+  .s3 .card .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(1.1); }
+  .s3 .card .ch { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 96%; max-width: none; }
+  .s3 .card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(20,3,6,.9)); }
+  .s3 .card strong { position: absolute; z-index: 1; right: 10px; bottom: 12px; font-size: 15px; font-weight: 900; }
+  .s3 .card i { position: absolute; z-index: 1; top: 0; right: 0; width: 34px; height: 4px; background: var(--red-2); }
+  .s3 .nav { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; padding-bottom: 14px; background: linear-gradient(180deg, rgba(20,3,6,0), #1a0408 40%); display: flex; align-items: flex-end; justify-content: space-around; }
+  .s3 .nav div { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; color: var(--muted-2); padding-bottom: 6px; position: relative; }
+  .s3 .nav .on { color: #fff; }
+  .s3 .nav .on::after { content: ''; position: absolute; bottom: -2px; width: 30px; height: 3px; background: var(--red-2); box-shadow: 0 0 12px var(--red-2); transform: skewX(-20deg); }
+
+  /* =====================================================================================
+     4. BENTO: one calm grid of differently sized tiles; flat surfaces, very readable
+     ===================================================================================== */
+  .s4 { background: #2e0b12; }
+  .s4 .scroll { padding: 18px 16px 120px; }
+  .s4 .top { display: flex; align-items: baseline; justify-content: space-between; }
+  .s4 .top h1 { font-size: 26px; font-weight: 900; }
+  .s4 .top span { font-size: 13px; color: var(--muted); font-weight: 700; }
+  .s4 .bento { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 86px; gap: 10px; }
+  .s4 .t { border-radius: 24px; background: #43141d; padding: 14px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .s4 .t small { font-size: 12px; color: var(--muted); font-weight: 700; }
+  .s4 .t strong { font-size: 18px; font-weight: 900; line-height: 1.3; }
+  .s4 .wallet { grid-column: span 2; background: var(--cream); color: #3f1119; flex-direction: row; align-items: center; gap: 12px; }
+  .s4 .wallet small { color: #8a5a20; }
+  .s4 .wallet strong { font-size: 24px; display: block; }
+  .s4 .wallet div { flex: 1; }
+  .s4 .wallet b { height: 44px; padding: 0 16px; border-radius: 15px; background: #3f1119; color: var(--cream); display: grid; place-items: center; font-size: 14px; }
+  .s4 .feat { grid-column: span 2; grid-row: span 3; padding: 0; background: linear-gradient(140deg, #d94262, #f07a8e); }
+  .s4 .feat img { position: absolute; left: -10px; bottom: 0; height: 100%; }
+  .s4 .feat .b { position: absolute; right: 16px; top: 16px; bottom: 16px; width: 52%; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .s4 .feat .b span { font-size: 12px; font-weight: 900; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.25); }
+  .s4 .feat strong { font-size: 24px; }
+  .s4 .feat em { font-style: normal; font-size: 15px; font-weight: 900; }
+  .s4 .feat b { margin-top: auto; background: #fff; color: #3f1119; padding: 10px 16px; border-radius: 14px; font-size: 13.5px; }
+  .s4 .tour { grid-row: span 2; background: var(--red); }
+  .s4 .tour small { color: rgba(255,240,235,.85); }
+  .s4 .tour .img3d { position: absolute; left: 6px; bottom: 6px; width: 84px; }
+  .s4 .tour strong { font-size: 20px; }
+  .s4 .team { background: var(--purple); }
+  .s4 .team small { color: rgba(240,235,255,.8); }
+  .s4 .orders { }
+  .s4 .ico { position: absolute; left: 12px; top: 12px; width: 34px; }
+  .s4 h3 { margin: 22px 2px 10px; font-size: 18px; font-weight: 900; }
+  .s4 .chips { display: flex; gap: 8px; }
+  .s4 .chip { display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 16px; background: #43141d; font-size: 13px; font-weight: 800; }
+  .s4 .chip img { width: 30px; height: 30px; border-radius: 10px; object-fit: cover; }
+  .s4 .nav { position: absolute; left: 16px; right: 16px; bottom: 16px; height: 64px; border-radius: 22px; background: #43141d; display: flex; align-items: center; justify-content: space-around; box-shadow: 0 10px 30px -10px #000; }
+  .s4 .nav div { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--muted-2); font-size: 10.5px; font-weight: 800; }
+  .s4 .nav .on { color: var(--cream); }
+  .s4 .nav .on::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cream); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></symbol>
+  <symbol id="trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></symbol>
+  <symbol id="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 7H6"/></symbol>
+  <symbol id="user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
+  <symbol id="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+</svg>
+
+<div class="grid">
+
+<!-- ================================================================ 1 -->
+<section class="opt">
+  <h2><span>۱</span>Titan Classic</h2>
+  <p>همان زبان طراحی سایت: بنر صورتی‌مرجانی با شخصیت، کارت‌های دسته‌بندی، دکمه‌های گرد تیره و نوار پایین با دکمه‌ی قرمز برجسته. کاربر بین سایت و اپ تفاوتی حس نمی‌کند.</p>
+  <div class="phone s1"><div class="scroll">
+    <div class="top">
+      <img class="logo" src="../public/titan-logo.webp" alt="" />
+      <div class="wal">۱٫۴۵ میلیون <b><svg class="i" style="width:18px"><use href="#plus"/></svg></b></div>
+      <div class="rb"><svg class="i"><use href="#search"/></svg></div>
+      <div class="rb"><svg class="i"><use href="#bell"/></svg><span class="n">۳</span></div>
+    </div>
+    <div class="hero">
+      <img src="../../titan-front/public/images/fortnite-crewpack-october2026.webp" alt="" />
+      <div class="body">
+        <span class="badge">🔥 محبوب</span>
+        <h1>کروپک فورتنایت</h1>
+        <span class="price">۵۹۹٬۰۰۰ تومان</span>
+        <span class="btnw">مشاهده محصول</span>
+      </div>
+      <div class="bars"><i class="on"></i><i></i><i></i></div>
+    </div>
+    <div class="sec">
+      <h3>دسته‌بندی‌ها</h3>
+      <div class="cats">
+        <div class="cat"><img class="bg" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-fortnite-background.png" alt="" /><img class="ch" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-fortnite-character.png" alt="" /><strong>فورتنایت</strong></div>
+        <div class="cat"><img class="bg" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-valorant-background.png" alt="" /><img class="ch" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-valorant-character.png" alt="" /><strong>ولورنت</strong></div>
+        <div class="cat"><img class="bg" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/callof-background.webp" alt="" /><img class="ch" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/callof-character-v2.webp" alt="" /><strong>کال آو دیوتی</strong></div>
+      </div>
+    </div>
+    <div class="trust">
+      <div><span><svg class="i"><use href="#bolt"/></svg></span>تحویل آنی<small>کمتر از یک دقیقه</small></div>
+      <div><span><svg class="i"><use href="#lock"/></svg></span>پرداخت امن<small>درگاه‌های معتبر</small></div>
+      <div><span><svg class="i"><use href="#shield"/></svg></span>ضمانت اصالت<small>۱۰۰٪ قانونی</small></div>
+    </div>
+  </div>
+  <nav class="nav">
+    <div><svg class="i"><use href="#user"/></svg>پروفایل</div>
+    <div><svg class="i"><use href="#cart"/></svg>سبد</div>
+    <div><svg class="i"><use href="#trophy"/></svg>مسابقات</div>
+    <div><svg class="i"><use href="#bag"/></svg>فروشگاه</div>
+    <div class="on"><b><svg class="i"><use href="#home"/></svg></b>خانه</div>
+  </nav></div>
+</section>
+
+<!-- ================================================================ 2 -->
+<section class="opt">
+  <h2><span>۲</span>Aurora Glass</h2>
+  <p>پنل‌های شیشه‌ای مات که روی نورهای رنگی قرمز، بنفش و صورتی شناورند. لوکس و مدرن، با تمرکز روی موجودی و یک کارت بزرگ ویژه.</p>
+  <div class="phone s2"><div class="scroll">
+    <div class="top">
+      <div class="av">ط</div>
+      <div class="hi"><small>سلام، خوش برگشتی</small><strong>TahaTitan</strong></div>
+      <div class="glass ib"><svg class="i"><use href="#search"/></svg></div>
+      <div class="glass ib"><svg class="i"><use href="#bell"/></svg></div>
+    </div>
+    <div class="glass bal">
+      <div class="t"><small>موجودی کیف پول</small><strong>۱٬۴۵۰٬۰۰۰ <em>تومان</em></strong></div>
+      <div class="add"><svg class="i" style="width:18px"><use href="#plus"/></svg>شارژ</div>
+    </div>
+    <div class="hero">
+      <img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-valorant-background.png" alt="" />
+      <img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-valorant-character.png" alt="" style="left:auto;right:auto;width:auto;height:110%;left:50%;transform:translateX(-50%);object-fit:contain;top:-6%" />
+      <span class="glass live">زنده</span>
+      <div class="glass info"><div><strong>ولورنت نایتفال</strong><small>جایزه ۲۵٬۰۰۰ دلار، تیمی ۵ نفره</small></div><span class="go"><svg class="i"><use href="#arrow"/></svg></span></div>
+    </div>
+    <div class="acts">
+      <div class="glass act"><img src="../public/clay/package.webp" alt="" />سفارش‌ها</div>
+      <div class="glass act"><img src="../public/clay/shield.webp" alt="" />تیم من</div>
+      <div class="glass act"><img src="../public/clay/trophy.webp" alt="" />مسابقات</div>
+      <div class="glass act"><img src="../public/clay/headphone.webp" alt="" />پشتیبانی</div>
+    </div>
+    <h3>بازی‌ها</h3>
+    <div class="games">
+      <div class="glass game"><img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/categories-fortnite.png" alt="" style="object-fit:contain;background:rgba(0,0,0,.25);padding:6px" /><div><strong>فورتنایت</strong><small>۶ محصول</small></div></div>
+      <div class="glass game"><img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/categories-callof-v2.webp" alt="" style="object-fit:contain;background:rgba(0,0,0,.25);padding:6px" /><div><strong>کال آو دیوتی</strong><small>۲ محصول</small></div></div>
+    </div>
+  </div>
+  <nav class="glass nav">
+    <div><svg class="i"><use href="#user"/></svg></div>
+    <div><svg class="i"><use href="#cart"/></svg></div>
+    <div><svg class="i"><use href="#trophy"/></svg></div>
+    <div><svg class="i"><use href="#bag"/></svg></div>
+    <div class="on"><svg class="i"><use href="#home"/></svg></div>
+  </nav></div>
+</section>
+
+<!-- ================================================================ 3 -->
+<section class="opt">
+  <h2><span>۳</span>Arena</h2>
+  <p>حس پخش زنده‌ی مسابقات ایاسپورت: برش‌های مورب، تایپوگرافی درشت، شخصیت‌های بزرگ و جایزه به‌عنوان قهرمان صفحه. پرانرژی و کاملاً گیمری.</p>
+  <div class="phone s3"><div class="scroll">
+    <div class="top">
+      <div class="lvl"><div class="ring">۱</div><div><span class="tag">BRONZE</span><strong>TahaTitan</strong></div></div>
+      <div class="wal">۱٫۴۵ م تومان</div>
+    </div>
+    <div class="hero">
+      <div class="slab"></div>
+      <img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-fortnite-character.png" alt="" />
+      <div class="body">
+        <span class="live">● LIVE</span>
+        <h1>جام زیرو بیلد تایتان</h1>
+        <div class="prize"><small>مجموع جوایز</small><strong>$10,000</strong></div>
+      </div>
+      <span class="cta">ورود به مسابقه</span>
+    </div>
+    <div class="acts">
+      <div class="act"><svg class="i"><use href="#box"/></svg>سفارش‌ها</div>
+      <div class="act"><svg class="i"><use href="#shield"/></svg>تیم</div>
+      <div class="act"><svg class="i"><use href="#trophy"/></svg>رتبه‌ها</div>
+      <div class="act"><svg class="i"><use href="#chat"/></svg>پشتیبانی</div>
+    </div>
+    <h3>انتخاب بازی <small>SELECT GAME</small></h3>
+    <div class="cards">
+      <div class="card"><img class="bg" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-valorant-background.png" alt="" /><img class="ch" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/games-valorant-character.png" alt="" /><i></i><strong>ولورنت</strong></div>
+      <div class="card"><img class="bg" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/callof-background.webp" alt="" /><img class="ch" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/callof-character-v2.webp" alt="" /><i></i><strong>کال آو دیوتی</strong></div>
+      <div class="card"><img class="bg" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/clash-background.webp" alt="" /><img class="ch" src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/clash-character.webp" alt="" /><i></i><strong>کلش</strong></div>
+    </div>
+  </div>
+  <nav class="nav">
+    <div><svg class="i"><use href="#user"/></svg>پروفایل</div>
+    <div><svg class="i"><use href="#cart"/></svg>سبد</div>
+    <div><svg class="i"><use href="#trophy"/></svg>مسابقات</div>
+    <div><svg class="i"><use href="#bag"/></svg>فروشگاه</div>
+    <div class="on"><svg class="i"><use href="#home"/></svg>خانه</div>
+  </nav></div>
+</section>
+
+<!-- ================================================================ 4 -->
+<section class="opt">
+  <h2><span>۴</span>Bento</h2>
+  <p>یک شبکه‌ی آرام از کاشی‌های با اندازه‌های مختلف؛ هر کاشی یک کار. سطوح تخت، بدون شلوغی، خیلی خوانا و مرتب، با رنگ‌های تایتان به‌عنوان نقطه‌ی تأکید.</p>
+  <div class="phone s4"><div class="scroll">
+    <div class="top"><h1>سلام طاها</h1><span>برنز، سطح ۱</span></div>
+    <div class="bento">
+      <div class="t wallet"><div><small>موجودی کیف پول</small><strong>۱٬۴۵۰٬۰۰۰ تومان</strong></div><b>شارژ</b></div>
+      <div class="t feat">
+        <img src="../../titan-front/public/images/fortnite-crewpack-october2026.webp" alt="" />
+        <div class="b"><span>محبوب</span><strong>کروپک فورتنایت</strong><em>۵۹۹٬۰۰۰ تومان</em><b>مشاهده</b></div>
+      </div>
+      <div class="t tour"><small>زنده</small><strong>جام زیرو بیلد</strong><img class="img3d" src="../public/clay/trophy.webp" alt="" /></div>
+      <div class="t team"><small>تیم من</small><strong>Iran Titans</strong></div>
+      <div class="t orders"><small>سفارش‌ها</small><strong>۲ در حال تحویل</strong></div>
+    </div>
+    <h3>بازی‌ها</h3>
+    <div class="chips">
+      <div class="chip"><img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/categories-fortnite.png" alt="" />فورتنایت</div>
+      <div class="chip"><img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/categories-valorant.png" alt="" />ولورنت</div>
+      <div class="chip"><img src="https://35tmectztpibboo6.public.blob.vercel-storage.com/games/categories-callof-v2.webp" alt="" />کال آو</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <div><svg class="i"><use href="#user"/></svg>پروفایل</div>
+    <div><svg class="i"><use href="#cart"/></svg>سبد</div>
+    <div><svg class="i"><use href="#trophy"/></svg>مسابقات</div>
+    <div><svg class="i"><use href="#bag"/></svg>فروشگاه</div>
+    <div class="on"><svg class="i"><use href="#home"/></svg>خانه</div>
+  </nav></div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { PackageSearch } from 'lucide-react';
 
 import { catalogApi, type ProductQuery } from '@/api/endpoints';
 import { ProductCard } from '@/ui/cards';
+import { Icon3D } from '@/ui/Icon3D';
 import { Empty, ErrorState } from '@/ui/Empty';
 import { Skeleton } from '@/ui/Skeleton';
 import { useInView } from '@/ui/useInView';
@@ -30,7 +30,7 @@ export function ProductGrid({ query }: { query: Omit<ProductQuery, 'page'> }) {
     );
 
   const items = products.data.pages.flatMap(page => page.results);
-  if (!items.length) return <Empty icon={<PackageSearch size={36} />} title="محصولی پیدا نشد" text="فیلتر دیگری را امتحان کنید." />;
+  if (!items.length) return <Empty icon={<Icon3D name="magnifying-glass-tilted-left" size={52} />} title="محصولی پیدا نشد" text="فیلتر دیگری را امتحان کنید." />;
 
   return (
     <>

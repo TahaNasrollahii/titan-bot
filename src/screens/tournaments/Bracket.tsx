@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { Copy, GitFork } from 'lucide-react';
+import { Copy } from 'lucide-react';
 
 import { tournamentsApi } from '@/api/endpoints';
 import type { Match, Participant } from '@/api/types';
 import { dateTime, faDigits } from '@/lib/format';
 import { Avatar } from '@/ui/Avatar';
+import { Icon3D } from '@/ui/Icon3D';
 import { Empty, ErrorState } from '@/ui/Empty';
 import { Skeleton } from '@/ui/Skeleton';
 import { toast } from '@/ui/Toast';
@@ -21,7 +22,7 @@ export function Bracket({ slug }: { slug: string }) {
       </div>
     );
   if (!rounds.data.length)
-    return <Empty icon={<GitFork size={32} />} title="براکت هنوز چیده نشده" text="بعد از بسته شدن ثبت‌نام، جدول مسابقات این‌جا می‌آید." />;
+    return <Empty icon={<Icon3D name="crossed-swords" size={52} />} title="براکت هنوز چیده نشده" text="بعد از بسته شدن ثبت‌نام، جدول مسابقات این‌جا می‌آید." />;
 
   return (
     <div className="bracket" aria-label="جدول مسابقات">

@@ -1,4 +1,4 @@
-import { Flame, Radio, Star, Trophy, Users } from 'lucide-react';
+import { Radio, Star, Users } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
 
@@ -6,6 +6,7 @@ import type { Game, ProductSummary, TournamentSummary } from '@/api/types';
 import { compactToman, date, faDigits, money, num } from '@/lib/format';
 import { haptic } from '@/lib/telegram';
 
+import { Icon3D } from './Icon3D';
 import { Img } from './Img';
 
 const accent = (color: string | undefined) => ({ '--accent': color || '#e2453f' }) as CSSProperties;
@@ -16,16 +17,16 @@ export function ProductCard({ product, wide }: { product: ProductSummary; wide?:
   return (
     <Link
       to={`/product/${product.slug}`}
-      className={`pcard card--press ${wide ? 'pcard--wide' : ''}`}
+      className={`clay pcard card--press ${wide ? 'pcard--wide' : ''}`}
       style={accent(product.game?.accentColor)}
       onClick={() => haptic.tap()}
     >
       <div className="pcard__media">
         <Img src={product.image} alt={product.imageAlt || product.title} contain />
-        {product.discountPercent > 0 && <span className="pcard__off num">٪{faDigits(product.discountPercent)}</span>}
+        {product.discountPercent > 0 && <span className="clay clay--red pcard__off num">٪{faDigits(product.discountPercent)}</span>}
         {product.badges.includes('bestseller') && (
-          <span className="pcard__hot">
-            <Flame size={12} /> پرفروش
+          <span className="clay clay--cream pcard__hot">
+            <Icon3D name="fire" size={14} /> پرفروش
           </span>
         )}
       </div>
@@ -59,16 +60,27 @@ export function GameTile({ game, size = 'md' }: { game: Game; size?: 'md' | 'lg'
   return (
     <Link
       to={`/store/${game.slug}`}
-      className={`gtile gtile--${size} card--press`}
+      className={`clay gtile gtile--${size} card--press`}
       style={accent(game.accentColor)}
       onClick={() => haptic.tap()}
     >
-      <Img className="gtile__bg" src={game.backgroundImage || game.coverImage} alt="" />
+      {game.backgroundImage || game.coverImage ? (
+        <Img className="gtile__bg" src={game.backgroundImage || game.coverImage} alt="" />
+      ) : (
+        <span className="gtile__plain" aria-hidden />
+      )}
+      {game.characterImage ? (
+        <Img className="gtile__char" src={game.characterImage} alt="" contain />
+      ) : game.iconImage ? (
+        <Img className="gtile__icon" src={game.iconImage} alt="" contain />
+      ) : (
+        <span className="gtile__mono ltr" aria-hidden>
+          {game.titleEn.slice(0, 2).toUpperCase()}
+        </span>
+      )}
       <div className="gtile__shade" />
-      {game.characterImage && <Img className="gtile__char" src={game.characterImage} alt="" contain />}
       <div className="gtile__info">
         <strong>{game.title}</strong>
-        <span className="ltr">{game.titleEn}</span>
       </div>
     </Link>
   );
@@ -100,7 +112,7 @@ export function TournamentCard({ t, compact }: { t: TournamentSummary; compact?:
   return (
     <Link
       to={`/tournaments/${t.slug}`}
-      className={`tcard card--press ${compact ? 'tcard--compact' : ''}`}
+      className={`clay tcard card--press ${compact ? 'tcard--compact' : ''}`}
       style={accent(t.game.accentColor)}
       onClick={() => haptic.tap()}
     >
@@ -119,18 +131,18 @@ export function TournamentCard({ t, compact }: { t: TournamentSummary; compact?:
       <div className="tcard__body">
         <div className="tcard__game">
           <Img className="tcard__icon" src={t.game.iconImage} alt="" contain />
-          {t.game.title} · {t.formatLabel}
+          {t.game.title}، {t.formatLabel}
         </div>
         <h3 className="tcard__title">{t.title}</h3>
         <div className="tcard__meta">
           <span className="tcard__prize">
-            <Trophy size={15} />
+            <Icon3D name="trophy" size={20} />
             <span className="num">{money(t.prizePool, t.prizeCurrency)}</span>
           </span>
           <span className="muted text-xs">{date(t.startsAt)}</span>
         </div>
         <div className="tcard__fill">
-          <div className="tcard__bar">
+          <div className="well tcard__bar">
             <span style={{ width: `${fill}%` }} />
           </div>
           <span className="text-xs muted num">

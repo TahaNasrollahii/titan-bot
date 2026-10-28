@@ -1,5 +1,5 @@
 import { AnimatePresence, m } from 'motion/react';
-import { BellRing, ChevronRight, KeyRound, Link2, MessageSquareText, Phone, ShieldCheck, Wallet } from 'lucide-react';
+import { ChevronRight, KeyRound, Link2, MessageSquareText, Phone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { ApiError, errorText } from '@/api/client';
@@ -9,6 +9,7 @@ import { faDigits, toLatinDigits } from '@/lib/format';
 import { haptic, requestContact, tg } from '@/lib/telegram';
 import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
+import { Icon3D } from '@/ui/Icon3D';
 import { toast } from '@/ui/Toast';
 
 import './link.css';
@@ -116,15 +117,15 @@ function Intro({ name, onUseAnother, onNeedsCode }: { name: string; onUseAnother
 
       <ul className="link__perks">
         <li>
-          <span><Wallet size={18} /></span>
+          <span><Icon3D name="money-bag" size={26} /></span>
           کیف پول، سفارش‌ها و تیمت؛ همه‌جا یکی
         </li>
         <li>
-          <span><BellRing size={18} /></span>
+          <span><Icon3D name="bell" size={26} /></span>
           اعلان تحویل سفارش و شروع مسابقه، همین‌جا در تلگرام
         </li>
         <li>
-          <span><ShieldCheck size={18} /></span>
+          <span><Icon3D name="shield" size={26} /></span>
           بدون رمز و کد پیامکی؛ تلگرام شماره‌ات را تأیید می‌کند
         </li>
       </ul>

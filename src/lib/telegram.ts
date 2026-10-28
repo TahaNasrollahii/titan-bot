@@ -70,8 +70,8 @@ declare global {
   }
 }
 
-export const BRAND_BG = '#170409';
-export const BRAND_HEADER = '#1d060c';
+export const BRAND_BG = '#4d1720';
+export const BRAND_HEADER = '#6a2430';
 
 function webApp(): WebApp | null {
   const app = window.Telegram?.WebApp;

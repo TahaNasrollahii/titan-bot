@@ -8,6 +8,7 @@ import { countdown, faDigits, num } from '@/lib/format';
 import { haptic } from '@/lib/telegram';
 import { Empty } from '@/ui/Empty';
 import { Img } from '@/ui/Img';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Sheet } from '@/ui/Sheet';
 import { Skeleton } from '@/ui/Skeleton';
@@ -74,7 +75,7 @@ export default function FortniteShop() {
       </div>
 
       {shop.isError ? (
-        <Empty icon={<Clock size={36} />} title="شاپ در دسترس نیست" text="چند لحظه دیگر دوباره سر بزن." />
+        <Empty icon={<Icon3D name="hourglass-not-done" size={52} />} title="شاپ در دسترس نیست" text="چند لحظه دیگر دوباره سر بزن." />
       ) : !shop.data ? (
         <div className="fn-grid">
           {Array.from({ length: 6 }, (_, i) => (

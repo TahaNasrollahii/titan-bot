@@ -1,0 +1,230 @@
+/*
+ * Claymorphism in Titan's colours.
+ *
+ * Every raised surface is the page's own wine colour (or a brand colour), inflated by light alone: a lit
+ * top-left edge, a shaded bottom-right edge and a soft deep shadow underneath. Elements only choose their
+ * fill (--c) and how strong the light is (--hi / --lo); the recipe below does the rest, so the whole app
+ * shares one material. Pressed-in "wells" (inputs, tracks, toggles) are the same light, reversed.
+ */
+:where(
+    .clay,
+    .card,
+    .list,
+    .icon-btn,
+    .chip,
+    .btn--primary,
+    .btn--white,
+    .btn--cream,
+    .btn--glass,
+    .wallet-chip,
+    .wallet-chip__icon,
+    .tabbar,
+    .tabbar__bubble,
+    .action-bar,
+    .toast,
+    .stat,
+    .empty__art,
+    .list-row__icon,
+    .segmented .segmented__pill,
+    .badge-tile,
+    .bracket__name,
+    .bubble--agent,
+    .bubble--me,
+    .cart-item,
+    .composer__send,
+    .fact,
+    .fn-banner,
+    .fn-detail,
+    .fn-head,
+    .fn-timer,
+    .home-search,
+    .link__perks li,
+    .link__perks li span,
+    .link__titan,
+    .match,
+    .my-next,
+    .my-next__icon,
+    .order-row,
+    .order-status,
+    .participant,
+    .pd__delivery,
+    .pd__feature,
+    .pd__media,
+    .pd__thumbs button,
+    .pick,
+    .pick__icon,
+    .prize,
+    .prize-banner,
+    .prize-banner__icon,
+    .prize__place,
+    .review,
+    .specs,
+    .stepper button,
+    .sup-intro,
+    .team-hero,
+    .timeline__dot,
+    .variant,
+    .wallet-card,
+    .wallet-card__chip
+  ) {
+  --c: var(--clay);
+  background-color: var(--c);
+  box-shadow:
+    0 18px 28px -16px rgba(26, 3, 8, 0.85),
+    0 6px 10px -6px rgba(26, 3, 8, 0.55),
+    inset 6px 8px 14px color-mix(in srgb, var(--c), var(--clay-light) var(--hi, 16%)),
+    inset -6px -9px 16px color-mix(in srgb, var(--c), var(--clay-dark) var(--lo, 45%));
+}
+
+/* Brand-coloured clay: brighter fills need a softer shadow edge to stay round, not dirty. */
+:where(.clay--red, .btn--primary, .tabbar__bubble, .chip[aria-pressed='true'], .segmented .segmented__pill) {
+  --c: var(--red);
+  --hi: 32%;
+  --lo: 28%;
+  color: #fff;
+}
+
+:where(.clay--cream, .btn--cream, .wallet-chip, .wallet-chip__icon) {
+  --c: var(--cream);
+  --hi: 62%;
+  --lo: 16%;
+  color: var(--on-cream);
+}
+
+:where(.clay--white, .btn--white) {
+  --c: #ffffff;
+  --hi: 70%;
+  --lo: 12%;
+  color: var(--surface);
+}
+
+.clay--purple {
+  --c: var(--violet);
+  --hi: 30%;
+  --lo: 30%;
+  color: #fff;
+}
+
+/* Dark clay: the bottom bars and sheets sit one step deeper than the page. */
+:where(.clay--dark, .tabbar, .action-bar) {
+  --c: var(--surface);
+  --hi: 10%;
+  --lo: 50%;
+}
+
+/* Small inner pieces sit on raised surfaces: less shadow so they read as part of them. */
+:where(.list-row__icon, .wallet-chip__icon) {
+  box-shadow:
+    inset 3px 4px 8px color-mix(in srgb, var(--c), var(--clay-light) var(--hi, 16%)),
+    inset -3px -5px 9px color-mix(in srgb, var(--c), var(--clay-dark) var(--lo, 45%));
+}
+
+.wallet-chip__icon {
+  --c: #ffe28a;
+}
+
+/* The bubble keeps a ring of page colour so it looks cut into the bar. */
+.tabbar__bubble {
+  box-shadow:
+    0 0 0 6px var(--bg),
+    0 14px 22px -8px rgba(226, 69, 63, 0.9),
+    inset 5px 7px 10px color-mix(in srgb, var(--c), var(--clay-light) var(--hi)),
+    inset -5px -7px 12px color-mix(in srgb, var(--c), var(--clay-dark) var(--lo));
+}
+
+/* ================================================================ wells: the same light, pressed in */
+:where(.well, .input, .segmented, .switch, .search-box, .cart-item__media, .code-box, .composer__input, .countdown > div, .invite-box, .stepper, .topup-amount) {
+  background-color: var(--surface);
+  box-shadow:
+    inset 5px 7px 12px rgba(20, 2, 6, 0.7),
+    inset -4px -5px 10px rgba(255, 200, 200, 0.06);
+}
+
+.input:focus,
+.search-box:focus-within {
+  box-shadow:
+    inset 5px 7px 12px rgba(20, 2, 6, 0.7),
+    inset -4px -5px 10px rgba(255, 200, 200, 0.06),
+    0 0 0 2px var(--red-2);
+}
+
+.switch[aria-checked='true'] {
+  background-color: var(--red);
+  box-shadow:
+    inset 4px 5px 10px rgba(110, 10, 20, 0.6),
+    inset -3px -4px 8px rgba(255, 200, 190, 0.25);
+}
+
+/* A selected option is pressed-in red clay. */
+:where(.pick, .variant)[aria-checked='true'] {
+  --c: var(--red);
+  --hi: 30%;
+  --lo: 30%;
+  color: #fff;
+}
+
+/* 3D icons (public/clay) sit on clay with a little shadow of their own. */
+.icon3d {
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 4px rgba(30, 3, 9, 0.45));
+  -webkit-user-drag: none;
+}
+
+/* Text colours on coloured clay need class specificity: links and buttons inherit theirs otherwise. */
+.clay--red,
+.clay--purple,
+.btn--primary {
+  color: #fff;
+}
+
+.clay--cream,
+.btn--cream,
+.wallet-chip {
+  color: var(--on-cream);
+}
+
+.clay--white,
+.btn--white {
+  color: var(--surface);
+}
+
+/* ================================================================ per-surface fills */
+:where(.wallet-card, .prize-banner__icon, .my-next__icon, .wallet-card__chip) {
+  --c: var(--cream);
+  --hi: 62%;
+  --lo: 16%;
+}
+
+:where(.bubble--me, .composer__send, .timeline__step[data-done='true'] .timeline__dot) {
+  --c: var(--red);
+  --hi: 32%;
+  --lo: 28%;
+}
+
+:where(.fn-banner, .fn-head, .fn-detail) {
+  --c: #2c1f5e;
+  --hi: 22%;
+  --lo: 40%;
+}
+
+.fn-timer {
+  --c: #1a1238;
+}
+
+:where(.pd__media, .pick__icon, .link__perks li span, .badge-tile) {
+  --c: var(--surface-2);
+}
+
+.bubble--me {
+  color: #fff;
+}
+
+/* A disabled action is dark clay with muted text: clearly unavailable, never a faded red. */
+.btn:disabled:is(.btn--primary, .btn--cream, .btn--white) {
+  --c: var(--surface-2);
+  --hi: 12%;
+  --lo: 45%;
+  color: var(--muted);
+  opacity: 1;
+}

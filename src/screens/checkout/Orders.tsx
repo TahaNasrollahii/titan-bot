@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { PackageOpen } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
 
@@ -8,6 +7,7 @@ import { date, faDigits, toman } from '@/lib/format';
 import { haptic } from '@/lib/telegram';
 import { Empty, ErrorState } from '@/ui/Empty';
 import { Img } from '@/ui/Img';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { SkeletonList } from '@/ui/Skeleton';
 
@@ -24,7 +24,7 @@ export default function Orders() {
         <SkeletonList count={4} h={78} />
       ) : orders.data.results.length === 0 ? (
         <Empty
-          icon={<PackageOpen size={36} />}
+          icon={<Icon3D name="package" size={52} />}
           title="هنوز سفارشی نداری"
           action={
             <Link to="/store" className="btn btn--primary btn--sm">

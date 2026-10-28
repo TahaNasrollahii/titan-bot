@@ -14,6 +14,7 @@ import { Button } from '@/ui/Button';
 import { StatusBadge } from '@/ui/cards';
 import { Empty, ErrorState } from '@/ui/Empty';
 import { Img } from '@/ui/Img';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Segmented } from '@/ui/Segmented';
 import { Skeleton, SkeletonList } from '@/ui/Skeleton';
@@ -288,7 +289,7 @@ function Participants({ slug }: { slug: string }) {
   const list = useQuery({ queryKey: ['tournament', slug, 'participants'], queryFn: () => tournamentsApi.participants(slug) });
   if (list.isError) return <ErrorState error={list.error} onRetry={() => list.refetch()} />;
   if (!list.data) return <SkeletonList count={3} h={56} />;
-  if (!list.data.length) return <Empty icon={<Users size={32} />} title="هنوز کسی ثبت‌نام نکرده" text="اولین نفر باش!" />;
+  if (!list.data.length) return <Empty icon={<Icon3D name="busts-in-silhouette" size={52} />} title="هنوز کسی ثبت‌نام نکرده" text="اولین نفر باش!" />;
   return (
     <div className="participants">
       {list.data.map(p => (

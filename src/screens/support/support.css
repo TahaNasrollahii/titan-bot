@@ -6,10 +6,6 @@
   gap: 10px;
   padding: 26px 16px;
   border-radius: var(--r-xl);
-  background:
-    radial-gradient(100% 120% at 50% 0%, rgba(61, 220, 132, 0.2), transparent 60%),
-    var(--grad-surface);
-  border: 1px solid var(--line);
 }
 
 .sup-intro h1 {
@@ -58,16 +54,12 @@
 
 .bubble--me {
   align-self: flex-start;
-  background: var(--grad-red);
   color: #fff;
   border-bottom-right-radius: 6px;
-  box-shadow: 0 8px 18px -10px rgba(226, 69, 63, 0.8);
 }
 
 .bubble--agent {
   align-self: flex-end;
-  background: var(--surface-3);
-  border: 1px solid var(--line);
   border-bottom-left-radius: 6px;
 }
 
@@ -148,8 +140,6 @@
   max-height: 120px;
   padding: 10px 14px;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--line-strong);
   resize: none;
   field-sizing: content;
   line-height: 1.5;
@@ -161,9 +151,7 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--grad-red);
   color: #fff;
-  box-shadow: var(--glow-red);
   transition: transform 0.15s, opacity 0.2s;
 }
 

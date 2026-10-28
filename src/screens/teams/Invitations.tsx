@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Check, MailOpen, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -10,6 +10,7 @@ import { haptic } from '@/lib/telegram';
 import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
 import { Empty, ErrorState } from '@/ui/Empty';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { SkeletonList } from '@/ui/Skeleton';
 import { toast } from '@/ui/Toast';
@@ -49,7 +50,7 @@ export default function Invitations() {
       ) : !list.data ? (
         <SkeletonList count={2} h={120} />
       ) : pending.length === 0 ? (
-        <Empty icon={<MailOpen size={36} />} title="دعوت‌نامه‌ای نداری" />
+        <Empty icon={<Icon3D name="envelope-with-arrow" size={52} />} title="دعوت‌نامه‌ای نداری" />
       ) : (
         <div className="stack">
           {pending.map(inv => (

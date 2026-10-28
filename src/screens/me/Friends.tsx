@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Check, UserPlus, UsersRound, X } from 'lucide-react';
+import { Check, UserPlus, X } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
 
 import { errorText } from '@/api/client';
@@ -10,6 +10,7 @@ import { confirmDialog } from '@/lib/telegram';
 import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
 import { Empty, ErrorState } from '@/ui/Empty';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Sheet } from '@/ui/Sheet';
 import { SkeletonList } from '@/ui/Skeleton';
@@ -95,7 +96,7 @@ export default function Friends() {
         <SkeletonList count={4} h={60} />
       ) : sorted.length === 0 ? (
         <Empty
-          icon={<UsersRound size={36} />}
+          icon={<Icon3D name="busts-in-silhouette" size={52} />}
           title="هنوز دوستی اضافه نکرده‌ای"
           text="با آیدی بازی، دوستانت را پیدا کن و با هم تیم بشوید."
           action={

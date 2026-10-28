@@ -1,52 +1,48 @@
-import { ChevronLeft, Trophy } from 'lucide-react';
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import type { Promo, TournamentSummary } from '@/api/types';
+import type { Game, Promo, TournamentSummary } from '@/api/types';
+import { env } from '@/lib/env';
 import { money, num } from '@/lib/format';
 import { haptic, openExternal } from '@/lib/telegram';
-import { env } from '@/lib/env';
-import { StatusBadge } from '@/ui/cards';
+import { Icon3D } from '@/ui/Icon3D';
 import { Img } from '@/ui/Img';
 
 interface Slide {
   key: string;
-  image: string | null;
   art: string | null;
-  kicker: string;
+  badge: string;
   title: string;
-  subtitle: string;
+  line: string;
   cta: string;
-  accent: string;
-  extra?: React.ReactNode;
+  live?: boolean;
   go: () => void;
 }
 
 /** Website links in promos → the matching Mini App screen (or the website, for pages the app lacks). */
 function appRoute(link: string): string | null {
   const path = link.replace(/^https?:\/\/[^/]+/, '');
-  const known = /^\/(product|store|tournaments|cart|wallet)(\/|$|\?)/;
-  if (known.test(path)) return path;
-  if (path.startsWith('/tournament/')) return path.replace('/tournament/', '/tournaments/');
+  if (/^\/(product|store|tournaments|cart|wallet|fortnite-shop)(\/|$|\?)/.test(path)) return path;
+  if (/^\/tournament(\/|$|\?)/.test(path)) return path.replace(/^\/tournament/, '/tournaments');
   return null;
 }
 
-export function HeroCarousel({ promos, tournaments }: { promos: Promo[]; tournaments: TournamentSummary[] }) {
+/** Red clay banners; each one's character or artwork steps out over the top edge. */
+export function HeroCarousel({ promos, tournaments, games }: { promos: Promo[]; tournaments: TournamentSummary[]; games: Game[] }) {
   const navigate = useNavigate();
   const track = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const touched = useRef(false);
+  const characters = new Map(games.map(g => [g.slug, g.characterImage]));
 
   const slides: Slide[] = [
     ...promos.map(p => ({
       key: `p${p.id}`,
-      image: p.backgroundImage,
       art: p.image,
-      kicker: p.badge || 'پیشنهاد ویژه',
+      badge: p.badge || 'پیشنهاد ویژه',
       title: p.title,
-      subtitle: p.subtitle,
-      cta: p.price ? `${num(p.price)} تومان` : 'مشاهده',
-      accent: '#e2453f',
+      line: p.price ? `${num(p.price)} تومان` : p.subtitle,
+      cta: 'مشاهده',
       go: () => {
         const route = p.product ? `/product/${p.product}` : p.tournament ? `/tournaments/${p.tournament}` : appRoute(p.link || '');
         if (route) navigate(route);
@@ -55,31 +51,20 @@ export function HeroCarousel({ promos, tournaments }: { promos: Promo[]; tournam
     })),
     ...tournaments.slice(0, 4).map(t => ({
       key: `t${t.id}`,
-      image: t.coverImage,
-      art: null,
-      kicker: t.game.title,
+      art: characters.get(t.game.slug) ?? null,
+      badge: t.game.title,
       title: t.title,
-      subtitle: t.formatLabel,
+      line: `${money(t.prizePool, t.prizeCurrency)} جایزه`,
       cta: t.isRegistered ? 'مشاهده' : t.status === 'registration_open' ? 'ثبت‌نام' : 'جزئیات',
-      accent: t.game.accentColor,
-      extra: (
-        <span className="hero__prize">
-          <Trophy size={14} /> <span className="num">{money(t.prizePool, t.prizeCurrency)}</span>
-          <StatusBadge status={t.status} />
-        </span>
-      ),
+      live: t.status === 'live',
       go: () => navigate(`/tournaments/${t.slug}`),
     })),
   ];
 
-  // Follow the visible slide for the dots.
   useEffect(() => {
     const el = track.current;
     if (!el) return;
-    const onScroll = () => {
-      const width = el.clientWidth;
-      setActive(Math.round(Math.abs(el.scrollLeft) / Math.max(1, width - 24)));
-    };
+    const onScroll = () => setActive(Math.round(Math.abs(el.scrollLeft) / Math.max(1, el.clientWidth)));
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
   }, []);
@@ -90,9 +75,8 @@ export function HeroCarousel({ promos, tournaments }: { promos: Promo[]; tournam
     const timer = window.setInterval(() => {
       const el = track.current;
       if (!el || touched.current || document.hidden) return;
-      const next = (active + 1) % slides.length;
-      const child = el.children[next] as HTMLElement | undefined;
-      child?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      const next = el.children[(active + 1) % slides.length] as HTMLElement | undefined;
+      next?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     }, 5200);
     return () => window.clearInterval(timer);
   }, [active, slides.length]);
@@ -103,28 +87,26 @@ export function HeroCarousel({ promos, tournaments }: { promos: Promo[]; tournam
     <div className="hero">
       <div className="hero__track" ref={track} onTouchStart={() => (touched.current = true)}>
         {slides.map((slide, index) => (
-          <button
-            key={slide.key}
-            className="hero__slide"
-            style={{ '--accent': slide.accent } as CSSProperties}
-            onClick={() => {
-              haptic.tap('medium');
-              slide.go();
-            }}
-          >
-            <Img className="hero__bg" src={slide.image} alt="" priority={index === 0} />
-            <div className="hero__shade" />
-            {slide.art && <Img className="hero__art" src={slide.art} alt="" contain priority={index === 0} />}
-            <div className="hero__content">
-              <span className="hero__kicker">{slide.kicker}</span>
-              <strong className="hero__title">{slide.title}</strong>
-              {slide.subtitle && <span className="hero__sub">{slide.subtitle}</span>}
-              {slide.extra}
-              <span className="hero__cta">
-                {slide.cta} <ChevronLeft size={16} />
+          <div key={slide.key} className="hero__frame">
+            <button
+              className="clay clay--red hero__slide"
+              onClick={() => {
+                haptic.tap('medium');
+                slide.go();
+              }}
+            >
+              {slide.art && <Img className="hero__art" src={slide.art} alt="" contain priority={index === 0} />}
+              <span className="hero__body">
+                <span className="clay clay--cream hero__badge">
+                  {slide.live ? <span className="live-dot" /> : <Icon3D name="fire" size={16} />}
+                  {slide.live ? 'زنده' : slide.badge}
+                </span>
+                <strong className="hero__title">{slide.title}</strong>
+                {slide.line && <span className="hero__line num">{slide.line}</span>}
+                <span className="clay clay--white hero__cta">{slide.cta}</span>
               </span>
-            </div>
-          </button>
+            </button>
+          </div>
         ))}
       </div>
       {slides.length > 1 && (

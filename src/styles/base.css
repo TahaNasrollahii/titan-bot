@@ -32,7 +32,7 @@ body {
   -webkit-touch-callout: none;
 }
 
-/* The ambient backdrop: two soft brand glows over the deep crimson. */
+/* The site's page: wine fading to deep wine, with one soft red light at the top. */
 body::before {
   content: '';
   position: fixed;
@@ -40,9 +40,8 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(520px 340px at 85% -8%, rgba(226, 69, 63, 0.22), transparent 70%),
-    radial-gradient(460px 380px at -10% 105%, rgba(122, 80, 230, 0.16), transparent 70%),
-    linear-gradient(180deg, #210710, #150308 60%);
+    radial-gradient(460px 320px at 100% -6%, rgba(240, 100, 90, 0.2), transparent 70%),
+    linear-gradient(180deg, var(--page-top), var(--bg) 70%);
 }
 
 input,
@@ -52,10 +51,8 @@ textarea,
   user-select: text;
 }
 
-button,
-input,
-textarea,
-select {
+/* Resets stay at zero specificity so the clay layer can paint buttons and inputs. */
+:where(button, input, textarea, select) {
   font: inherit;
   color: inherit;
   border: 0;
@@ -63,12 +60,12 @@ select {
   outline: none;
 }
 
-button {
+:where(button) {
   cursor: pointer;
   touch-action: manipulation;
 }
 
-a {
+:where(a) {
   color: inherit;
   text-decoration: none;
 }

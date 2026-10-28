@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { CalendarClock, Trophy } from 'lucide-react';
+import { CalendarClock } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
@@ -9,6 +9,7 @@ import { haptic } from '@/lib/telegram';
 import { TournamentCard } from '@/ui/cards';
 import { Empty, ErrorState } from '@/ui/Empty';
 import { Img } from '@/ui/Img';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Segmented } from '@/ui/Segmented';
 import { Skeleton } from '@/ui/Skeleton';
@@ -101,7 +102,7 @@ export default function Tournaments() {
           ))}
         </div>
       ) : items.length === 0 ? (
-        <Empty icon={<Trophy size={36} />} title="فعلاً تورنمنتی این‌جا نیست" text="تب دیگری را ببین یا بعداً سر بزن." />
+        <Empty icon={<Icon3D name="trophy" size={52} />} title="فعلاً تورنمنتی این‌جا نیست" text="تب دیگری را ببین یا بعداً سر بزن." />
       ) : (
         <div className="stack">
           {items.map(t => (

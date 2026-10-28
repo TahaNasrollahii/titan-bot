@@ -1,16 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  ArrowDownLeft,
-  ArrowUpRight,
-  Gift,
-  Plus,
-  ReceiptText,
-  RotateCcw,
-  Settings2,
-  ShoppingBag,
-  Trophy,
-  Wallet as WalletIcon,
-} from 'lucide-react';
+import { ArrowDownLeft, ArrowUpRight, Gift, Plus, RotateCcw, Settings2, ShoppingBag, Trophy, Wallet as WalletIcon } from 'lucide-react';
 import { m } from 'motion/react';
 import { useState, type CSSProperties } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
@@ -23,6 +12,7 @@ import { useWallet } from '@/lib/queries';
 import { haptic, openExternal } from '@/lib/telegram';
 import { Button } from '@/ui/Button';
 import { Empty, ErrorState } from '@/ui/Empty';
+import { Icon3D } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Sheet } from '@/ui/Sheet';
 import { Skeleton, SkeletonList } from '@/ui/Skeleton';
@@ -94,7 +84,7 @@ export default function Wallet() {
           <SkeletonList count={5} h={62} />
         ) : transactions.data.results.length === 0 ? (
           <Empty
-            icon={<ReceiptText size={36} />}
+            icon={<Icon3D name="receipt" size={52} />}
             title="هنوز تراکنشی نداری"
             text="بعد از اولین شارژ یا خرید، این‌جا نمایش داده می‌شود."
           />

@@ -3,7 +3,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { haptic } from '@/lib/telegram';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'cream' | 'glass' | 'ghost' | 'danger';
+  variant?: 'primary' | 'white' | 'cream' | 'glass' | 'ghost' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   block?: boolean;
   loading?: boolean;
