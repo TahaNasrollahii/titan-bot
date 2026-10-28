@@ -11,6 +11,22 @@ import { Img } from './Img';
 
 const accent = (color: string | undefined) => ({ '--accent': color || '#e2453f' }) as CSSProperties;
 
+/** Same colour choice as the website's product cards (titan-front StoreClient GAME_ACCENTS / ACCENT_COLORS). */
+const GAME_ACCENTS: Record<string, string> = {
+  fortnite: '#35c6ff',
+  'call-of-duty': '#f59e0b',
+  'clash-of-clans': '#38bdf8',
+  valorant: '#ef2f5a',
+  steam: '#4a8bff',
+  premium: '#ef2f5a',
+};
+const ACCENT_COLORS = ['#ff7a2f', '#4a8bff', '#35c6ff', '#ef2f5a', '#35d07f', '#ffb800'];
+
+export function productAccent(product: Pick<ProductSummary, 'id' | 'game'>): string {
+  const slug = product.game?.slug ?? '';
+  return product.game?.accentColor || GAME_ACCENTS[slug] || ACCENT_COLORS[product.id % ACCENT_COLORS.length];
+}
+
 // ------------------------------------------------------------------ products
 export function ProductCard({ product, wide }: { product: ProductSummary; wide?: boolean }) {
   const from = product.hasVariants && product.priceMax && product.priceMax !== product.price;
@@ -18,11 +34,17 @@ export function ProductCard({ product, wide }: { product: ProductSummary; wide?:
     <Link
       to={`/product/${product.slug}`}
       className={`clay pcard card--press ${wide ? 'pcard--wide' : ''}`}
-      style={accent(product.game?.accentColor)}
+      style={accent(productAccent(product))}
       onClick={() => haptic.tap()}
     >
       <div className="pcard__media">
-        <Img src={product.image} alt={product.imageAlt || product.title} contain />
+        {product.image ? (
+          <Img src={product.image} alt={product.imageAlt || product.title} contain />
+        ) : (
+          <span className="pcard__fallback" aria-hidden>
+            <Icon3D name="wrapped-gift" size={72} />
+          </span>
+        )}
         {product.discountPercent > 0 && <span className="clay clay--red pcard__off num">٪{faDigits(product.discountPercent)}</span>}
         {product.badges.includes('bestseller') && (
           <span className="clay clay--cream pcard__hot">

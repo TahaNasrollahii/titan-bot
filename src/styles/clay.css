@@ -49,7 +49,6 @@
     .participant,
     .pd__delivery,
     .pd__feature,
-    .pd__media,
     .pd__thumbs button,
     .pick,
     .pick__icon,
@@ -211,7 +210,7 @@
   --c: #1a1238;
 }
 
-:where(.pd__media, .pick__icon, .link__perks li span, .badge-tile) {
+:where(.pick__icon, .link__perks li span, .badge-tile) {
   --c: var(--surface-2);
 }
 

@@ -14,24 +14,51 @@
   width: 158px;
 }
 
+/* The website's product backdrop (titan-front store.css .card .bg/.glow): the game's colour as soft light,
+   a faint sheen and a blurred glow, with the artwork fading into the card instead of a cut edge. */
 .pcard__media {
   position: relative;
+  overflow: hidden;
   aspect-ratio: 1;
   border-radius: 20px;
+  isolation: isolate;
   background:
-    radial-gradient(circle at 50% 58%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 68%),
-    var(--surface);
-  box-shadow: inset 4px 6px 12px rgba(20, 2, 6, 0.6), inset -3px -4px 8px rgba(255, 200, 200, 0.05);
+    radial-gradient(95% 55% at 50% 36%, color-mix(in srgb, var(--accent) 46%, transparent), transparent 78%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.015) 45%),
+    var(--surface-2);
+}
+
+.pcard__media::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 46%;
+  width: 82%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent), transparent 68%);
+  opacity: 0.68;
+  filter: blur(18px);
 }
 
 .pcard__media .img {
   position: absolute;
-  inset: 10%;
+  inset: 6% 10% 4%;
   background: none;
 }
 
 .pcard__media .img img {
-  filter: drop-shadow(0 12px 12px rgba(20, 2, 6, 0.6));
+  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 68%, transparent 98%);
+}
+
+.pcard__fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
 }
 
 .pcard__off {

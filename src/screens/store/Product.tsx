@@ -11,7 +11,7 @@ import { keys } from '@/lib/queries';
 import { haptic } from '@/lib/telegram';
 import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
-import { ProductCard } from '@/ui/cards';
+import { ProductCard, productAccent } from '@/ui/cards';
 import { ErrorState } from '@/ui/Empty';
 import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { Img } from '@/ui/Img';
@@ -107,7 +107,7 @@ function ProductView({ product }: { product: ProductType }) {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['wishlist'] }),
   });
 
-  const accent = { '--accent': product.game?.accentColor || '#e2453f' } as CSSProperties;
+  const accent = { '--accent': productAccent(product) } as CSSProperties;
   const images = [product.image, ...product.gallery.map(g => g.image)].filter(Boolean) as string[];
   const [shown, setShown] = useState(0);
 
@@ -129,7 +129,6 @@ function ProductView({ product }: { product: ProductType }) {
     >
       <div className="pd" style={accent}>
         <div className="pd__media">
-          <div className="well pd__plinth" aria-hidden />
           <Img src={images[shown]} alt={product.imageAlt || product.title} contain priority />
           {product.discountPercent > 0 && <span className="clay clay--red pd__off num">٪{faDigits(product.discountPercent)} تخفیف</span>}
         </div>
