@@ -1,7 +1,9 @@
 import { m } from 'motion/react';
 import type { ReactNode } from 'react';
+import { Link } from 'react-router';
 
 import type { Me } from '@/api/types';
+import { useSession } from '@/auth/session';
 import { faDigits, num } from '@/lib/format';
 import { media } from '@/lib/media';
 
@@ -9,7 +11,11 @@ import { Icon3D } from './Icon3D';
 
 /** The player's identity: avatar, rank, points and progress to the next level. */
 export function PlayerCard({ user, children }: { user: Me; children?: ReactNode }) {
-  const name = user.username || user.fullName || 'گیمر تایتان';
+  const session = useSession();
+  const tg = session.status === 'ready' ? session.telegram : null;
+  // The player's real name, never a made-up label: Game ID, then their name, then Telegram's, then the phone.
+  const name =
+    user.username || user.fullName || `${tg?.firstName ?? ''} ${tg?.lastName ?? ''}`.trim() || faDigits(user.phone);
   const avatar = media(user.avatar);
   const progress = user.maxXp ? Math.min(100, Math.round((user.xp / user.maxXp) * 100)) : 0;
   return (
@@ -36,6 +42,12 @@ export function PlayerCard({ user, children }: { user: Me; children?: ReactNode 
           {faDigits(user.xp)} از {faDigits(user.maxXp)}
         </span>
       </div>
+      {!user.username && (
+        <Link to="/me/edit" className="clay clay--cream player__nudge">
+          <Icon3D name="video-game" size={18} />
+          آیدی بازی‌ات را تنظیم کن تا دوستانت پیدایت کنند
+        </Link>
+      )}
       {children}
     </div>
   );

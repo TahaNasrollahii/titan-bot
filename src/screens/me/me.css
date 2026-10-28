@@ -69,21 +69,228 @@
   color: var(--muted-2);
 }
 
-.avatar-edit {
+/* ================================================================ game accounts */
+.acct {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border-radius: var(--r-lg);
+  text-align: right;
+}
+
+.acct__icon {
+  --c: var(--surface-2);
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.acct__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+}
+
+.acct__body strong {
+  font-weight: 900;
+}
+
+.acct__body span {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.acct__body small {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+.acct__edit {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.acct__delete {
+  margin-top: 12px;
+}
+
+/* ================================================================ edit profile */
+.prof-hero {
   position: relative;
-  align-self: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 24px 16px 20px;
+  border-radius: var(--r-xl);
+}
+
+.prof-hero::before {
+  content: '';
+  position: absolute;
+  inset: -40% 10% auto;
+  height: 220px;
+  background: radial-gradient(closest-side, rgba(240, 100, 90, 0.35), transparent);
+  pointer-events: none;
+}
+
+.prof-hero__avatar {
+  position: relative;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
-.avatar-edit__badge {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 30px;
-  height: 30px;
+.prof-hero__picture {
+  width: 112px;
+  height: 112px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--grad-red);
-  border: 3px solid var(--bg);
+  overflow: hidden;
+  font-size: 44px;
+  font-weight: 900;
+}
+
+.prof-hero__picture img {
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.prof-hero__camera {
+  position: absolute;
+  left: -2px;
+  bottom: -2px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.prof-hero__name {
+  position: relative;
+  font-size: var(--fs-xl);
+  font-weight: 900;
+}
+
+.prof-hero__id {
+  position: relative;
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  color: var(--cream);
+}
+
+.prof-hero__since {
+  position: relative;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+.form-card {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-card__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-md);
+  font-weight: 900;
+}
+
+/* A well holding an icon and an input, e.g. the @Game ID field. */
+.prof-input {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border-radius: 18px;
+  color: var(--muted);
+  direction: ltr;
+}
+
+.prof-input input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  color: var(--text);
+  font-size: var(--fs-md);
+}
+
+.prof-phone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: var(--surface);
+}
+
+.prof-phone__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+
+.prof-phone__body strong {
+  font-weight: 900;
+  text-align: right;
+}
+
+.fav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.fav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  font-size: var(--fs-sm);
+  font-weight: 900;
+  text-align: right;
+}
+
+.fav__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: none;
+}
+
+.fav__mono {
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 900;
+  background: var(--surface);
 }

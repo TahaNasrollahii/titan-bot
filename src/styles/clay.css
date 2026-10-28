@@ -60,7 +60,6 @@
     .review,
     .specs,
     .stepper button,
-    .sup-intro,
     .team-hero,
     .timeline__dot,
     .variant,
@@ -133,7 +132,7 @@
 }
 
 /* ================================================================ wells: the same light, pressed in */
-:where(.well, .input, .segmented, .switch, .search-box, .cart-item__media, .code-box, .composer__input, .countdown > div, .invite-box, .stepper, .topup-amount) {
+:where(.well, .input, .segmented, .switch, .search-box, .cart-item__media, .code-box, .countdown > div, .invite-box, .stepper, .topup-amount) {
   background-color: var(--surface);
   box-shadow:
     inset 5px 7px 12px rgba(20, 2, 6, 0.7),
@@ -156,7 +155,7 @@
 }
 
 /* A selected option is pressed-in red clay. */
-:where(.pick, .variant)[aria-checked='true'] {
+:where(.pick, .variant, .fav, .sup-topic)[aria-checked='true'] {
   --c: var(--red);
   --hi: 30%;
   --lo: 30%;

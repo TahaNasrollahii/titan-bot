@@ -21,7 +21,7 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export function LinkAccount({ telegramUser }: { telegramUser: TelegramUser }) {
   const [mode, setMode] = useState<Mode>('intro');
   const [phone, setPhone] = useState('');
-  const name = telegramUser.firstName || telegramUser.username || 'گیمر';
+  const name = telegramUser.firstName || telegramUser.username;
 
   return (
     <div className="link">
@@ -32,7 +32,7 @@ export function LinkAccount({ telegramUser }: { telegramUser: TelegramUser }) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: 'spring', damping: 18, stiffness: 160 }}
         >
-          <Avatar name={name} src={telegramUser.photoUrl || null} seed={telegramUser.id % 97} size={76} />
+          <Avatar name={name || 'T'} src={telegramUser.photoUrl || null} seed={telegramUser.id % 97} size={76} />
           <span className="link__bridge" aria-hidden>
             <span />
             <Link2 size={18} />
@@ -70,7 +70,7 @@ const fade = {
   transition: { duration: 0.28, ease: [0.2, 0.8, 0.2, 1] as const },
 };
 
-function Intro({ name, onUseAnother, onNeedsCode }: { name: string; onUseAnother: () => void; onNeedsCode: () => void }) {
+function Intro({ name, onUseAnother, onNeedsCode }: { name?: string; onUseAnother: () => void; onNeedsCode: () => void }) {
   const [busy, setBusy] = useState(false);
 
   async function share() {
@@ -109,7 +109,7 @@ function Intro({ name, onUseAnother, onNeedsCode }: { name: string; onUseAnother
 
   return (
     <m.section className="link__panel" {...fade}>
-      <h1 className="link__title">سلام {name}!</h1>
+      <h1 className="link__title">{name ? `سلام ${name}!` : 'سلام!'}</h1>
       <p className="link__lead">
         حساب تلگرامت را یک بار به تایتان وصل کن. اگر در سایت تایتان حساب داری، همان حساب با کیف پول و سفارش‌هایت باز
         می‌شود.

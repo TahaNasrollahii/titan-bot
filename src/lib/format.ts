@@ -1,5 +1,6 @@
 const faNumber = new Intl.NumberFormat('fa-IR');
 const faDate = new Intl.DateTimeFormat('fa-IR', { day: 'numeric', month: 'long' });
+const faFullDate = new Intl.DateTimeFormat('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' });
 const faDateTime = new Intl.DateTimeFormat('fa-IR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
 const relative = new Intl.RelativeTimeFormat('fa', { numeric: 'auto' });
 
@@ -19,6 +20,7 @@ export function compactToman(value: number): string {
 }
 
 export const date = (iso: string) => faDate.format(new Date(iso));
+export const fullDate = (iso: string) => faFullDate.format(new Date(iso));
 export const dateTime = (iso: string) => faDateTime.format(new Date(iso));
 
 export function timeAgo(iso: string): string {

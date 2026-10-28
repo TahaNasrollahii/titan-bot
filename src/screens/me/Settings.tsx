@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { BellRing, ExternalLink, Globe, Headset, Link2Off, Phone, ShieldCheck } from 'lucide-react';
+import { BellRing, ExternalLink, Globe, Headset, LogOut, Phone, ShieldCheck } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
 
@@ -128,17 +128,15 @@ export default function Settings() {
               className="list-row"
               disabled={unlink.isPending}
               onClick={async () => {
-                if (await confirmDialog('اتصال تلگرام از حساب تایتان جدا شود؟ بعداً می‌توانی دوباره (یا با شماره‌ی دیگری) وصل شوی.'))
+                if (await confirmDialog('از حساب تایتان خارج می‌شوی؟ دفعه‌ی بعد با اشتراک شماره دوباره وارد می‌شوی.'))
                   unlink.mutate();
               }}
             >
-              <span className="list-row__icon" style={{ color: '#ff8a80' }}>
-                <Link2Off size={18} />
+              <span className="clay clay--red list-row__icon">
+                <LogOut size={18} />
               </span>
               <div className="list-row__body">
-                <div className="list-row__title" style={{ color: '#ff8a80' }}>
-                  قطع اتصال / ورود با حساب دیگر
-                </div>
+                <div className="list-row__title">خروج از حساب</div>
               </div>
             </button>
           </div>

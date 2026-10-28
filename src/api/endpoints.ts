@@ -134,6 +134,9 @@ export interface GameAccountInput {
 export const gameAccountsApi = {
   list: () => api<GameAccount[]>('me/game-accounts/'),
   create: (data: GameAccountInput) => api<GameAccount>('me/game-accounts/', { method: 'POST', body: data }),
+  /** A blank password keeps the saved one. */
+  update: (id: number, data: Partial<GameAccountInput>) =>
+    api<GameAccount>(`me/game-accounts/${id}/`, { method: 'PATCH', body: data }),
   remove: (id: number) => api<void>(`me/game-accounts/${id}/`, { method: 'DELETE' }),
 };
 

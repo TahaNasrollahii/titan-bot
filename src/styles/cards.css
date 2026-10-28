@@ -153,22 +153,22 @@
 
 .gtile__shade {
   position: absolute;
+  z-index: 1;
   inset: 6px;
   border-radius: 25px;
-  background: linear-gradient(180deg, transparent 48%, rgba(40, 6, 12, 0.92));
+  background: linear-gradient(180deg, transparent 52%, rgba(40, 6, 12, 0.9));
   pointer-events: none;
 }
 
 .gtile__char {
   position: absolute;
-  left: 50%;
-  bottom: 36px;
-  transform: translateX(-50%);
-  width: 112%;
+  inset: auto 6px 6px;
   height: 200px;
   background: none;
   overflow: visible;
   z-index: 1;
+  /* Standing on the frame's floor: the art's cut edge sits on the rounded bottom and never shows. */
+  clip-path: inset(-400px 0 0 0 round 0 0 25px 25px);
 }
 
 .gtile__char img {
@@ -422,6 +422,17 @@
   font-size: 18px;
   font-weight: 900;
   color: var(--cream);
+}
+
+.player__nudge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .player__points small {

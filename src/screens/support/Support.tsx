@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CheckCheck, ImagePlus, MessageCircle, SendHorizontal, Star, X } from 'lucide-react';
+import { CheckCheck, ImagePlus, Pencil, SendHorizontal, Star, X } from 'lucide-react';
 import { AnimatePresence, m } from 'motion/react';
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 
@@ -8,10 +8,11 @@ import { supportApi } from '@/api/endpoints';
 import type { SupportMessage, VisitorSync } from '@/api/types';
 import { useMe, useSession } from '@/auth/session';
 import { faDigits } from '@/lib/format';
-import { confirmDialog, haptic, tg } from '@/lib/telegram';
 import { media } from '@/lib/media';
+import { confirmDialog, haptic, tg } from '@/lib/telegram';
 import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
+import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { toast } from '@/ui/Toast';
 
@@ -45,7 +46,16 @@ export default function Support() {
   return token ? <Chat token={token} onGone={() => update(null)} onNew={() => update(null)} /> : <StartChat onStarted={update} />;
 }
 
+const newId = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`);
+
 // ------------------------------------------------------------------ start
+const TOPICS: { label: string; icon: Icon3DName }[] = [
+  { label: 'سفارش و تحویل', icon: 'package' },
+  { label: 'پرداخت و کیف پول', icon: 'money-bag' },
+  { label: 'تورنمنت و تیم', icon: 'trophy' },
+  { label: 'سؤال دیگر', icon: 'speech-balloon' },
+];
+
 function StartChat({ onStarted }: { onStarted: (token: string) => void }) {
   const me = useMe();
   const session = useSession();
@@ -53,59 +63,119 @@ function StartChat({ onStarted }: { onStarted: (token: string) => void }) {
   const [first, last] = (me.fullName || '').split(/\s+/, 2);
   const [firstName, setFirstName] = useState(first || tgUser?.firstName || tg.user?.first_name || '');
   const [lastName, setLastName] = useState(last || tgUser?.lastName || tg.user?.last_name || '');
+  const [editingName, setEditingName] = useState(false);
+  const [topic, setTopic] = useState<string | null>(null);
+  const [message, setMessage] = useState('');
   const status = useQuery({ queryKey: ['support', 'status'], queryFn: supportApi.status, refetchInterval: 30_000 });
 
+  const nameOk = firstName.trim().length >= 2 && lastName.trim().length >= 2;
+  const ready = nameOk && (topic !== null || message.trim().length > 0);
+
   const start = useMutation({
-    mutationFn: () => supportApi.start({ firstName: firstName.trim(), lastName: lastName.trim(), phone: me.phone, pageUrl: 'telegram-mini-app' }),
-    onSuccess: data => onStarted(data.token),
-    onError: error => toast.error(errorText(error)),
+    mutationFn: async () => {
+      const started = await supportApi.start({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        phone: me.phone,
+        pageUrl: 'telegram-mini-app',
+      });
+      // The first message carries the topic, so the agent knows what it is about before replying.
+      const body = [topic && `موضوع: ${topic}`, message.trim()].filter(Boolean).join('\n');
+      if (body) await supportApi.send(started.token, body, newId());
+      return started.token;
+    },
+    onSuccess: token => {
+      haptic.success();
+      onStarted(token);
+    },
+    onError: error => {
+      if (error instanceof ApiError && error.errors && ('firstName' in error.errors || 'lastName' in error.errors)) setEditingName(true);
+      toast.error(errorText(error));
+    },
   });
 
-  const online = status.data?.online;
+  const online = Boolean(status.data?.online);
+  const minutes = status.data?.avgResponseSeconds ? Math.max(1, Math.round(status.data.avgResponseSeconds / 60)) : null;
+
   return (
     <Screen title="پشتیبانی" noTabs>
-      <div className="sup-intro">
-        <div className="sup-agents">
-          {(status.data?.agents ?? []).slice(0, 3).map(a => (
-            <Avatar key={a.id} name={a.name} src={a.avatar} seed={a.avatarSeed} size={52} presence={a.isOnline ? 'online' : 'offline'} />
-          ))}
-          {!status.data?.agents.length && (
-            <span className="empty__art">
-              <MessageCircle size={36} />
-            </span>
-          )}
-        </div>
-        <h1>سلام! چطور کمکت کنیم؟</h1>
-        <p className="muted text-sm">
-          {online
-            ? `پشتیبان‌ها آنلاین هستند${status.data?.avgResponseSeconds ? ` · پاسخ معمولاً زیر ${faDigits(Math.max(1, Math.round(status.data.avgResponseSeconds / 60)))} دقیقه` : ''}`
-            : 'الان کسی آنلاین نیست؛ پیامت را بگذار، پاسخ در تلگرام به دستت می‌رسد.'}
-        </p>
-        <span className={`badge ${online ? 'badge--green' : 'badge--amber'}`}>
-          <span className="live-dot" style={{ animation: online ? undefined : 'none' }} /> {online ? 'آنلاین' : 'آفلاین'}
+      <div className="clay sup-hero">
+        <span className="clay sup-hero__icon">
+          <Icon3D name="headphone" size={64} />
         </span>
+        <h1>پشتیبانی تایتان</h1>
+        <span className={`sup-status ${online ? 'is-online' : ''}`}>
+          <span className="live-dot" />
+          {online ? (minutes ? `آنلاین؛ پاسخ معمولاً زیر ${faDigits(minutes)} دقیقه` : 'پشتیبان‌ها آنلاین‌اند') : 'الان آفلاین؛ پاسخ را در تلگرام می‌گیری'}
+        </span>
+        {status.data && status.data.agents.length > 0 && (
+          <div className="sup-agents">
+            {status.data.agents.slice(0, 4).map(a => (
+              <Avatar key={a.id} name={a.name} src={a.avatar} seed={a.avatarSeed} size={40} presence={a.isOnline ? 'online' : 'offline'} />
+            ))}
+          </div>
+        )}
       </div>
-      <div className="stack section" style={{ '--gap': '12px' } as CSSProperties}>
-        <div className="row" style={{ '--gap': '10px' } as CSSProperties}>
-          <label className="field" style={{ flex: 1 }}>
-            <span className="field__label">نام</span>
-            <input className="input" value={firstName} onChange={e => setFirstName(e.target.value)} maxLength={40} />
-          </label>
-          <label className="field" style={{ flex: 1 }}>
-            <span className="field__label">نام خانوادگی</span>
-            <input className="input" value={lastName} onChange={e => setLastName(e.target.value)} maxLength={60} />
-          </label>
+
+      <section className="sup-who">
+        {editingName ? (
+          <div className="row" style={{ '--gap': '10px' } as CSSProperties}>
+            <label className="field" style={{ flex: 1 }}>
+              <span className="field__label">نام</span>
+              <input className="input" value={firstName} onChange={e => setFirstName(e.target.value)} maxLength={40} />
+            </label>
+            <label className="field" style={{ flex: 1 }}>
+              <span className="field__label">نام خانوادگی</span>
+              <input className="input" value={lastName} onChange={e => setLastName(e.target.value)} maxLength={60} />
+            </label>
+          </div>
+        ) : (
+          <button className="clay sup-name" onClick={() => setEditingName(true)}>
+            <span>
+              <small>گفتگو به نام</small>
+              <strong>{nameOk ? `${firstName} ${lastName}` : 'نامت را وارد کن'}</strong>
+            </span>
+            <Pencil size={16} />
+          </button>
+        )}
+      </section>
+
+      <section className="section">
+        <h2 className="sup-label">درباره‌ی چه موضوعی؟</h2>
+        <div className="sup-topics" role="radiogroup">
+          {TOPICS.map(t => (
+            <button
+              key={t.label}
+              role="radio"
+              aria-checked={topic === t.label}
+              className="clay sup-topic"
+              onClick={() => {
+                haptic.select();
+                setTopic(topic === t.label ? null : t.label);
+              }}
+            >
+              <Icon3D name={t.icon} size={30} />
+              {t.label}
+            </button>
+          ))}
         </div>
-      </div>
+      </section>
+
+      <section className="section">
+        <h2 className="sup-label">پیامت</h2>
+        <textarea
+          className="input sup-message"
+          rows={4}
+          maxLength={2000}
+          placeholder="مثلاً: شماره‌ی سفارش و مشکلی که پیش آمده را بنویس."
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+        />
+      </section>
+
+
       <div className="action-bar">
-        <Button
-          size="lg"
-          block
-          disabled={firstName.trim().length < 2 || lastName.trim().length < 2}
-          loading={start.isPending}
-          onClick={() => start.mutate()}
-          icon={<MessageCircle size={20} />}
-        >
+        <Button size="lg" block disabled={!ready} loading={start.isPending} onClick={() => start.mutate()} icon={<SendHorizontal size={20} style={{ transform: 'scaleX(-1)' }} />}>
           شروع گفتگو
         </Button>
       </div>
@@ -120,8 +190,6 @@ interface Pending {
   preview?: string;
   failed?: boolean;
 }
-
-const newId = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`);
 
 function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onNew: () => void }) {
   const queryClient = useQueryClient();
@@ -165,6 +233,8 @@ function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onN
 
   const conversation: VisitorSync['conversation'] | undefined = sync.data?.conversation;
   const closed = conversation?.status === 'closed';
+  const agent = conversation?.agent;
+  const supportOnline = Boolean(sync.data?.support.online);
 
   async function send(body: string, image?: File) {
     const clientId = newId();
@@ -187,10 +257,9 @@ function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onN
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['support', 'sync', token] }),
   });
 
-  const agent = conversation?.agent;
   return (
     <Screen
-      title={agent ? agent.name : 'پشتیبانی تایتان'}
+      title="پشتیبانی"
       noTabs
       actions={
         !closed && conversation ? (
@@ -206,17 +275,39 @@ function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onN
         ) : undefined
       }
     >
-      <div className="chat" aria-live="polite">
-        {conversation && (
-          <div className="chat__ticket">
-            تیکت <span className="ltr">{conversation.ticket}</span>
-          </div>
+      <div className="clay chat-head">
+        {agent ? (
+          <Avatar name={agent.name} src={agent.avatar} seed={agent.avatarSeed} size={48} presence={agent.isOnline ? 'online' : 'offline'} />
+        ) : (
+          <span className="clay chat-head__icon">
+            <Icon3D name="headphone" size={30} />
+          </span>
         )}
+        <span className="chat-head__body">
+          <strong>{agent ? agent.name : 'پشتیبانی تایتان'}</strong>
+          <small className={conversation?.agentTyping ? 'is-typing' : ''}>
+            {conversation?.agentTyping
+              ? 'در حال نوشتن…'
+              : closed
+                ? 'گفتگو بسته شد'
+                : agent
+                  ? agent.isOnline
+                    ? 'آنلاین'
+                    : 'آفلاین'
+                  : supportOnline
+                    ? 'به‌زودی یک پشتیبان جواب می‌دهد'
+                    : 'پاسخ را در تلگرام هم می‌گیری'}
+          </small>
+        </span>
+        {conversation && <span className="badge ltr">{conversation.ticket}</span>}
+      </div>
+
+      <div className="chat" aria-live="polite">
         {messages.map(msg => (
           <Bubble key={msg.id} msg={msg} read={msg.kind === 'visitor' && conversation ? msg.id <= conversation.agentReadId : false} />
         ))}
         {pending.map(p => (
-          <div key={p.clientId} className="bubble bubble--me" data-failed={p.failed}>
+          <div key={p.clientId} className="clay bubble bubble--me" data-failed={p.failed}>
             {p.preview && <img src={p.preview} alt="" className="bubble__img" />}
             {p.body && <p>{p.body}</p>}
             <span className="bubble__meta">{p.failed ? 'ارسال نشد' : 'در حال ارسال…'}</span>
@@ -224,7 +315,7 @@ function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onN
         ))}
         <AnimatePresence>
           {conversation?.agentTyping && (
-            <m.div className="bubble bubble--agent typing" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+            <m.div className="clay bubble bubble--agent typing" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
               <span />
               <span />
               <span />
@@ -237,7 +328,7 @@ function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onN
 
       {!closed && (
         <form
-          className="composer"
+          className="clay clay--dark composer"
           onSubmit={e => {
             e.preventDefault();
             const body = text.trim();
@@ -246,7 +337,7 @@ function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onN
             void send(body);
           }}
         >
-          <label className="icon-btn" aria-label="ارسال تصویر">
+          <label className="clay composer__attach" aria-label="ارسال تصویر">
             <ImagePlus size={20} />
             <input
               type="file"
@@ -262,7 +353,7 @@ function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onN
             />
           </label>
           <textarea
-            className="composer__input"
+            className="well composer__input"
             rows={1}
             maxLength={2000}
             placeholder="پیامت را بنویس…"
@@ -275,7 +366,7 @@ function Chat({ token, onGone, onNew }: { token: string; onGone: () => void; onN
               }
             }}
           />
-          <button type="submit" className="composer__send" disabled={!text.trim()} aria-label="ارسال">
+          <button type="submit" className="clay composer__send" disabled={!text.trim()} aria-label="ارسال">
             <SendHorizontal size={20} style={{ transform: 'scaleX(-1)' }} />
           </button>
         </form>
@@ -290,7 +381,11 @@ function Bubble({ msg, read }: { msg: SupportMessage; read: boolean }) {
   const mine = msg.kind === 'visitor';
   const time = new Date(msg.createdAt).toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
   return (
-    <m.div className={`bubble ${mine ? 'bubble--me' : 'bubble--agent'}`} initial={{ opacity: 0, y: 8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }}>
+    <m.div
+      className={`clay bubble ${mine ? 'bubble--me' : 'bubble--agent'}`}
+      initial={{ opacity: 0, y: 8, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+    >
       {msg.image && <img src={media(msg.image)} alt="" className="bubble__img" loading="lazy" />}
       {msg.body && <p data-selectable>{msg.body}</p>}
       <span className="bubble__meta">
@@ -313,15 +408,16 @@ function Rate({ token, rated, onNew }: { token: string; rated: boolean; onNew: (
     onError: error => toast.error(errorText(error)),
   });
   return (
-    <div className="card card--pad stack" style={{ textAlign: 'center', marginTop: 12 }}>
-      <strong>گفتگو بسته شد</strong>
+    <div className="clay sup-rate">
+      <Icon3D name={rated ? 'party-popper' : 'glowing-star'} size={44} />
+      <strong>{rated ? 'ممنون که نظرت را گفتی' : 'گفتگو بسته شد'}</strong>
       {!rated && (
         <>
           <span className="muted text-sm">به این گفتگو چه امتیازی می‌دهی؟</span>
           <div className="row" style={{ justifyContent: 'center', '--gap': '6px' } as CSSProperties}>
             {[1, 2, 3, 4, 5].map(n => (
               <button key={n} aria-label={`${n} ستاره`} onClick={() => (haptic.select(), setStars(n))} style={{ color: 'var(--gold)' }}>
-                <Star size={30} fill={n <= stars ? 'currentColor' : 'none'} />
+                <Star size={32} fill={n <= stars ? 'currentColor' : 'none'} />
               </button>
             ))}
           </div>

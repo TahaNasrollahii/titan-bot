@@ -832,6 +832,7 @@ textarea.input {
 /* ================================================================ avatar */
 .avatar {
   position: relative;
+  display: inline-block;
   flex-shrink: 0;
   width: var(--size, 40px);
   height: var(--size, 40px);
