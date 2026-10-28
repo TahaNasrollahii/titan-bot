@@ -491,7 +491,8 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: var(--gutter);
-  padding: 4px var(--gutter) 10px;
+  padding: 8px var(--gutter) 28px;
+  margin-bottom: -16px;
   margin-inline: calc(var(--gutter) * -1);
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
