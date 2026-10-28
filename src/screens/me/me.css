@@ -1,0 +1,91 @@
+@import '../checkout/checkout.css';
+
+.badge-tile {
+  width: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 18px;
+  background: var(--grad-surface);
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.badge-tile span {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.badge-tile strong {
+  font-size: 10.5px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.notif {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  text-align: right;
+  width: 100%;
+}
+
+.notif + .notif {
+  border-top: 1px solid var(--line);
+}
+
+.notif[data-unread='true'] {
+  background: linear-gradient(90deg, transparent, rgba(226, 69, 63, 0.08));
+}
+
+.notif__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.notif[data-unread='true'] .notif__dot {
+  background: var(--red-2);
+  box-shadow: 0 0 8px var(--red);
+}
+
+.notif strong {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 800;
+}
+
+.notif p {
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+.notif time {
+  font-size: 10.5px;
+  color: var(--muted-2);
+}
+
+.avatar-edit {
+  position: relative;
+  align-self: center;
+  cursor: pointer;
+}
+
+.avatar-edit__badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--grad-red);
+  border: 3px solid var(--bg);
+}

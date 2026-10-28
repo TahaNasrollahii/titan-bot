@@ -1,0 +1,22 @@
+import { Compass } from 'lucide-react';
+import { Link } from 'react-router';
+
+import { Empty } from '@/ui/Empty';
+import { Screen } from '@/ui/Screen';
+
+export default function NotFound() {
+  return (
+    <Screen title="پیدا نشد">
+      <Empty
+        icon={<Compass size={36} />}
+        title="این صفحه وجود ندارد"
+        text="شاید لینک قدیمی باشد. از خانه ادامه بده."
+        action={
+          <Link to="/" replace className="btn btn--primary btn--sm">
+            بازگشت به خانه
+          </Link>
+        }
+      />
+    </Screen>
+  );
+}

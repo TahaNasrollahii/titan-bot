@@ -1,0 +1,67 @@
+/* Titan design tokens: the website's crimson/cream identity, tuned for a phone-sized native app. */
+:root {
+  color-scheme: dark;
+
+  /* surfaces, from the page outward */
+  --bg: #170409;
+  --bg-2: #1d060c;
+  --surface: #2a0b12;
+  --surface-2: #34101a;
+  --surface-3: #401520;
+  --glass: rgba(52, 16, 26, 0.62);
+  --glass-strong: rgba(36, 9, 15, 0.86);
+  --line: rgba(255, 214, 214, 0.08);
+  --line-strong: rgba(255, 214, 214, 0.16);
+
+  /* brand */
+  --red: #e2453f;
+  --red-2: #f0645a;
+  --red-deep: #9d1f24;
+  --cream: #fff0b3;
+  --gold: #ffcb5c;
+  --violet: #7a50e6;
+  --green: #3ddc84;
+  --amber: #ffb547;
+  --blue: #4cc3ff;
+
+  /* text */
+  --text: #fdf1f0;
+  --text-2: #e3c3c5;
+  --muted: #c98d92;
+  --muted-2: #a86068;
+
+  /* gradients & glows */
+  --grad-red: linear-gradient(135deg, #f0645a 0%, #e2453f 45%, #b8262b 100%);
+  --grad-cream: linear-gradient(135deg, #fff6cf, #ffd98a);
+  --grad-surface: linear-gradient(180deg, rgba(64, 21, 32, 0.9), rgba(42, 11, 18, 0.9));
+  --glow-red: 0 10px 30px -8px rgba(226, 69, 63, 0.55);
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-2: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 18px 40px -16px rgba(0, 0, 0, 0.75);
+
+  /* shape & rhythm */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --gutter: 16px;
+
+  /* type */
+  --font: 'Vazirmatn Variable', 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-xs: 11px;
+  --fs-sm: 13px;
+  --fs-md: 15px;
+  --fs-lg: 17px;
+  --fs-xl: 21px;
+  --fs-2xl: 26px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --spring: cubic-bezier(0.3, 1.5, 0.5, 1);
+
+  /* Telegram's safe areas (set by lib/telegram.ts), falling back to the device's own. */
+  --safe-top: max(var(--tg-top, 0px), env(safe-area-inset-top, 0px));
+  --safe-bottom: max(var(--tg-bottom, 0px), env(safe-area-inset-bottom, 0px));
+  --topbar-h: 56px;
+  --tabbar-h: 64px;
+}

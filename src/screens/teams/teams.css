@@ -1,0 +1,45 @@
+@import '../checkout/checkout.css';
+@import '../tournaments/tournaments.css';
+
+.team-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 24px 16px 18px;
+  border-radius: var(--r-xl);
+  background:
+    radial-gradient(100% 120% at 50% 0%, rgba(122, 80, 230, 0.35), transparent 60%),
+    var(--grad-surface);
+  border: 1px solid rgba(122, 80, 230, 0.3);
+}
+
+.team-hero h1 {
+  font-size: var(--fs-xl);
+  font-weight: 900;
+  direction: ltr;
+}
+
+.invite-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px dashed rgba(255, 240, 179, 0.35);
+}
+
+.invite-box code {
+  flex: 1;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--cream);
+  direction: ltr;
+  text-align: right;
+}

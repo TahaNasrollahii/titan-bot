@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#170409" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>تایتان</title>
+    <link rel="icon" type="image/webp" href="/titan-logo.webp" />
+    <link rel="preload" href="/titan-logo.webp" as="image" type="image/webp" />
+    <!-- Telegram's bridge, served from our own origin: telegram.org is filtered on many networks the
+         webview uses even when the Telegram app itself goes through a proxy. Refreshed on every build. -->
+    <script src="/telegram-web-app.js"></script>
+    <style>
+      html,body{margin:0;background:#170409;color:#fdf1f0;height:100%}
+      #boot{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(600px 400px at 50% 30%,rgba(226,69,63,.25),transparent 70%),#170409}
+      #boot img{width:96px;height:auto;animation:boot 1.6s ease-in-out infinite}
+      @keyframes boot{0%,100%{opacity:.55;transform:scale(.96)}50%{opacity:1;transform:scale(1)}}
+      @media (prefers-reduced-motion:reduce){#boot img{animation:none}}
+    </style>
+  </head>
+  <body>
+    <div id="root"><div id="boot"><img src="/titan-logo.webp" alt="تایتان" width="96" height="96" /></div></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

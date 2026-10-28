@@ -1,0 +1,465 @@
+/* ================================================================ product card */
+.pcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  background: var(--grad-surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+  transition: transform 0.18s var(--ease-out);
+}
+
+.rail > .pcard {
+  width: 156px;
+}
+
+.pcard__media {
+  position: relative;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%),
+    linear-gradient(160deg, color-mix(in srgb, var(--accent) 18%, #2a0b12), #1c060b);
+}
+
+.pcard__media .img {
+  position: absolute;
+  inset: 10%;
+  background: none;
+}
+
+.pcard__media .img img {
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55));
+}
+
+.pcard__off {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: var(--grad-red);
+  color: #fff;
+  font-size: var(--fs-xs);
+  font-weight: 900;
+  box-shadow: 0 4px 12px -4px rgba(226, 69, 63, 0.8);
+}
+
+.pcard__hot {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--amber);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.pcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px 12px;
+  flex: 1;
+}
+
+.pcard__game {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--accent) 70%, #fff);
+}
+
+.pcard__title {
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.9em;
+}
+
+.pcard__foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.pcard__price {
+  font-weight: 900;
+  font-size: var(--fs-md);
+}
+
+.pcard__price small {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.pcard__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.pcard--wide {
+  flex-direction: row;
+}
+
+.pcard--wide .pcard__media {
+  width: 112px;
+  flex-shrink: 0;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* ================================================================ game tile */
+.gtile {
+  position: relative;
+  display: block;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 16px 30px -18px color-mix(in srgb, var(--accent) 80%, transparent);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.gtile--md {
+  width: 132px;
+  height: 172px;
+}
+
+.gtile--lg {
+  width: 100%;
+  height: 150px;
+}
+
+.gtile__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.gtile__shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, transparent 30%, rgba(10, 2, 4, 0.92)),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%);
+}
+
+.gtile__char {
+  position: absolute;
+  bottom: 18px;
+  left: -6%;
+  width: 92%;
+  height: 92%;
+  background: none;
+  z-index: 0;
+}
+
+.gtile--lg .gtile__char {
+  left: 0;
+  width: 55%;
+  height: 120%;
+  bottom: -6px;
+}
+
+.gtile__char img {
+  object-position: bottom;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.6));
+}
+
+.gtile__info {
+  position: absolute;
+  inset: auto 12px 10px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.gtile__info strong {
+  font-weight: 900;
+  font-size: var(--fs-md);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.gtile__info span {
+  font-size: 10.5px;
+  color: color-mix(in srgb, var(--accent) 60%, #fff);
+  font-weight: 700;
+  text-align: right;
+}
+
+.gtile--lg .gtile__info {
+  inset: auto 16px 14px auto;
+  max-width: 50%;
+}
+
+.gtile--lg .gtile__info strong {
+  font-size: var(--fs-xl);
+}
+
+/* ================================================================ tournament card */
+.tcard {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--grad-surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-1);
+  transition: transform 0.18s var(--ease-out);
+}
+
+.rail > .tcard {
+  width: 280px;
+}
+
+.tcard__cover {
+  position: relative;
+  aspect-ratio: 16 / 8;
+}
+
+.tcard__cover .img {
+  position: absolute;
+  inset: 0;
+}
+
+.tcard__cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(34, 8, 14, 0.95));
+}
+
+.tcard__badges {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+}
+
+.tcard__viewers {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.55);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+}
+
+.tcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 14px 14px;
+  margin-top: -14px;
+  position: relative;
+  z-index: 1;
+}
+
+.tcard__game {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  color: color-mix(in srgb, var(--accent) 65%, #fff);
+  font-weight: 700;
+}
+
+.tcard__icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: none;
+}
+
+.tcard__title {
+  font-size: var(--fs-md);
+  font-weight: 900;
+  line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tcard__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tcard__prize {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold);
+  font-weight: 900;
+}
+
+.tcard__fill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tcard__fill > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.tcard__bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.tcard__bar span {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 50%, #fff));
+}
+
+.tcard__free {
+  color: var(--green);
+  font-weight: 800;
+}
+
+.tcard--compact .tcard__cover {
+  aspect-ratio: 16 / 7;
+}
+
+/* ================================================================ player card */
+.player {
+  position: relative;
+  overflow: hidden;
+  padding: 16px;
+  border-radius: var(--r-xl);
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--rank-a) 30%, transparent), transparent 55%),
+    radial-gradient(100% 120% at 0% 100%, color-mix(in srgb, var(--rank-b) 26%, transparent), transparent 60%),
+    linear-gradient(160deg, #3d1119, #220810);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-2);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.player__glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: -90px;
+  left: -40px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--rank-a) 45%, transparent), transparent);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.player__id {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.player__id strong {
+  font-size: var(--fs-lg);
+  font-weight: 900;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player__rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, var(--rank-a), var(--rank-b));
+}
+
+.player__level {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.player__points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--gold);
+  line-height: 1.2;
+  font-weight: 900;
+}
+
+.player__points small {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.player__xp {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player__xp-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.player__xp-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--rank-a), var(--rank-b));
+  box-shadow: 0 0 12px var(--rank-a);
+}
