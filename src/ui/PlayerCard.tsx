@@ -5,28 +5,29 @@ import { Link } from 'react-router';
 import type { Me } from '@/api/types';
 import { useSession } from '@/auth/session';
 import { faDigits, num } from '@/lib/format';
-import { media } from '@/lib/media';
+import { getTierByScore } from '@/lib/ranks';
 
 import { Icon3D } from './Icon3D';
+import { RankAvatar } from './RankAvatar';
 
-/** The player's identity: avatar, rank, points and progress to the next level. */
+/** The player's identity: avatar inside rank frame, rank, points and progress to the next level. */
 export function PlayerCard({ user, children }: { user: Me; children?: ReactNode }) {
   const session = useSession();
   const tg = session.status === 'ready' ? session.telegram : null;
   // The player's real name, never a made-up label: Game ID, then their name, then Telegram's, then the phone.
   const name =
     user.username || user.fullName || `${tg?.firstName ?? ''} ${tg?.lastName ?? ''}`.trim() || faDigits(user.phone);
-  const avatar = media(user.avatar);
   const progress = user.maxXp ? Math.min(100, Math.round((user.xp / user.maxXp) * 100)) : 0;
+  const rankName = user.rank?.name ?? getTierByScore(user.points).name;
   return (
     <div className="clay player">
       <div className="player__who">
-        <span className="clay clay--red player__avatar">{avatar ? <img src={avatar} alt="" /> : name.trim()[0]?.toUpperCase()}</span>
+        <RankAvatar user={user} size={64} />
         <div className="player__id">
           <strong>{name}</strong>
           <span className="player__tier">
             <Icon3D name="crown" size={18} />
-            {user.rank?.name ?? 'بدون رنک'}، سطح {faDigits(user.level)}
+            {rankName}، سطح {faDigits(user.level)}
           </span>
         </div>
         <div className="player__points">

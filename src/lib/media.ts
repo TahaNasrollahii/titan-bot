@@ -23,6 +23,7 @@ const LOCAL_GAME_BACKGROUNDS: Record<string, string> = {
   'clash-of-clans': '/images/games/clash-background.webp',
   fortnite: '/images/games/fortnite-background.webp',
   valorant: '/images/games/valorant-background.webp',
+  premium: '/images/games/premium.webp',
 };
 
 const LOCAL_GAME_CHARACTERS: Record<string, string> = {
@@ -30,7 +31,6 @@ const LOCAL_GAME_CHARACTERS: Record<string, string> = {
   'clash-of-clans': '/images/games/clash-character.webp',
   fortnite: '/images/games/fortnite-character.webp',
   valorant: '/images/games/valorant-character.webp',
-  premium: '/images/games/premium.webp',
 };
 
 const LOCAL_CHARACTERS = [
@@ -41,7 +41,6 @@ const LOCAL_CHARACTERS = [
   '/images/hero/characters/valorant.webp',
   '/images/products/vbucks.webp',
   '/images/support-robot.webp',
-  '/images/games/premium.webp',
 ];
 
 /** Absolute URL for an image from the API: blob/CDN URLs pass through and uploads come from the API host.
@@ -52,6 +51,7 @@ export function media(src: string | null | undefined): string | undefined {
   if (src.includes('games-clash-background')) return '/images/games/clash-background.webp';
   if (src.includes('games-fortnite-background')) return '/images/games/fortnite-background.webp';
   if (src.includes('games-valorant-background')) return '/images/games/valorant-background.webp';
+  if (src.includes('games-premium') || src.includes('games/premium')) return '/images/games/premium.webp';
   if (src.includes('games-apexlegends-character') || src.includes('games-callof-character')) return '/images/games/callof-character-v2.webp';
   if (src.includes('games-clash-character')) return '/images/games/clash-character.webp';
   if (src.includes('games-fortnite-character')) return '/images/games/fortnite-character.webp';
@@ -78,7 +78,7 @@ export function gameBackground(slug: string | undefined, remoteBg?: string | nul
 }
 
 export function gameCharacter(slug: string | undefined, remoteChar?: string | null): string | null {
-  if (!slug) return remoteChar ?? null;
+  if (!slug || slug === 'premium') return null;
   return LOCAL_GAME_CHARACTERS[slug] ?? remoteChar ?? null;
 }
 

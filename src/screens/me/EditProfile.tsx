@@ -7,11 +7,11 @@ import { ApiError, errorText } from '@/api/client';
 import { catalogApi, meApi } from '@/api/endpoints';
 import { updateUser, useMe } from '@/auth/session';
 import { faDigits, fullDate } from '@/lib/format';
-import { media } from '@/lib/media';
 import { haptic } from '@/lib/telegram';
 import { Button } from '@/ui/Button';
 import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { Img } from '@/ui/Img';
+import { RankAvatar } from '@/ui/RankAvatar';
 import { Screen } from '@/ui/Screen';
 import { toast } from '@/ui/Toast';
 
@@ -59,15 +59,12 @@ export default function EditProfile() {
   });
 
   const shownName = username.trim() || fullName.trim() || faDigits(me.phone);
-  const photo = media(me.avatar);
 
   return (
     <Screen title="ویرایش پروفایل" fallback="/me" noTabs>
       <div className="clay prof-hero">
         <label className="prof-hero__avatar" aria-label="تغییر تصویر پروفایل">
-          <span className="clay clay--red prof-hero__picture">
-            {photo ? <img src={photo} alt="" /> : shownName.trim()[0]?.toUpperCase()}
-          </span>
+          <RankAvatar user={me} size={112} />
           <span className="clay clay--cream prof-hero__camera">
             {avatar.isPending ? <span className="spinner" style={{ width: 16, height: 16 }} /> : <Camera size={18} />}
           </span>

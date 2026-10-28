@@ -913,7 +913,9 @@ textarea.input {
   font-size: calc(var(--size, 40px) * 0.4);
 }
 
-.avatar__inner img {
+.avatar__inner img,
+.avatar__inner svg {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -940,6 +942,214 @@ textarea.input {
 
 .avatar__presence[data-presence='away'] {
   background: var(--amber);
+}
+
+/* ================================================================ rank avatar frame (titan-front RankAvatar + globals.css) */
+.rank-avatar {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--size, 64px);
+  height: var(--size, 64px);
+  overflow: visible;
+}
+
+.rank-frame-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%) scale(var(--scale, 1));
+  pointer-events: none;
+  overflow: visible;
+}
+
+.rank-frame-wrap--tuck .rank-frame-ornament {
+  top: 8px;
+}
+
+.rank-avatar__picture {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.rank-avatar__picture img,
+.rank-avatar__picture svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rank-frame-glow {
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--tier-glow), transparent 72%);
+  animation: frameGlow 2.8s ease-in-out infinite;
+}
+
+@keyframes frameGlow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+.rank-frame-ring {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.rank-frame-ring svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.rank-frame-sweep {
+  transform-origin: 50% 50%;
+  animation: frameSpin 6s linear infinite;
+}
+
+.rank-frame-sweep2 {
+  transform-origin: 50% 50%;
+  animation: frameSpin 4.5s linear infinite reverse;
+}
+
+@keyframes frameSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rank-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: twinkle 2.2s ease-in-out infinite;
+}
+
+.rank-spark.s2 {
+  animation-delay: 0.55s;
+}
+
+.rank-spark.s3 {
+  animation-delay: 1.1s;
+}
+
+.rank-spark.s4 {
+  animation-delay: 1.65s;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.rank-frame-ornament {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  transform: translate(-50%, -58%);
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  animation: ornBob 3.6s ease-in-out infinite;
+}
+
+.rank-frame-ornament svg {
+  overflow: visible;
+}
+
+@keyframes ornBob {
+  0%,
+  100% {
+    transform: translate(-50%, -58%);
+  }
+  50% {
+    transform: translate(-50%, -64%);
+  }
+}
+
+.rank-frame-wrap[data-tier='titan'] .rank-frame-ornament svg {
+  transform: scale(1.9);
+  transform-origin: 50% 88%;
+}
+
+.rank-frame-wrap[data-tier='titan'] .rank-frame-glow {
+  animation-duration: 1.5s;
+  inset: 0;
+}
+
+.rank-frame-wrap[data-tier='titan'] .rank-frame-sweep {
+  animation-duration: 3s;
+}
+
+.rank-frame-wrap[data-tier='titan'] .rank-frame-sweep2 {
+  animation-duration: 2.2s;
+}
+
+.rank-eye-blink {
+  transform-box: fill-box;
+  transform-origin: 50% 55%;
+  animation: eyeBlink 3.2s ease-in-out infinite;
+}
+
+.rank-eye-blink.e2 {
+  animation-delay: 0.05s;
+}
+
+@keyframes eyeBlink {
+  0%,
+  84%,
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  87% {
+    transform: scaleY(0.06);
+    opacity: 0.6;
+  }
+  90% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  93% {
+    transform: scaleY(0.06);
+    opacity: 0.6;
+  }
+  96% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 
 /* ================================================================ price */
@@ -970,16 +1180,39 @@ textarea.input {
 }
 
 .stat {
-  padding: 14px 12px;
+  position: relative;
+  overflow: hidden;
+  padding: 13px 12px 12px;
   border-radius: var(--r-md);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.stat::before {
+  content: '';
+  position: absolute;
+  top: -28px;
+  right: -28px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--tone, 255 110 90) / 0.22), transparent 70%);
+  pointer-events: none;
+}
+
+.stat__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  margin-bottom: 4px;
 }
 
 .stat__value {
   font-size: var(--fs-lg);
   font-weight: 900;
+  line-height: 1.2;
 }
 
 .stat__label {

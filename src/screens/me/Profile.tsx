@@ -8,6 +8,7 @@ import { useMe } from '@/auth/session';
 import { faDigits, money, num, toman } from '@/lib/format';
 import { useUnread, useWallet } from '@/lib/queries';
 import { haptic } from '@/lib/telegram';
+import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { PlayerCard } from '@/ui/PlayerCard';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
@@ -41,12 +42,14 @@ export default function Profile() {
       <section className="section">
         {stats.data ? (
           <div className="stats">
-            <Stat value={faDigits(stats.data.tournamentsPlayed)} label="تورنمنت" />
-            <Stat value={faDigits(stats.data.wins)} label="برد" />
-            <Stat value={`${faDigits(stats.data.winRate)}٪`} label="درصد برد" />
-            <Stat value={faDigits(stats.data.tournamentsWon)} label="قهرمانی" />
-            <Stat value={num(stats.data.points)} label="امتیاز" />
+            <Stat icon="joystick" tone="91 140 255" value={faDigits(stats.data.tournamentsPlayed)} label="تورنمنت" />
+            <Stat icon="crossed-swords" tone="255 110 90" value={faDigits(stats.data.wins)} label="برد" />
+            <Stat icon="hundred-points" tone="47 210 122" value={`${faDigits(stats.data.winRate)}٪`} label="درصد برد" />
+            <Stat icon="trophy" tone="255 196 75" value={faDigits(stats.data.tournamentsWon)} label="قهرمانی" />
+            <Stat icon="glowing-star" tone="196 160 255" value={num(stats.data.points)} label="امتیاز" />
             <Stat
+              icon="money-bag"
+              tone="56 200 232"
               value={stats.data.earningsUsd ? money(stats.data.earningsUsd, 'USD') : num(stats.data.earningsIrt)}
               label="درآمد"
             />
@@ -101,9 +104,12 @@ export default function Profile() {
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
+function Stat({ icon, tone, value, label }: { icon: Icon3DName; tone: string; value: string; label: string }) {
   return (
-    <div className="stat">
+    <div className="stat" style={{ '--tone': tone } as CSSProperties}>
+      <span className="tone-icon stat__icon">
+        <Icon3D name={icon} size={22} />
+      </span>
       <span className="stat__value num">{value}</span>
       <span className="stat__label">{label}</span>
     </div>

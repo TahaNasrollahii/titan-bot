@@ -137,7 +137,7 @@
   align-items: center;
   text-align: center;
   gap: 4px;
-  padding: 24px 16px 20px;
+  padding: 28px 16px 20px;
   border-radius: var(--r-xl);
 }
 
@@ -152,32 +152,16 @@
 
 .prof-hero__avatar {
   position: relative;
+  margin-top: 8px;
   margin-bottom: 10px;
   cursor: pointer;
-}
-
-.prof-hero__picture {
-  width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  font-size: 44px;
-  font-weight: 900;
-}
-
-.prof-hero__picture img {
-  width: calc(100% - 12px);
-  height: calc(100% - 12px);
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .prof-hero__camera {
   position: absolute;
   left: -2px;
   bottom: -2px;
+  z-index: 4;
   width: 40px;
   height: 40px;
   border-radius: 50%;

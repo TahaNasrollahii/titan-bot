@@ -19,7 +19,7 @@ export const GAME_ACCENTS: Record<string, string> = {
   'clash-of-clans': '#38bdf8',
   valorant: '#ef2f5a',
   steam: '#4a8bff',
-  premium: '#ef2f5a',
+  premium: '#3b82f6',
 };
 const ACCENT_COLORS = ['#ff7a2f', '#4a8bff', '#35c6ff', '#ef2f5a', '#35d07f', '#ffb800'];
 
@@ -142,13 +142,13 @@ export function GameTile({ game, size = 'md' }: { game: Game; size?: 'md' | 'lg'
       )}
       {char ? (
         <Img className="gtile__char" src={char} alt="" contain />
-      ) : icon ? (
+      ) : !bg && icon ? (
         <Img className="gtile__icon" src={icon} alt="" contain />
-      ) : (
+      ) : !bg ? (
         <span className="gtile__mono ltr" aria-hidden>
           {game.titleEn.slice(0, 2).toUpperCase()}
         </span>
-      )}
+      ) : null}
       <div className="gtile__shade" />
       <div className="gtile__info">
         <strong>{game.title}</strong>

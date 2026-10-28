@@ -33,7 +33,10 @@ export default function GameStore() {
 
   return (
     <Screen title={game?.title ?? 'فروشگاه'} fallback="/store">
-      <header className="game-hero" style={{ '--accent': accentColor } as CSSProperties}>
+      <header
+        className={`game-hero ${charSrc ? '' : 'game-hero--no-char'}`.trim()}
+        style={{ '--accent': accentColor } as CSSProperties}
+      >
         <div className="game-hero__card">
           {bgSrc && <Img className="game-hero__bg" src={bgSrc} alt="" priority />}
           <div className="game-hero__shade" aria-hidden />
