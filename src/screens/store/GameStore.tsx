@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router';
 
 import { catalogApi, tournamentsApi } from '@/api/endpoints';
 import { faDigits } from '@/lib/format';
-import { gameBackground, gameCharacter, gameIcon, gameLogo } from '@/lib/media';
+import { gameBackground, gameCharacter, gameIcon } from '@/lib/media';
 import { haptic } from '@/lib/telegram';
 import { GAME_ACCENTS, TournamentCard } from '@/ui/cards';
 import { Img } from '@/ui/Img';
@@ -14,6 +14,20 @@ import { Screen } from '@/ui/Screen';
 import { ProductGrid } from './ProductGrid';
 import { SORTS } from './Store';
 import './store.css';
+
+const GAME_MONOGRAMS: Record<string, string> = {
+  'ea-fc': 'FC',
+  pubg: 'PG',
+  minecraft: 'MC',
+  cs2: 'CS2',
+  'dota-2': 'D2',
+};
+
+function gameMonogram(slug: string, titleEn?: string): string {
+  if (GAME_MONOGRAMS[slug]) return GAME_MONOGRAMS[slug];
+  const clean = (titleEn || slug).replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+  return clean.slice(0, 3) || 'GG';
+}
 
 export default function GameStore() {
   const { game: slug = '' } = useParams();
@@ -29,34 +43,45 @@ export default function GameStore() {
   const bgSrc = gameBackground(slug, game?.backgroundImage || game?.coverImage);
   const charSrc = gameCharacter(slug, game?.characterImage);
   const iconSrc = gameIcon(slug, game?.iconImage);
-  const logoSrc = gameLogo(slug, game?.logoImage);
+  const monogram = gameMonogram(slug, game?.titleEn);
 
   return (
     <Screen title={game?.title ?? 'فروشگاه'} fallback="/store">
       <header
-        className={`game-hero ${charSrc ? '' : 'game-hero--no-char'}`.trim()}
+        className={`game-hero ${charSrc ? 'game-hero--has-char' : 'game-hero--no-char'}`}
         style={{ '--accent': accentColor } as CSSProperties}
       >
         <div className="game-hero__card">
-          {bgSrc && <Img className="game-hero__bg" src={bgSrc} alt="" priority />}
+          {bgSrc && <Img key={`bg-${slug}`} className="game-hero__bg" src={bgSrc} alt="" priority />}
           <div className="game-hero__shade" aria-hidden />
           <div className="game-hero__glow" aria-hidden />
           <div className="game-hero__shine" aria-hidden />
+
+          {!charSrc && (
+            <div className="game-hero__emblem-wrap" aria-hidden>
+              <div className="game-hero__emblem">
+                {iconSrc ? (
+                  <Img key={`emblem-${slug}`} src={iconSrc} alt="" contain priority />
+                ) : (
+                  <span className="game-hero__mono ltr">{monogram}</span>
+                )}
+              </div>
+            </div>
+          )}
 
           <div className="game-hero__content">
             <div className="game-hero__eyebrow">
               {iconSrc && (
                 <span className="game-hero__icon">
-                  <Img src={iconSrc} alt="" contain />
+                  <Img key={`icon-${slug}`} src={iconSrc} alt="" contain />
                 </span>
               )}
-              <span className="game-hero__en ltr">{game?.titleEn || slug.toUpperCase()}</span>
+              <span className="game-hero__en ltr">{game?.titleEn || slug.replace(/-/g, ' ').toUpperCase()}</span>
               {game?.genre && <span className="game-hero__genre">{game.genre}</span>}
             </div>
 
             <div className="game-hero__title-row">
               <h1>{game?.title ?? 'فروشگاه بازی'}</h1>
-              {logoSrc && <Img className="game-hero__logo" src={logoSrc} alt="" contain />}
             </div>
 
             <div className="game-hero__pills">
@@ -86,7 +111,11 @@ export default function GameStore() {
           </div>
         </div>
 
-        {charSrc && <Img className="game-hero__char" src={charSrc} alt={game?.title ?? ''} contain priority />}
+        {charSrc && (
+          <div className="game-hero__art-stage" aria-hidden>
+            <Img key={`char-${slug}`} className="game-hero__char" src={charSrc} alt={game?.title ?? ''} contain priority />
+          </div>
+        )}
       </header>
 
       {games.data && games.data.length > 1 && (

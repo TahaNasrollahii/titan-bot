@@ -20,6 +20,11 @@ export const GAME_ACCENTS: Record<string, string> = {
   valorant: '#ef2f5a',
   steam: '#4a8bff',
   premium: '#3b82f6',
+  'ea-fc': '#10b981',
+  pubg: '#f59e0b',
+  minecraft: '#22c55e',
+  cs2: '#fb923c',
+  'dota-2': '#ef4444',
 };
 const ACCENT_COLORS = ['#ff7a2f', '#4a8bff', '#35c6ff', '#ef2f5a', '#35d07f', '#ffb800'];
 

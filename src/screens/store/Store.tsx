@@ -256,6 +256,12 @@ export const SORTS = [
 export default function Store() {
   const games = useQuery({ queryKey: ['games'], queryFn: catalogApi.games, staleTime: 5 * 60_000 });
   const [ordering, setOrdering] = useState('-popularity');
+  const sortedGames = games.data
+    ? [
+        ...games.data.filter(g => g.slug !== 'premium' && g.kind !== 'service'),
+        ...games.data.filter(g => g.slug === 'premium' || g.kind === 'service'),
+      ]
+    : undefined;
 
   return (
     <Screen>
@@ -279,8 +285,8 @@ export default function Store() {
           <h2 className="section-title">بازی‌ها</h2>
         </div>
         <div className="games-grid">
-          {games.data
-            ? games.data.map(game => <GameTile key={game.slug} game={game} size="lg" />)
+          {sortedGames
+            ? sortedGames.map(game => <GameTile key={game.slug} game={game} size="lg" />)
             : Array.from({ length: 4 }, (_, i) => <Skeleton key={i} h={150} r={22} />)}
         </div>
       </section>
