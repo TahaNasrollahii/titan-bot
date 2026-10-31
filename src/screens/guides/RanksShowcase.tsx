@@ -58,46 +58,52 @@ const RANK_MECHANICS: {
     icon: 'trophy',
     badge: '+۲۵ تا +۱,۰۰۰ امتیاز',
     title: 'نحوه کسب امتیاز رنک (Points)',
-    desc: 'با پیروزی در هر مسابقه از جدول براکت ۲۵ امتیاز رنک می‌گیرید. نفرات و تیم‌های برتر هر تورنومنت (رتبه‌های اول تا سوم) نیز پاداش امتیازی ویژه جدول (از ۱۵۰ تا ۱,۰۰۰ امتیاز) دریافت می‌کنند.',
+    desc: 'با پیروزی در هر مسابقه از جدول براکت ۲۵ امتیاز رنک می‌گیرید. نفرات و تیم‌های برتر هر تورنومنت نیز از ۱۵۰ تا ۱,۰۰۰ امتیاز پاداش می‌گیرند.',
     tone: '245 158 11',
   },
   {
     icon: 'high-voltage',
     badge: '+۱۲۰ XP برد / +۴۰ XP حضور',
     title: 'تفاوت امتیاز رنک با تجربه (XP) و لول',
-    desc: 'امتیاز رنک سطح رقابتی شما (برنز تا تایتان) را مشخص می‌کند، اما XP نشان‌دهنده سابقه فعالیت شماست. در هر بازی برنده ۱۲۰ XP و بازنده ۴۰ XP می‌گیرد و با فرمول 500 + (Level × 300) لول ارتقا می‌یابد.',
+    desc: 'امتیاز رنک سطح رقابتی شما (برنز تا تایتان) را مشخص می‌کند، اما XP نشان‌دهنده سابقه فعالیت شماست و در هر بازی به برنده و بازنده تعلق می‌گیرد.',
     tone: '56 200 232',
   },
   {
     icon: 'crossed-swords',
     badge: 'سیدبندی هوشمند',
     title: 'تاثیر رنک در براکت و مسابقات تیمی',
-    desc: 'در مسابقات تیمی امتیاز هم به تیم و هم به بازیکنان حاضر در ترکیب (Roster) اضافه می‌شود. همچنین جدول براکت بر اساس امتیاز سیدبندی می‌شود تا تیم‌های قوی در دور اول به هم نخورند.',
+    desc: 'در مسابقات تیمی امتیاز هم به تیم و هم به بازیکنان حاضر در ترکیب (Roster) اضافه می‌شود و جدول براکت بر اساس امتیاز سیدبندی می‌شود.',
     tone: '157 111 255',
   },
   {
     icon: 'crown',
     badge: '۵ نشان افتخار',
     title: 'نشان‌های افتخار (Badges) پروفایل',
-    desc: 'با فتح فینال هر تورنومنت، نشان «قهرمان (Champion)» به‌صورت خودکار به پروفایل شما اضافه می‌شود. نشان‌های «استاد برد پیاپی»، «کهنه‌کار»، «سلطان هدشات» و «استاد کلاچ» نیز رکوردهای شما را نمایش می‌دهند.',
+    desc: 'با فتح فینال هر تورنومنت نشان «قهرمان» و با ثبت رکوردهای ویژه نشان‌های «برد پیاپی»، «کهنه‌کار»، «سلطان هدشات» و «استاد کلاچ» فعال می‌شوند.',
     tone: '226 69 63',
   },
 ];
 
 export function RanksShowcase({ variant = 'hub' }: { variant?: 'hub' | 'article' }) {
+  const isHub = variant === 'hub';
+
   return (
     <section className="g-ranks clay" aria-labelledby="bot-ranks-title">
-      <div className="g-ranks__head">
-        <span className="g-ranks__kicker">
-          <Icon3D name="crown" size={18} />
-          سیستم رنک‌بندی و امتیازات تایتان
-        </span>
-        <h2 id="bot-ranks-title" className="g-ranks__title">
-          آموزش کامل رنک‌های سایت، امتیازات (Points) و مسیر صعود تا تایتان
-        </h2>
-        <p className="g-ranks__sub">
-          در تایتان هر بازیکن و هر تیم بر اساس امتیازهای کسب‌شده در تورنومنت‌ها در یکی از ۵ سطح رنک قرار می‌گیرد. رنک شما قاب آواتار، رتبه در لیدربرد و سیدبندی جدول مسابقات را تعیین می‌کند.
-        </p>
+      <div className="g-ranks__head-row">
+        <div>
+          <h2 id="bot-ranks-title" className="g-ranks__title">
+            {isHub ? 'رنک‌ها و سیستم امتیازدهی' : 'سطح‌های ۵گانه رنک و امتیازات'}
+          </h2>
+          <p className="g-ranks__sub">
+            مسیر ارتقای رنک از سطح ۱ (برنز) تا سطح ۵ (تایتان) بر اساس امتیاز تورنومنت‌ها
+          </p>
+        </div>
+        {isHub && (
+          <Link to="/guides/ranks" className="g-ranks__more" onClick={() => haptic.tap()}>
+            <span>آموزش کامل</span>
+            <ChevronLeft size={15} />
+          </Link>
+        )}
       </div>
 
       {/* 1 -> 5 Left-to-Right Visual Progression Strip */}
@@ -106,7 +112,12 @@ export function RanksShowcase({ variant = 'hub' }: { variant?: 'hub' | 'article'
           const detail = RANK_TIER_DETAILS[rank.id] ?? RANK_TIER_DETAILS.bronze;
           const uid = `-bot-strip-${variant}-${rank.id}`;
           return (
-            <div key={rank.id} className="g-ranks__strip-item">
+            <Link
+              key={rank.id}
+              to="/guides/ranks"
+              className="g-ranks__strip-item"
+              onClick={() => haptic.tap()}
+            >
               <span
                 className="rank-avatar"
                 style={{ '--size': '44px', '--scale': 44 / 68 } as CSSProperties}
@@ -127,87 +138,80 @@ export function RanksShowcase({ variant = 'hub' }: { variant?: 'hub' | 'article'
               </span>
               <strong style={{ color: rank.from }}>{detail.faName}</strong>
               <span className="num">{rank.pts}</span>
-            </div>
+            </Link>
           );
         })}
       </div>
 
-      {/* 5 Rank Tiers */}
-      <div className="g-ranks__tiers">
-        {RANKS.map((rank, index) => {
-          const detail = RANK_TIER_DETAILS[rank.id] ?? RANK_TIER_DETAILS.bronze;
-          const uid = `-bot-${variant}-${rank.id}`;
-          return (
-            <div
-              key={rank.id}
-              className="g-tier-card"
-              style={
-                {
-                  '--rank-from': rank.from,
-                  '--rank-to': rank.to,
-                  '--rank-glow': rank.glow,
-                } as CSSProperties
-              }
-            >
-              <div className="g-tier-card__row">
-                <span
-                  className="rank-avatar g-tier-card__avatar"
-                  style={{ '--size': '56px', '--scale': 56 / 68 } as CSSProperties}
+      {/* Detailed 5 Rank Tiers & 4 Mechanics Cards — only shown on /guides/ranks */}
+      {!isHub && (
+        <>
+          <div className="g-ranks__tiers">
+            {RANKS.map((rank, index) => {
+              const detail = RANK_TIER_DETAILS[rank.id] ?? RANK_TIER_DETAILS.bronze;
+              const uid = `-bot-${variant}-${rank.id}`;
+              return (
+                <div
+                  key={rank.id}
+                  className="g-tier-card"
+                  style={
+                    {
+                      '--rank-from': rank.from,
+                      '--rank-to': rank.to,
+                      '--rank-glow': rank.glow,
+                    } as CSSProperties
+                  }
                 >
-                  <span
-                    className="rank-frame-wrap"
-                    data-tier={rank.id}
-                    style={{ '--tier-glow': rank.glow } as CSSProperties}
-                    aria-hidden
-                  >
-                    <span className="rank-frame-glow" />
-                    <span className="rank-frame-ring">{getRingSVG(rank, uid)}</span>
-                    <span className="rank-avatar__picture g-tier-card__num num">
-                      {faDigits(index + 1)}
+                  <div className="g-tier-card__row">
+                    <span
+                      className="rank-avatar g-tier-card__avatar"
+                      style={{ '--size': '52px', '--scale': 52 / 68 } as CSSProperties}
+                    >
+                      <span
+                        className="rank-frame-wrap"
+                        data-tier={rank.id}
+                        style={{ '--tier-glow': rank.glow } as CSSProperties}
+                        aria-hidden
+                      >
+                        <span className="rank-frame-glow" />
+                        <span className="rank-frame-ring">{getRingSVG(rank, uid)}</span>
+                        <span className="rank-avatar__picture g-tier-card__num num">
+                          {faDigits(index + 1)}
+                        </span>
+                        <span className="rank-frame-ornament">{getOrnamentSVGWrapper(rank, uid)}</span>
+                      </span>
                     </span>
-                    <span className="rank-frame-ornament">{getOrnamentSVGWrapper(rank, uid)}</span>
-                  </span>
-                </span>
 
-                <div className="g-tier-card__info">
-                  <div className="g-tier-card__title-row">
-                    <strong style={{ color: rank.from }}>{detail.faName}</strong>
-                    <span className="g-tier-card__en">{rank.name}</span>
-                    <span className="g-tier-card__pts num">{rank.pts}</span>
+                    <div className="g-tier-card__info">
+                      <div className="g-tier-card__title-row">
+                        <strong style={{ color: rank.from }}>{detail.faName}</strong>
+                        <span className="g-tier-card__en">{rank.name}</span>
+                        <span className="g-tier-card__pts num">{detail.rangeLabel}</span>
+                      </div>
+                      <div className="g-tier-card__motto">«{rank.desc}»</div>
+                    </div>
                   </div>
-                  <div className="g-tier-card__motto">«{rank.desc}»</div>
-                  <div className="g-tier-card__range">{detail.rangeLabel} · {detail.ornamentLabel}</div>
+                  <p className="g-tier-card__perk">{detail.perk}</p>
                 </div>
-              </div>
-              <p className="g-tier-card__perk">{detail.perk}</p>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* 4 Mechanics Cards */}
-      <div className="g-ranks__mechs">
-        {RANK_MECHANICS.map(item => (
-          <div key={item.title} className="g-mech-card" style={{ '--tone': item.tone } as CSSProperties}>
-            <div className="g-mech-card__head">
-              <span className="tone-icon g-mech-card__icon">
-                <Icon3D name={item.icon} size={22} />
-              </span>
-              <span className="g-mech-card__badge">{item.badge}</span>
-            </div>
-            <strong>{item.title}</strong>
-            <p>{item.desc}</p>
+              );
+            })}
           </div>
-        ))}
-      </div>
 
-      {variant === 'hub' && (
-        <div className="g-ranks__actions">
-          <Link to="/guides/ranks" className="btn btn--primary btn--block" onClick={() => haptic.tap()}>
-            <span>مطالعه آموزش کامل رنک‌ها و سوالات متداول</span>
-            <ChevronLeft size={18} />
-          </Link>
-        </div>
+          <div className="g-ranks__mechs">
+            {RANK_MECHANICS.map(item => (
+              <div key={item.title} className="g-mech-card" style={{ '--tone': item.tone } as CSSProperties}>
+                <div className="g-mech-card__head">
+                  <span className="tone-icon g-mech-card__icon">
+                    <Icon3D name={item.icon} size={20} />
+                  </span>
+                  <span className="g-mech-card__badge num">{item.badge}</span>
+                </div>
+                <h4>{item.title}</h4>
+                <p>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </section>
   );

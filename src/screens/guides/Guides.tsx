@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { BookOpen, ChevronLeft, Search, X } from 'lucide-react';
+import { ChevronLeft, Search, X } from 'lucide-react';
 import { useMemo, useState, type CSSProperties } from 'react';
 import { Link, useSearchParams } from 'react-router';
 
@@ -18,18 +18,8 @@ import { RanksShowcase } from './RanksShowcase';
 import { GUIDE_CATEGORIES, cleanGuideText, guideCategoryMeta } from './guidesData';
 import './guides.css';
 
-const QUICK_TAGS = [
-  { label: 'وی‌باکس فورتنایت', query: 'وی‌باکس' },
-  { label: 'ولورانت پوینت', query: 'ولورانت پوینت' },
-  { label: 'سی‌پی کالاف', query: 'سی‌پی' },
-  { label: 'سوپرسل آیدی', query: 'سوپرسل' },
-  { label: 'تأیید دومرحله‌ای 2FA', query: 'دومرحله‌ای' },
-  { label: 'ثبت‌نام تورنومنت', query: 'تورنومنت' },
-  { label: 'رنک‌ها و امتیازات', query: 'رنک' },
-];
-
 const GAME_FILTERS = [
-  { key: 'all', label: 'همه آموزش‌ها' },
+  { key: 'all', label: 'همه بازی‌ها' },
   { key: 'fortnite', label: 'فورتنایت' },
   { key: 'valorant', label: 'ولورانت' },
   { key: 'call-of-duty', label: 'کالاف دیوتی' },
@@ -93,28 +83,15 @@ export default function Guides() {
 
   return (
     <Screen title="آموزش‌ها و راهنما" fallback="/">
-      {/* Hero Banner */}
+      {/* Clean Header & Search */}
       <header className="g-hero clay">
-        <div className="g-hero__top">
-          <span className="g-hero__badge">
-            <Icon3D name="sparkles" size={16} />
-            آکادمی و راهنمای تایتان
-          </span>
-          <span className="g-hero__count num">{faDigits(allGuides.length || 21)} آموزش</span>
-        </div>
-        <h1 className="g-hero__title">صفر تا صد خرید، امنیت اکانت، تورنومنت‌ها و رنک‌بندی</h1>
-        <p className="g-hero__sub">
-          تمام آموزش‌های خرید و فعال‌سازی محصولات، اتصال اکانت بازی‌ها، شرکت در مسابقات نقدی و سیستم رنک‌های تایتان در یک جا.
-        </p>
-
-        {/* Search Input */}
         <div className="g-search">
-          <Search size={18} className="g-search__icon" />
+          <Search size={17} className="g-search__icon" />
           <input
             type="search"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="جستجو در آموزش‌ها (مثلاً: وی‌باکس، رنک، تورنومنت...)"
+            placeholder="جستجو در آموزش‌ها (وی‌باکس، سوپرسل، تورنومنت، رنک...)"
             aria-label="جستجو در آموزش‌ها"
           />
           {query && (
@@ -124,61 +101,40 @@ export default function Guides() {
           )}
         </div>
 
-        {/* Quick Tags */}
-        <div className="rail chips-rail g-quick-tags">
-          {QUICK_TAGS.map(tag => {
-            const active = query === tag.query;
-            return (
-              <button
-                key={tag.label}
-                type="button"
-                className="chip"
-                aria-pressed={active}
-                onClick={() => {
-                  haptic.select();
-                  setQuery(active ? '' : tag.query);
-                }}
-              >
-                {tag.label}
-              </button>
-            );
-          })}
-        </div>
-      </header>
-
-      {/* Category Bento Grid */}
-      <section className="section">
-        <div className="g-cat-grid">
+        {/* Category Filter Tabs */}
+        <div className="rail chips-rail">
+          <button
+            type="button"
+            className="chip"
+            aria-pressed={category === 'all'}
+            onClick={() => {
+              haptic.select();
+              setCategory('all');
+            }}
+          >
+            همه دسته‌ها
+          </button>
           {GUIDE_CATEGORIES.map(cat => {
-            const count = allGuides.filter(g => g.category === cat.key).length;
             const active = category === cat.key;
             return (
               <button
                 key={cat.key}
                 type="button"
+                className="chip"
                 aria-pressed={active}
-                className={`g-cat-card clay card--press ${active ? 'is-active' : ''}`}
-                style={{ '--tone': cat.tone, '--accent': cat.accent } as CSSProperties}
                 onClick={() => {
                   haptic.select();
                   setCategory(active ? 'all' : cat.key);
                 }}
               >
-                <div className="g-cat-card__top">
-                  <span className="tone-icon g-cat-card__icon">
-                    <img src={cat.icon} alt="" width={22} height={22} draggable={false} />
-                  </span>
-                  <span className="g-cat-card__count num">{faDigits(count)} راهنما</span>
-                </div>
-                <strong>{cat.shortTitle}</strong>
-                <span>{cat.kicker}</span>
+                {cat.shortTitle}
               </button>
             );
           })}
         </div>
 
         {/* Game Filter Chips */}
-        <div className="rail chips-rail" style={{ marginTop: 12 }}>
+        <div className="rail chips-rail">
           {GAME_FILTERS.map(gf => (
             <button
               key={gf.key}
@@ -198,23 +154,22 @@ export default function Guides() {
         {isFiltering && (
           <div className="g-filter-bar">
             <span>
-              نمایش <b className="num">{faDigits(filteredGuides.length)}</b> از{' '}
-              <b className="num">{faDigits(allGuides.length)}</b> آموزش
+              <b className="num">{faDigits(filteredGuides.length)}</b> آموزش
             </span>
             <button type="button" className="g-filter-reset" onClick={resetFilters}>
-              <X size={14} /> حذف فیلترها
+              <X size={14} /> پاک کردن فیلتر
             </button>
           </div>
         )}
-      </section>
+      </header>
 
       {/* Guides Content */}
       {guidesQuery.isError ? (
         <ErrorState error={guidesQuery.error} onRetry={() => guidesQuery.refetch()} />
       ) : !guidesQuery.data ? (
-        <div className="stack" style={{ marginTop: 18 }}>
+        <div className="stack" style={{ marginTop: 14 }}>
           {[0, 1, 2, 3].map(i => (
-            <Skeleton key={i} h={108} r={22} />
+            <Skeleton key={i} h={92} r={20} />
           ))}
         </div>
       ) : sections.length === 0 ? (
@@ -230,21 +185,6 @@ export default function Guides() {
         />
       ) : (
         <>
-          {sections.map(sec => (
-            <section key={sec.key} id={sec.key} className="section">
-              <div className="section-head">
-                <h2 className="section-title">{sec.title}</h2>
-                <span className="text-xs muted num">{faDigits(sec.guides.length)} مورد</span>
-              </div>
-              <p className="g-sec-intro">{sec.intro}</p>
-              <div className="stack">
-                {sec.guides.map(item => (
-                  <GuideRowCard key={item.slug} guide={item} />
-                ))}
-              </div>
-            </section>
-          ))}
-
           {(category === 'all' || category === 'tournament') &&
             (game === 'all' || game === 'general') &&
             (!normalizedQuery ||
@@ -255,6 +195,20 @@ export default function Guides() {
                 <RanksShowcase variant="hub" />
               </div>
             )}
+
+          {sections.map(sec => (
+            <section key={sec.key} id={sec.key} className="section">
+              <div className="section-head">
+                <h2 className="section-title">{sec.title}</h2>
+                <span className="text-xs muted num">{faDigits(sec.guides.length)} آموزش</span>
+              </div>
+              <div className="stack">
+                {sec.guides.map(item => (
+                  <GuideRowCard key={item.slug} guide={item} />
+                ))}
+              </div>
+            </section>
+          ))}
         </>
       )}
     </Screen>
@@ -277,7 +231,7 @@ export function GuideRowCard({ guide }: { guide: GuideSummary }) {
         <div className="g-card__badges">
           {guide.game ? (
             <span className="g-card__game">
-              {gIcon && <Img src={gIcon} alt="" contain style={{ width: 16, height: 16, borderRadius: 4, background: 'none' }} />}
+              {gIcon && <Img src={gIcon} alt="" contain style={{ width: 15, height: 15, borderRadius: 4, background: 'none' }} />}
               {guide.game.title}
             </span>
           ) : (
@@ -287,18 +241,11 @@ export function GuideRowCard({ guide }: { guide: GuideSummary }) {
             </span>
           )}
         </div>
-        <span className="g-card__read">
-          <BookOpen size={13} /> مطالعه
-        </span>
+        <ChevronLeft size={16} className="muted" />
       </div>
 
       <h3 className="g-card__title">{guide.title}</h3>
       {summary && <p className="g-card__summary">{summary}</p>}
-
-      <div className="g-card__foot">
-        <span>مشاهده آموزش گام‌به‌گام</span>
-        <ChevronLeft size={16} />
-      </div>
     </Link>
   );
 }
