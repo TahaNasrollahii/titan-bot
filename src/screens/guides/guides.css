@@ -208,6 +208,20 @@
   gap: 6px;
 }
 
+.g-card__right-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.g-card__idx {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--accent, var(--red-2));
+  opacity: 0.55;
+  line-height: 1;
+}
+
 .g-card__game,
 .g-card__cat {
   display: inline-flex;
@@ -537,12 +551,223 @@
   gap: 14px;
 }
 
+.ga-scroll-target {
+  scroll-margin-top: 155px;
+}
+
 .ga-h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 16.5px;
   font-weight: 900;
   line-height: 1.4;
-  padding-top: 8px;
+  padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.ga-h2__num {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  font-size: 11.5px;
+  font-weight: 900;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--gold, #f0c866);
+  flex-shrink: 0;
+}
+
+/* Sticky Floating Progress + Step Switcher Bar in Bot Guide */
+.ga-sticky-steps {
+  position: sticky;
+  top: 56px;
+  z-index: 45;
+  margin-top: 10px;
+  padding: 10px 11px 8px;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  background: rgba(22, 6, 11, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.ga-sticky-steps__bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ga-sticky-steps__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f0c866, var(--accent, var(--red-2)));
+  transition: width 0.15s linear;
+}
+
+.ga-sticky-steps__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ga-sticky-steps__current {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
+  text-align: right;
+}
+
+.ga-sticky-steps__badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent, var(--red-2));
+  color: #140408;
+  font-size: 10.5px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.ga-sticky-steps__title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ga-sticky-steps__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.ga-sticky-steps__nav,
+.ga-sticky-steps__toggle {
+  width: 27px;
+  height: 27px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.ga-sticky-steps__nav:disabled {
+  opacity: 0.3;
+}
+
+.ga-sticky-steps__toggle.is-open {
+  background: var(--accent, var(--red-2));
+  color: #140408;
+}
+
+.ga-sticky-steps__pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-top: 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.ga-sticky-steps__pills::-webkit-scrollbar {
+  display: none;
+}
+
+.ga-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px 4px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ga-step-pill.is-active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent, var(--red-2));
+  color: #fff;
+  font-weight: 800;
+}
+
+.ga-step-pill__num {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 900;
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--muted);
+}
+
+.ga-step-pill.is-active .ga-step-pill__num {
+  background: var(--accent, var(--red-2));
+  color: #140408;
+}
+
+.ga-step-pill.is-done .ga-step-pill__num {
+  background: rgba(61, 220, 132, 0.22);
+  color: #3ddc84;
+}
+
+.ga-step-pill__label {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ga-sticky-steps__drawer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  max-height: 210px;
+  overflow-y: auto;
+}
+
+.ga-drawer-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+  color: var(--text-2);
+}
+
+.ga-drawer-item.is-active {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--accent, var(--red-2));
   color: #fff;
 }
 

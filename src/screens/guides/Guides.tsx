@@ -30,12 +30,14 @@ const GAME_FILTERS = [
 
 export default function Guides() {
   const [searchParams] = useSearchParams();
-  const initialCategory = (searchParams.get('category') as GuideCategory | null) ?? 'all';
+  const initialCategory = (searchParams.get('category') as GuideCategory | 'all' | null) ?? 'purchase';
   const initialGame = searchParams.get('game') ?? 'all';
 
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<GuideCategory | 'all'>(
-    GUIDE_CATEGORIES.some(c => c.key === initialCategory) ? (initialCategory as GuideCategory) : 'all',
+    initialCategory === 'all' || GUIDE_CATEGORIES.some(c => c.key === initialCategory)
+      ? initialCategory
+      : 'purchase',
   );
   const [game, setGame] = useState<string>(initialGame);
 
@@ -47,11 +49,14 @@ export default function Guides() {
 
   const allGuides = guidesQuery.data ?? [];
   const normalizedQuery = query.trim().toLowerCase();
-  const isFiltering = normalizedQuery.length > 0 || category !== 'all' || game !== 'all';
+  const isSearchOrGameFilter = normalizedQuery.length > 0 || game !== 'all';
 
-  const filteredGuides = useMemo(() => {
-    return allGuides.filter(item => {
-      if (category !== 'all' && item.category !== category) return false;
+  const effectiveCategory: GuideCategory | 'all' = useMemo(() => {
+    if (category === 'all') return 'all';
+    if (!isSearchOrGameFilter) return category;
+
+    const hasMatchInActive = allGuides.some(item => {
+      if (item.category !== category) return false;
       if (game !== 'all') {
         if (game === 'general') {
           if (item.game !== null) return false;
@@ -65,7 +70,27 @@ export default function Guides() {
       }
       return true;
     });
-  }, [allGuides, category, game, normalizedQuery]);
+
+    return hasMatchInActive ? category : 'all';
+  }, [allGuides, category, game, isSearchOrGameFilter, normalizedQuery]);
+
+  const filteredGuides = useMemo(() => {
+    return allGuides.filter(item => {
+      if (effectiveCategory !== 'all' && item.category !== effectiveCategory) return false;
+      if (game !== 'all') {
+        if (game === 'general') {
+          if (item.game !== null) return false;
+        } else if (item.game?.slug !== game) {
+          return false;
+        }
+      }
+      if (normalizedQuery) {
+        const hay = `${item.title} ${cleanGuideText(item.summary)} ${item.game?.title ?? ''} ${item.game?.titleEn ?? ''}`.toLowerCase();
+        if (!hay.includes(normalizedQuery)) return false;
+      }
+      return true;
+    });
+  }, [allGuides, effectiveCategory, game, normalizedQuery]);
 
   const sections = useMemo(() => {
     return GUIDE_CATEGORIES.map(meta => ({
@@ -77,14 +102,32 @@ export default function Guides() {
   const resetFilters = () => {
     haptic.select();
     setQuery('');
-    setCategory('all');
+    setCategory('purchase');
     setGame('all');
   };
 
   return (
     <Screen title="آموزش‌ها و راهنما" fallback="/">
-      {/* Clean Header & Search */}
+      {/* Clean Header, 2x2 Category Bento Deck & Game Filter */}
       <header className="g-hero clay">
+        <div className="g-hero__top">
+          <span className="g-hero__badge">آکادمی رسمی تایتان</span>
+          {allGuides.length > 0 && (
+            <button
+              type="button"
+              className="g-hero__count"
+              onClick={() => {
+                haptic.select();
+                setCategory(effectiveCategory === 'all' ? 'purchase' : 'all');
+              }}
+            >
+              {effectiveCategory === 'all'
+                ? 'نمای دسته‌بندی'
+                : `نمایش همه (${faDigits(allGuides.length)})`}
+            </button>
+          )}
+        </div>
+
         <div className="g-search">
           <Search size={17} className="g-search__icon" />
           <input
@@ -95,39 +138,45 @@ export default function Guides() {
             aria-label="جستجو در آموزش‌ها"
           />
           {query && (
-            <button type="button" className="g-search__clear" onClick={() => setQuery('')} aria-label="پاک کردن">
+            <button
+              type="button"
+              className="g-search__clear"
+              onClick={() => setQuery('')}
+              aria-label="پاک کردن"
+            >
               <X size={15} />
             </button>
           )}
         </div>
 
-        {/* Category Filter Tabs */}
-        <div className="rail chips-rail">
-          <button
-            type="button"
-            className="chip"
-            aria-pressed={category === 'all'}
-            onClick={() => {
-              haptic.select();
-              setCategory('all');
-            }}
-          >
-            همه دسته‌ها
-          </button>
+        {/* 2x2 Interactive Category Bento Deck */}
+        <div className="g-cat-grid" role="tablist" aria-label="دسته‌بندی آموزش‌ها">
           {GUIDE_CATEGORIES.map(cat => {
-            const active = category === cat.key;
+            const count = allGuides.filter(g => g.category === cat.key).length;
+            const active = effectiveCategory === cat.key;
             return (
               <button
                 key={cat.key}
                 type="button"
-                className="chip"
-                aria-pressed={active}
+                role="tab"
+                aria-selected={active}
+                className={`g-cat-card clay ${active ? 'is-active' : ''}`}
+                style={{ '--accent': cat.accent, '--tone': cat.tone } as CSSProperties}
                 onClick={() => {
                   haptic.select();
-                  setCategory(active ? 'all' : cat.key);
+                  setCategory(cat.key);
+                  if (game === 'general' && cat.key !== 'tournament' && cat.key !== 'site') {
+                    setGame('all');
+                  }
                 }}
               >
-                {cat.shortTitle}
+                <div className="g-cat-card__top">
+                  <span className="g-cat-card__icon">
+                    <img src={cat.icon} alt="" width={22} height={22} draggable={false} />
+                  </span>
+                  <span className="g-cat-card__count num">{faDigits(count)} آموزش</span>
+                </div>
+                <strong>{cat.shortTitle}</strong>
               </button>
             );
           })}
@@ -143,7 +192,13 @@ export default function Guides() {
               aria-pressed={game === gf.key}
               onClick={() => {
                 haptic.select();
-                setGame(game === gf.key && gf.key !== 'all' ? 'all' : gf.key);
+                const nextGame = game === gf.key && gf.key !== 'all' ? 'all' : gf.key;
+                setGame(nextGame);
+                if (nextGame !== 'all') {
+                  setCategory('all');
+                } else if (category === 'all') {
+                  setCategory('purchase');
+                }
               }}
             >
               {gf.label}
@@ -151,10 +206,10 @@ export default function Guides() {
           ))}
         </div>
 
-        {isFiltering && (
+        {isSearchOrGameFilter && (
           <div className="g-filter-bar">
             <span>
-              <b className="num">{faDigits(filteredGuides.length)}</b> آموزش
+              <b className="num">{faDigits(filteredGuides.length)}</b> آموزش یافت شد
             </span>
             <button type="button" className="g-filter-reset" onClick={resetFilters}>
               <X size={14} /> پاک کردن فیلتر
@@ -185,16 +240,15 @@ export default function Guides() {
         />
       ) : (
         <>
-          {(category === 'all' || category === 'tournament') &&
-            (game === 'all' || game === 'general') &&
-            (!normalizedQuery ||
+          {(effectiveCategory === 'tournament' ||
+            (normalizedQuery &&
               'رنک امتیاز برنز نقره طلا پلاتینیوم تایتان لول xp سیدبندی تورنومنت'.includes(
                 normalizedQuery,
-              )) && (
-              <div className="section">
-                <RanksShowcase variant="hub" />
-              </div>
-            )}
+              ))) && (
+            <div className="section">
+              <RanksShowcase variant="hub" />
+            </div>
+          )}
 
           {sections.map(sec => (
             <section key={sec.key} id={sec.key} className="section">
@@ -202,9 +256,10 @@ export default function Guides() {
                 <h2 className="section-title">{sec.title}</h2>
                 <span className="text-xs muted num">{faDigits(sec.guides.length)} آموزش</span>
               </div>
+              <p className="g-sec-intro">{sec.intro}</p>
               <div className="stack">
-                {sec.guides.map(item => (
-                  <GuideRowCard key={item.slug} guide={item} />
+                {sec.guides.map((item, idx) => (
+                  <GuideRowCard key={item.slug} guide={item} index={idx + 1} />
                 ))}
               </div>
             </section>
@@ -215,10 +270,18 @@ export default function Guides() {
   );
 }
 
-export function GuideRowCard({ guide }: { guide: GuideSummary }) {
+export function GuideRowCard({
+  guide,
+  index,
+}: {
+  guide: GuideSummary;
+  index?: number;
+}) {
   const cat = guideCategoryMeta(guide.category);
   const gIcon = guide.game ? gameIcon(guide.game.slug, guide.game.iconImage) : null;
   const summary = cleanGuideText(guide.summary);
+  const formattedIndex =
+    typeof index === 'number' ? faDigits(index).padStart(2, '۰') : null;
 
   return (
     <Link
@@ -231,7 +294,14 @@ export function GuideRowCard({ guide }: { guide: GuideSummary }) {
         <div className="g-card__badges">
           {guide.game ? (
             <span className="g-card__game">
-              {gIcon && <Img src={gIcon} alt="" contain style={{ width: 15, height: 15, borderRadius: 4, background: 'none' }} />}
+              {gIcon && (
+                <Img
+                  src={gIcon}
+                  alt=""
+                  contain
+                  style={{ width: 15, height: 15, borderRadius: 4, background: 'none' }}
+                />
+              )}
               {guide.game.title}
             </span>
           ) : (
@@ -241,7 +311,10 @@ export function GuideRowCard({ guide }: { guide: GuideSummary }) {
             </span>
           )}
         </div>
-        <ChevronLeft size={16} className="muted" />
+        <div className="g-card__right-meta">
+          {formattedIndex && <span className="g-card__idx num">{formattedIndex}</span>}
+          <ChevronLeft size={16} className="muted" />
+        </div>
       </div>
 
       <h3 className="g-card__title">{guide.title}</h3>
