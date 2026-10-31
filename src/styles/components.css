@@ -15,7 +15,7 @@
 }
 
 .screen--no-tabs {
-  padding-bottom: calc(var(--safe-bottom) + 112px);
+  padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 124px);
 }
 
 .stack {
@@ -105,8 +105,34 @@
   height: var(--topbar-h);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   padding: 0 var(--gutter);
+}
+
+.topbar__back {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 38px;
+  padding: 0 12px 0 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 6px 16px -6px rgba(0, 0, 0, 0.55);
+  transition: transform 0.15s var(--ease-out), background 0.2s, border-color 0.2s;
+}
+
+.topbar__back:active {
+  transform: scale(0.94);
+  background: rgba(226, 69, 63, 0.24);
+  border-color: rgba(240, 100, 90, 0.5);
 }
 
 .topbar__title {
@@ -796,7 +822,7 @@ textarea.input {
   z-index: 30;
   left: 12px;
   right: 12px;
-  bottom: calc(var(--safe-bottom) + 12px);
+  bottom: calc(var(--safe-bottom) + var(--tabbar-h) + 20px);
   padding: 10px 10px 10px 16px;
   border-radius: 28px;
   display: flex;

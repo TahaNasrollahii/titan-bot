@@ -10,8 +10,6 @@ import { OutsideTelegram } from './gates/OutsideTelegram';
 import { PaymentReturn } from './gates/PaymentReturn';
 import { SessionError, Splash } from './gates/Status';
 
-const TAB_ROOTS = new Set(['/', '/store', '/tournaments', '/cart', '/me']);
-
 export function Layout() {
   const session = useSession();
   const { pathname } = useLocation();
@@ -37,7 +35,7 @@ export function Layout() {
   return (
     <div className="app">
       <Outlet />
-      {TAB_ROOTS.has(pathname) && <TabBar />}
+      <TabBar />
       <ScrollRestoration />
       <StartParamRedirect />
     </div>

@@ -250,15 +250,74 @@
   color: var(--text-2);
   font-size: var(--fs-sm);
   line-height: 1.9;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+  max-height: 120px;
   overflow: hidden;
-  white-space: pre-line;
+  position: relative;
+}
+
+.pd__desc:not(.is-open)::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 44px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
 }
 
 .pd__desc.is-open {
-  -webkit-line-clamp: unset;
+  max-height: none;
+}
+
+.pd__desc p + p {
+  margin-top: 8px;
+}
+
+.pd__desc-heading {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  color: var(--text);
+}
+
+.pd__desc-list {
+  margin: 6px 0 10px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: disc;
+}
+
+.pd__keywords {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pd__keywords-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.pd__keywords-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.pd__keyword-chip {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .specs {

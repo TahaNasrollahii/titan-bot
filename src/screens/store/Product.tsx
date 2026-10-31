@@ -21,6 +21,7 @@ import { Skeleton } from '@/ui/Skeleton';
 import { toast } from '@/ui/Toast';
 
 import './product.css';
+import { enrichProductSeo, getProductKeywords, parseDescriptionBlocks } from './productSeo';
 
 const FEATURE_ICONS: Record<string, Icon3DName> = {
   flame: 'fire',
@@ -52,7 +53,7 @@ export default function Product() {
         </div>
       </Screen>
     );
-  return <ProductView product={product.data} />;
+  return <ProductView product={enrichProductSeo(product.data)} />;
 }
 
 function ProductView({ product }: { product: ProductType }) {
@@ -254,25 +255,59 @@ function ProductView({ product }: { product: ProductType }) {
         {product.description && (
           <section className="pd__section">
             <h2 className="pd__label">توضیحات</h2>
-            <p className={`pd__desc ${expanded ? 'is-open' : ''}`}>{product.description}</p>
+            <div className={`pd__desc ${expanded ? 'is-open' : ''}`}>
+              {parseDescriptionBlocks(product.description).map((block, i) => {
+                if (block.type === 'heading') {
+                  return (
+                    <h3 key={i} className="pd__desc-heading">
+                      {block.text}
+                    </h3>
+                  );
+                }
+                if (block.type === 'list') {
+                  return (
+                    <ul key={i} className="pd__desc-list">
+                      {block.items.map((item, j) => (
+                        <li key={j}>{item}</li>
+                      ))}
+                    </ul>
+                  );
+                }
+                return <p key={i}>{block.text}</p>;
+              })}
+            </div>
             {product.description.length > 220 && (
               <button className="section-link" onClick={() => setExpanded(e => !e)}>
                 {expanded ? 'بستن' : 'ادامه‌ی توضیحات'}
               </button>
             )}
+            {getProductKeywords(product).length > 0 && (
+              <div className="pd__keywords">
+                <span className="pd__keywords-label">کلمات کلیدی:</span>
+                <div className="pd__keywords-list">
+                  {getProductKeywords(product).map(kw => (
+                    <span key={kw} className="pd__keyword-chip">
+                      {kw}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
         )}
 
-        {Object.keys(product.specs).length > 0 && (
+        {Object.entries(product.specs).filter(([k]) => k !== 'keywords').length > 0 && (
           <section className="pd__section">
             <h2 className="pd__label">مشخصات</h2>
             <dl className="specs">
-              {Object.entries(product.specs).map(([k, v]) => (
-                <div key={k}>
-                  <dt>{SPEC_LABELS[k] ?? k}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
+              {Object.entries(product.specs)
+                .filter(([k]) => k !== 'keywords')
+                .map(([k, v]) => (
+                  <div key={k}>
+                    <dt>{SPEC_LABELS[k] ?? k}</dt>
+                    <dd>{v}</dd>
+                  </div>
+                ))}
             </dl>
           </section>
         )}

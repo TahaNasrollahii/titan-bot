@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 
@@ -7,10 +8,26 @@ import { haptic } from '@/lib/telegram';
 
 import { Icon3D } from './Icon3D';
 
-export function TopBar({ title, actions, scrolled }: { title?: string; actions?: ReactNode; scrolled: boolean }) {
+export function TopBar({
+  title,
+  actions,
+  scrolled,
+  onBack,
+}: {
+  title?: string;
+  actions?: ReactNode;
+  scrolled: boolean;
+  onBack?: () => void;
+}) {
   return (
     <header className="topbar" data-scrolled={scrolled}>
       <div className="topbar__inner">
+        {onBack && (
+          <button type="button" className="topbar__back" onClick={onBack} aria-label="بازگشت">
+            <ArrowRight size={17} strokeWidth={2.5} aria-hidden="true" />
+            <span>بازگشت</span>
+          </button>
+        )}
         {title ? <h1 className="topbar__title">{title}</h1> : <Brand />}
         {actions ?? (!title && <BrandActions />)}
       </div>
