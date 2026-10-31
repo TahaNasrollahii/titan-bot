@@ -100,6 +100,38 @@ export function RanksShowcase({ variant = 'hub' }: { variant?: 'hub' | 'article'
         </p>
       </div>
 
+      {/* 1 -> 5 Left-to-Right Visual Progression Strip */}
+      <div className="g-ranks__strip" aria-label="مسیر صعود رنک ۱ تا ۵ از چپ به راست">
+        {RANKS.map((rank, index) => {
+          const detail = RANK_TIER_DETAILS[rank.id] ?? RANK_TIER_DETAILS.bronze;
+          const uid = `-bot-strip-${variant}-${rank.id}`;
+          return (
+            <div key={rank.id} className="g-ranks__strip-item">
+              <span
+                className="rank-avatar"
+                style={{ '--size': '44px', '--scale': 44 / 68 } as CSSProperties}
+              >
+                <span
+                  className="rank-frame-wrap"
+                  data-tier={rank.id}
+                  style={{ '--tier-glow': rank.glow } as CSSProperties}
+                  aria-hidden
+                >
+                  <span className="rank-frame-glow" />
+                  <span className="rank-frame-ring">{getRingSVG(rank, uid)}</span>
+                  <span className="rank-avatar__picture g-tier-card__num num" style={{ fontSize: 15 }}>
+                    {faDigits(index + 1)}
+                  </span>
+                  <span className="rank-frame-ornament">{getOrnamentSVGWrapper(rank, uid)}</span>
+                </span>
+              </span>
+              <strong style={{ color: rank.from }}>{detail.faName}</strong>
+              <span className="num">{rank.pts}</span>
+            </div>
+          );
+        })}
+      </div>
+
       {/* 5 Rank Tiers */}
       <div className="g-ranks__tiers">
         {RANKS.map((rank, index) => {

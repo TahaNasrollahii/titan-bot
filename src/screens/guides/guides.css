@@ -302,6 +302,37 @@
   line-height: 1.75;
 }
 
+.g-ranks__strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  direction: ltr;
+}
+
+.g-ranks__strip-item {
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 2px 5px;
+  border-radius: 14px;
+  background: rgba(16, 4, 8, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  text-align: center;
+}
+
+.g-ranks__strip-item strong {
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.g-ranks__strip-item > span:last-child {
+  font-size: 9.5px;
+  color: var(--muted);
+}
+
 .g-ranks__tiers {
   display: flex;
   flex-direction: column;
