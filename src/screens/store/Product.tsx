@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { BadgeCheck, Heart, Minus, Plus, ShoppingCart, Star, Zap } from 'lucide-react';
+import { BadgeCheck, BookOpen, ChevronLeft, Heart, Minus, Plus, ShoppingCart, Star, Zap } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 
 import { errorText } from '@/api/client';
-import { cartApi, catalogApi } from '@/api/endpoints';
+import { cartApi, catalogApi, guidesApi } from '@/api/endpoints';
 import type { Product as ProductType, ProductVariant } from '@/api/types';
 import { faDigits, num, timeAgo } from '@/lib/format';
 import { productImage } from '@/lib/media';
@@ -66,6 +66,13 @@ function ProductView({ product }: { product: ProductType }) {
 
   const related = useQuery({ queryKey: ['related', product.slug], queryFn: () => catalogApi.related(product.slug) });
   const reviews = useQuery({ queryKey: ['reviews', product.slug], queryFn: () => catalogApi.reviews(product.slug) });
+  const productGuides = useQuery({
+    queryKey: ['guides', { product: product.slug }],
+    queryFn: () => guidesApi.list({ product: product.slug }),
+    staleTime: 5 * 60_000,
+  });
+  const primaryGuide =
+    productGuides.data?.find(g => g.category === 'purchase') ?? productGuides.data?.[0] ?? null;
 
   const unit = variant ? variant.price : product.price;
   const unitOld = variant ? variant.originalPrice : product.originalPrice;
@@ -225,6 +232,24 @@ function ProductView({ product }: { product: ProductType }) {
             <Icon3D name="high-voltage" size={24} /> {product.deliveryInfo}
           </div>
         )}
+
+        <Link
+          to={primaryGuide ? `/guides/${primaryGuide.slug}` : '/guides/how-to-buy'}
+          className="clay list-row card--press"
+          style={{ borderRadius: 18, padding: '12px 14px', marginTop: 12 }}
+          onClick={() => haptic.tap()}
+        >
+          <span className="tone-icon list-row__icon" style={{ '--tone': '157 111 255' } as CSSProperties}>
+            <BookOpen size={19} />
+          </span>
+          <div className="list-row__body">
+            <div className="list-row__title">
+              {primaryGuide ? primaryGuide.title : 'آموزش نحوه خرید و فعال‌سازی این محصول'}
+            </div>
+            <div className="list-row__sub">راهنمای گام‌به‌گام تحویل و نکات امنیتی</div>
+          </div>
+          <ChevronLeft size={18} className="list-row__chev" />
+        </Link>
 
         {product.description && (
           <section className="pd__section">

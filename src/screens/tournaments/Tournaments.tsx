@@ -1,15 +1,17 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { CalendarClock } from 'lucide-react';
-import { useState } from 'react';
+import { BookOpen, CalendarClock, ChevronLeft } from 'lucide-react';
+import { useState, type CSSProperties } from 'react';
 import { Link } from 'react-router';
 
 import { catalogApi, meApi, tournamentsApi } from '@/api/endpoints';
 import type { TournamentStatus } from '@/api/types';
+import { faDigits } from '@/lib/format';
+import { RANKS, getOrnamentSVGWrapper, getRingSVG } from '@/lib/ranks';
 import { haptic } from '@/lib/telegram';
 import { TournamentCard } from '@/ui/cards';
 import { Empty, ErrorState } from '@/ui/Empty';
-import { Img } from '@/ui/Img';
 import { Icon3D } from '@/ui/Icon3D';
+import { Img } from '@/ui/Img';
 import { Screen } from '@/ui/Screen';
 import { Segmented } from '@/ui/Segmented';
 import { Skeleton } from '@/ui/Skeleton';
@@ -24,6 +26,14 @@ const TAB_STATUS: Record<Tab, TournamentStatus[]> = {
   live: ['live'],
   upcoming: ['upcoming', 'registration_closed'],
   done: ['completed'],
+};
+
+const FA_RANK_NAMES: Record<string, string> = {
+  bronze: 'برنز',
+  silver: 'نقره',
+  gold: 'طلا',
+  platinum: 'پلاتینیوم',
+  titan: 'تایتان',
 };
 
 export default function Tournaments() {
@@ -67,6 +77,71 @@ export default function Tournaments() {
           {activeMine.length > 1 && <span className="badge badge--cream">+{activeMine.length - 1}</span>}
         </Link>
       )}
+
+      {/* Ranks Timeline Strip (links to /guides/ranks) */}
+      <div className="t-ranks-strip clay">
+        <div className="t-ranks-strip__head">
+          <strong>مسیر پیشرفت و رنک‌ها</strong>
+          <Link to="/guides/ranks" className="t-ranks-strip__link" onClick={() => haptic.tap()}>
+            <span>آموزش رنک‌ها</span>
+            <ChevronLeft size={15} />
+          </Link>
+        </div>
+        <div className="t-ranks-strip__row">
+          {RANKS.map((r, i) => {
+            const uid = `-tour-strip-${r.id}`;
+            return (
+              <Link
+                key={r.id}
+                to="/guides/ranks"
+                className="t-rank-pill"
+                onClick={() => haptic.tap()}
+              >
+                <span
+                  className="rank-avatar"
+                  style={{ '--size': '44px', '--scale': 44 / 68 } as CSSProperties}
+                >
+                  <span
+                    className="rank-frame-wrap"
+                    data-tier={r.id}
+                    style={{ '--tier-glow': r.glow } as CSSProperties}
+                    aria-hidden
+                  >
+                    <span className="rank-frame-glow" />
+                    <span className="rank-frame-ring">{getRingSVG(r, uid)}</span>
+                    <span className="rank-avatar__picture t-rank-pill__num num">{faDigits(i + 1)}</span>
+                    <span className="rank-frame-ornament">{getOrnamentSVGWrapper(r, uid)}</span>
+                  </span>
+                </span>
+                <strong style={{ color: r.from }}>{FA_RANK_NAMES[r.id] ?? r.name}</strong>
+                <span className="num">{r.pts}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Tournament Participation Guide CTA Banner (Matches /tournament on website) */}
+      <div className="t-guide-banner clay">
+        <div className="t-guide-banner__main">
+          <span className="tone-icon t-guide-banner__icon" style={{ '--tone': '226 69 63' } as CSSProperties}>
+            <Icon3D name="trophy" size={24} />
+          </span>
+          <div className="t-guide-banner__copy">
+            <strong>چطور در مسابقات شرکت کنم؟</strong>
+            <p>آموزش گام‌به‌گام ثبت‌نام انفرادی و تیمی، ساخت تیم، قوانین براکت و دریافت جوایز</p>
+          </div>
+        </div>
+        <div className="t-guide-banner__actions">
+          <Link to="/guides/tournament-registration" className="btn btn--primary btn--sm" onClick={() => haptic.tap()}>
+            <BookOpen size={14} />
+            <span>آموزش شرکت در مسابقات</span>
+          </Link>
+          <Link to="/guides?category=tournament" className="btn btn--glass btn--sm" onClick={() => haptic.tap()}>
+            <span>همه آموزش‌های تورنومنت</span>
+          </Link>
+        </div>
+      </div>
 
       <Segmented<Tab>
         value={tab}

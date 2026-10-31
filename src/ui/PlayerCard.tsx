@@ -25,15 +25,15 @@ export function PlayerCard({ user, children }: { user: Me; children?: ReactNode 
         <RankAvatar user={user} size={64} />
         <div className="player__id">
           <strong>{name}</strong>
-          <span className="player__tier">
+          <Link to="/guides/ranks" className="player__tier">
             <Icon3D name="crown" size={18} />
             {rankName}، سطح {faDigits(user.level)}
-          </span>
+          </Link>
         </div>
-        <div className="player__points">
+        <Link to="/guides/ranks" className="player__points">
           <span className="num">{num(user.points)}</span>
           <small>امتیاز</small>
-        </div>
+        </Link>
       </div>
       <div className="player__xp">
         <div className="well player__track" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-label="پیشرفت سطح">

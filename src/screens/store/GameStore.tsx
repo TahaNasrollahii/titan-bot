@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { ChevronLeft, ShieldCheck, Sparkles, Zap } from 'lucide-react';
+import { BookOpen, ChevronLeft, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
 import { Link, useParams } from 'react-router';
 
-import { catalogApi, tournamentsApi } from '@/api/endpoints';
+import { catalogApi, guidesApi, tournamentsApi } from '@/api/endpoints';
 import { faDigits } from '@/lib/format';
 import { gameBackground, gameCharacter, gameIcon } from '@/lib/media';
 import { haptic } from '@/lib/telegram';
@@ -36,6 +36,11 @@ export default function GameStore() {
   const tournaments = useQuery({
     queryKey: ['tournaments', { game: slug, status: ['registration_open', 'live', 'upcoming'] }],
     queryFn: () => tournamentsApi.list({ game: slug, status: ['registration_open', 'live', 'upcoming'], page_size: 6 }),
+  });
+  const gameGuides = useQuery({
+    queryKey: ['guides', { game: slug }],
+    queryFn: () => guidesApi.list({ game: slug }),
+    staleTime: 5 * 60_000,
   });
   const [ordering, setOrdering] = useState('-popularity');
 
@@ -151,6 +156,26 @@ export default function GameStore() {
               <TournamentCard key={t.id} t={t} compact />
             ))}
           </div>
+        </section>
+      )}
+
+      {gameGuides.data && gameGuides.data.length > 0 && (
+        <section className="section">
+          <Link
+            to={`/guides?game=${encodeURIComponent(slug)}`}
+            className="clay list-row card--press"
+            style={{ borderRadius: 20, padding: '13px 14px' }}
+            onClick={() => haptic.tap()}
+          >
+            <span className="tone-icon list-row__icon" style={{ '--tone': '157 111 255' } as CSSProperties}>
+              <BookOpen size={20} />
+            </span>
+            <div className="list-row__body">
+              <div className="list-row__title">آموزش خرید و اکانت {game?.title}</div>
+              <div className="list-row__sub num">{faDigits(gameGuides.data.length)} راهنمای تخصصی فعال‌سازی و امنیت</div>
+            </div>
+            <ChevronLeft size={18} className="list-row__chev" />
+          </Link>
         </section>
       )}
 

@@ -39,6 +39,9 @@ const routes: RouteObject[] = [
       { path: 'teams/:id', lazy: screen(() => import('@/screens/teams/Team')) },
       { path: 'join/:code', lazy: screen(() => import('@/screens/teams/JoinTeam')) },
       { path: 'invitations', lazy: screen(() => import('@/screens/teams/Invitations')) },
+      // guides
+      { path: 'guides', lazy: screen(() => import('@/screens/guides/Guides')) },
+      { path: 'guides/:slug', lazy: screen(() => import('@/screens/guides/Guide')) },
       // me
       { path: 'me', lazy: screen(() => import('@/screens/me/Profile')) },
       { path: 'me/edit', lazy: screen(() => import('@/screens/me/EditProfile')) },

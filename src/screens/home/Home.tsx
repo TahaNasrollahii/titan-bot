@@ -16,6 +16,33 @@ import { Skeleton } from '@/ui/Skeleton';
 import { HeroCarousel } from './HeroCarousel';
 import './home.css';
 
+const FEATURED_GUIDES = [
+  {
+    to: '/guides/how-to-buy',
+    badge: 'خرید و تحویل',
+    title: 'آموزش خرید و فعال‌سازی محصولات',
+    sub: 'مراحل سفارش، ثبت اکانت بازی و تحویل فوری',
+    icon: '/icons/store.webp',
+    tone: '226 69 63',
+  },
+  {
+    to: '/guides/tournament-registration',
+    badge: 'مسابقات',
+    title: 'چطور در مسابقات شرکت کنم؟',
+    sub: 'ثبت‌نام انفرادی و تیمی، قوانین براکت و جوایز',
+    icon: '/icons/tournament.webp',
+    tone: '240 193 75',
+  },
+  {
+    to: '/guides/ranks',
+    badge: 'رنک‌بندی سایت',
+    title: 'آموزش کامل رنک‌ها و امتیازات تایتان',
+    sub: '۵ سطح از برنز تا تایتان، نحوه کسب امتیاز و XP',
+    icon: '/icons/guides.svg',
+    tone: '157 111 255',
+  },
+];
+
 export default function Home() {
   const me = useMe();
   const home = useQuery({ queryKey: ['home'], queryFn: contentApi.home });
@@ -44,6 +71,7 @@ export default function Home() {
             <Quick to="/orders" icon="/icons/cart.webp" tone="255 146 64" label="سفارش‌ها" />
             <Quick to="/teams" icon="/icons/team.webp" tone="91 140 255" label="تیم من" />
             <Quick to="/tournaments" icon="/icons/tournament.webp" tone="240 193 75" label="مسابقات" />
+            <Quick to="/guides" icon="/icons/guides.svg" tone="157 111 255" label="آموزش‌ها" />
             <Quick to="/support" icon="/icons/support.svg" tone="226 69 63" label="پشتیبانی" />
           </nav>
 
@@ -70,6 +98,30 @@ export default function Home() {
               {bestsellers.data
                 ? bestsellers.data.results.map(p => <ProductCard key={p.id} product={p} />)
                 : Array.from({ length: 3 }, (_, i) => <Skeleton key={i} w={172} h={284} r={24} />)}
+            </div>
+          </Section>
+
+          <Section title="آموزش‌ها و راهنما" to="/guides">
+            <div className="stack">
+              {FEATURED_GUIDES.map(item => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="home-guide clay card--press"
+                  style={{ '--tone': item.tone } as CSSProperties}
+                  onClick={() => haptic.tap()}
+                >
+                  <span className="tone-icon home-guide__icon">
+                    <img src={item.icon} alt="" width={23} height={23} draggable={false} />
+                  </span>
+                  <div className="home-guide__body">
+                    <span className="home-guide__badge">{item.badge}</span>
+                    <strong>{item.title}</strong>
+                    <p>{item.sub}</p>
+                  </div>
+                  <ChevronLeft size={18} className="list-row__chev" />
+                </Link>
+              ))}
             </div>
           </Section>
 
@@ -116,7 +168,7 @@ function Quick({ to, icon, tone, label }: { to: string; icon: string; tone: stri
   return (
     <Link to={to} className="quick__item" onClick={() => haptic.tap()}>
       <span className="tone-icon quick__icon card--press" style={{ '--tone': tone } as CSSProperties}>
-        <img src={icon} alt="" width={28} height={28} draggable={false} />
+        <img src={icon} alt="" width={26} height={26} draggable={false} />
       </span>
       <span>{label}</span>
     </Link>

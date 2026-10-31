@@ -251,6 +251,8 @@ export function routeForStartParam(param: string): string | null {
       return /^\d+$/.test(value) ? `/teams/${value}` : null;
     case 'join':
       return `/join/${value}`;
+    case 'guide':
+      return value === 'all' ? '/guides' : `/guides/${value}`;
     default:
       return null;
   }

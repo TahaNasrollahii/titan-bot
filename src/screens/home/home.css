@@ -132,24 +132,24 @@
 .quick {
   margin-top: 22px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
 }
 
 .quick__item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 7px;
+  font-size: 11.5px;
   font-weight: 800;
 }
 
 .quick__icon {
   width: 100%;
-  max-width: 72px;
+  max-width: 64px;
   aspect-ratio: 1;
-  border-radius: 24px;
+  border-radius: 21px;
   display: grid;
   place-items: center;
 }
@@ -157,6 +157,51 @@
 /* Rails of game tiles need headroom for the characters stepping out. */
 .rail--tall {
   padding-top: 0;
+}
+
+/* ================================================================ home guides */
+.home-guide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: 20px;
+}
+
+.home-guide__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.home-guide__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.home-guide__badge {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--gold, #f0c866);
+}
+
+.home-guide__body strong {
+  font-size: 13.5px;
+  font-weight: 900;
+}
+
+.home-guide__body p {
+  font-size: 11.5px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ================================================================ announcements */

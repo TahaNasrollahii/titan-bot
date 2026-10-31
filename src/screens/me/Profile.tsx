@@ -95,6 +95,8 @@ export default function Profile() {
           <Row to="/friends" icon="/icons/account.webp" tone="139 124 255" title="دوستان" />
         </div>
         <div className="list">
+          <Row to="/guides" icon="/icons/guides.svg" tone="157 111 255" title="آموزش‌ها و راهنمای سایت" sub="خرید، اکانت، تورنومنت و رنک‌ها" />
+          <Row to="/guides/ranks" icon="/icons/tournament.webp" tone="245 158 11" title="سیستم رنک‌بندی و امتیازات" sub="برنز تا تایتان" />
           <Row to="/notifications" icon="/icons/notif.webp" tone="47 210 122" title="اعلان‌ها" count={unread.data?.count} />
           <Row to="/support" icon="/icons/support.svg" tone="226 69 63" title="پشتیبانی آنلاین" />
           <Row to="/settings" icon="/icons/about-us.webp" tone="196 160 255" title="تنظیمات" />

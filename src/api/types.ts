@@ -782,3 +782,28 @@ export interface CannedReply {
   body: string;
   position: number;
 }
+
+// ------------------------------------------------------------------ guides
+export type GuideCategory = 'purchase' | 'account' | 'site' | 'tournament';
+
+export interface GuideSummary {
+  slug: string;
+  title: string;
+  category: GuideCategory;
+  game: GameMini | null;
+  summary: string;
+  publishedAt: string | null;
+  updatedAt: string;
+}
+
+export interface Guide extends GuideSummary {
+  body: string;
+  faqs: { question: string; answer: string }[];
+  products: { slug: string; title: string }[];
+  related: GuideSummary[];
+  metaTitle: string;
+  metaDescription: string;
+  noindex: boolean;
+  ogImage: string | null;
+  canonicalUrl: string;
+}

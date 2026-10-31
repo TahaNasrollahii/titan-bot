@@ -9,6 +9,9 @@ import type {
   FriendRequest,
   Game,
   GameAccount,
+  Guide,
+  GuideCategory,
+  GuideSummary,
   Home,
   Me,
   MyRegistration,
@@ -252,6 +255,39 @@ export const contentApi = {
   home: () => api<Home>('home/'),
   search: (q: string, signal?: AbortSignal) => api<SearchResults>('search/', { query: { q }, signal }),
   promos: (placement: Promo['placement']) => api<Promo[]>('content/promos/', { query: { placement } }),
+};
+
+export interface GuideQuery {
+  category?: GuideCategory;
+  game?: string;
+  product?: string;
+}
+
+export const guidesApi = {
+  list: async (query: GuideQuery = {}) => {
+    const { RANKS_GUIDE, toGuideSummary } = await import('@/screens/guides/guidesData');
+    let list: GuideSummary[] = [];
+    try {
+      list = await api<GuideSummary[]>('content/guides/', { query: { ...query }, auth: false });
+    } catch {
+      list = [];
+    }
+    const matchesRanksFilter =
+      !query.game && !query.product && (!query.category || query.category === 'tournament');
+    if (matchesRanksFilter && !list.some(item => item.slug === RANKS_GUIDE.slug)) {
+      list = [...list, toGuideSummary(RANKS_GUIDE)];
+    }
+    return list;
+  },
+  get: async (slug: string) => {
+    const { RANKS_GUIDE } = await import('@/screens/guides/guidesData');
+    try {
+      return await api<Guide>(`content/guides/${encodeURIComponent(slug)}/`, { auth: false });
+    } catch (err) {
+      if (slug === RANKS_GUIDE.slug) return RANKS_GUIDE;
+      throw err;
+    }
+  },
 };
 
 // ------------------------------------------------------------------ live support (visitor side)
