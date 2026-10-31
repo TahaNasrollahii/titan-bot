@@ -265,12 +265,46 @@ export interface GuideQuery {
 
 export const guidesApi = {
   list: async (query: GuideQuery = {}) => {
-    const { RANKS_GUIDE, toGuideSummary } = await import('@/screens/guides/guidesData');
+    const {
+      EPIC_GAMES_ACCOUNT_GUIDE,
+      EPIC_GAMES_LINK_CONSOLE_GUIDE,
+      RANKS_GUIDE,
+      toGuideSummary,
+    } = await import('@/screens/guides/guidesData');
     let list: GuideSummary[] = [];
     try {
       list = await api<GuideSummary[]>('content/guides/', { query: { ...query }, auth: false });
     } catch {
       list = [];
+    }
+    list = list.map(item => {
+      if (item.slug === EPIC_GAMES_ACCOUNT_GUIDE.slug) {
+        return {
+          ...item,
+          title: EPIC_GAMES_ACCOUNT_GUIDE.title,
+          summary: EPIC_GAMES_ACCOUNT_GUIDE.summary,
+          updatedAt: EPIC_GAMES_ACCOUNT_GUIDE.updatedAt,
+        };
+      }
+      if (item.slug === EPIC_GAMES_LINK_CONSOLE_GUIDE.slug) {
+        return {
+          ...item,
+          title: EPIC_GAMES_LINK_CONSOLE_GUIDE.title,
+          summary: EPIC_GAMES_LINK_CONSOLE_GUIDE.summary,
+          updatedAt: EPIC_GAMES_LINK_CONSOLE_GUIDE.updatedAt,
+        };
+      }
+      return item;
+    });
+    const matchesConsoleFilter =
+      !query.product &&
+      (!query.game || query.game === 'fortnite') &&
+      (!query.category || query.category === 'account');
+    if (
+      matchesConsoleFilter &&
+      !list.some(item => item.slug === EPIC_GAMES_LINK_CONSOLE_GUIDE.slug)
+    ) {
+      list = [...list, toGuideSummary(EPIC_GAMES_LINK_CONSOLE_GUIDE)];
     }
     const matchesRanksFilter =
       !query.game && !query.product && (!query.category || query.category === 'tournament');
@@ -280,10 +314,41 @@ export const guidesApi = {
     return list;
   },
   get: async (slug: string) => {
-    const { RANKS_GUIDE } = await import('@/screens/guides/guidesData');
+    const {
+      EPIC_GAMES_ACCOUNT_GUIDE,
+      EPIC_GAMES_LINK_CONSOLE_GUIDE,
+      RANKS_GUIDE,
+    } = await import('@/screens/guides/guidesData');
     try {
-      return await api<Guide>(`content/guides/${encodeURIComponent(slug)}/`, { auth: false });
+      const remote = await api<Guide>(`content/guides/${encodeURIComponent(slug)}/`, { auth: false });
+      if (slug === EPIC_GAMES_ACCOUNT_GUIDE.slug) {
+        return {
+          ...remote,
+          title: EPIC_GAMES_ACCOUNT_GUIDE.title,
+          summary: EPIC_GAMES_ACCOUNT_GUIDE.summary,
+          body: EPIC_GAMES_ACCOUNT_GUIDE.body,
+          faqs: EPIC_GAMES_ACCOUNT_GUIDE.faqs,
+          metaTitle: EPIC_GAMES_ACCOUNT_GUIDE.metaTitle,
+          metaDescription: EPIC_GAMES_ACCOUNT_GUIDE.metaDescription,
+          updatedAt: EPIC_GAMES_ACCOUNT_GUIDE.updatedAt,
+        };
+      }
+      if (slug === EPIC_GAMES_LINK_CONSOLE_GUIDE.slug) {
+        return {
+          ...remote,
+          title: EPIC_GAMES_LINK_CONSOLE_GUIDE.title,
+          summary: EPIC_GAMES_LINK_CONSOLE_GUIDE.summary,
+          body: EPIC_GAMES_LINK_CONSOLE_GUIDE.body,
+          faqs: EPIC_GAMES_LINK_CONSOLE_GUIDE.faqs,
+          metaTitle: EPIC_GAMES_LINK_CONSOLE_GUIDE.metaTitle,
+          metaDescription: EPIC_GAMES_LINK_CONSOLE_GUIDE.metaDescription,
+          updatedAt: EPIC_GAMES_LINK_CONSOLE_GUIDE.updatedAt,
+        };
+      }
+      return remote;
     } catch (err) {
+      if (slug === EPIC_GAMES_ACCOUNT_GUIDE.slug) return EPIC_GAMES_ACCOUNT_GUIDE;
+      if (slug === EPIC_GAMES_LINK_CONSOLE_GUIDE.slug) return EPIC_GAMES_LINK_CONSOLE_GUIDE;
       if (slug === RANKS_GUIDE.slug) return RANKS_GUIDE;
       throw err;
     }

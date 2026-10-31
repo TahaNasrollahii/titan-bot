@@ -252,11 +252,6 @@ export default function Guides() {
 
           {sections.map(sec => (
             <section key={sec.key} id={sec.key} className="section">
-              <div className="section-head">
-                <h2 className="section-title">{sec.title}</h2>
-                <span className="text-xs muted num">{faDigits(sec.guides.length)} آموزش</span>
-              </div>
-              <p className="g-sec-intro">{sec.intro}</p>
               <div className="stack">
                 {sec.guides.map((item, idx) => (
                   <GuideRowCard key={item.slug} guide={item} index={idx + 1} />
@@ -319,6 +314,14 @@ export function GuideRowCard({
 
       <h3 className="g-card__title">{guide.title}</h3>
       {summary && <p className="g-card__summary">{summary}</p>}
+
+      <div className="g-card__footer">
+        <span className="g-card__step-tag">راهنمای گام‌به‌گام</span>
+        <span className="g-card__btn">
+          <span>مشاهده آموزش</span>
+          <ChevronLeft size={14} />
+        </span>
+      </div>
     </Link>
   );
 }

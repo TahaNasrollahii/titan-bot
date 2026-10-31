@@ -1,20 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import {
   BookOpen,
-  Check,
   ChevronDown,
   ChevronLeft,
-  ChevronRight,
   Clock,
-  ListOrdered,
   Share2,
 } from 'lucide-react';
 import {
   Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
   useState,
   type CSSProperties,
   type ReactNode,
@@ -43,50 +36,6 @@ import {
   readingMinutes,
 } from './guidesData';
 import './guides.css';
-
-interface BotGuideStep {
-  id: string;
-  index: number;
-  title: string;
-}
-
-function extractBotGuideSteps(body: string, hasFaq: boolean): BotGuideStep[] {
-  const blocks = body
-    .replace(/\r\n/g, '\n')
-    .trim()
-    .split(/\n{2,}/);
-  const steps: BotGuideStep[] = [];
-  let h2Idx = 0;
-
-  for (const block of blocks) {
-    const lines = block
-      .split('\n')
-      .map(l => cleanGuideText(l))
-      .filter(Boolean);
-    if (lines.length === 1 && lines[0].startsWith('## ')) {
-      h2Idx += 1;
-      const rawTitle = lines[0]
-        .slice(3)
-        .replace(/\*\*/g, '')
-        .trim();
-      steps.push({
-        id: `ga-sec-${h2Idx}`,
-        index: h2Idx,
-        title: rawTitle,
-      });
-    }
-  }
-
-  if (hasFaq) {
-    steps.push({
-      id: 'ga-faq-section',
-      index: steps.length + 1,
-      title: 'سوالات متداول',
-    });
-  }
-
-  return steps;
-}
 
 export default function Guide() {
   const { slug = '' } = useParams();
@@ -126,11 +75,6 @@ function GuideView({ guide }: { guide: GuideType }) {
   const summary = cleanGuideText(guide.summary);
   const faqs = cleanGuideFaqs(guide.faqs ?? []);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-
-  const steps = useMemo(
-    () => extractBotGuideSteps(guide.body, faqs.length > 0),
-    [guide.body, faqs.length],
-  );
 
   const primaryAction = guide.products?.[0]
     ? { to: `/product/${guide.products[0].slug}`, label: `خرید ${guide.products[0].title}` }
@@ -207,9 +151,6 @@ function GuideView({ guide }: { guide: GuideType }) {
           </Link>
         </div>
       </header>
-
-      {/* Sticky Progress + Step Switcher Bar (follows user everywhere on scroll) */}
-      {steps.length > 0 && <GuideStickySteps steps={steps} accent={accent} />}
 
       {/* Interactive 5-Tier Ranks Showcase when viewing /guides/ranks */}
       {guide.slug === 'ranks' && (
@@ -290,191 +231,6 @@ function GuideView({ guide }: { guide: GuideType }) {
   );
 }
 
-function GuideStickySteps({
-  steps,
-  accent,
-}: {
-  steps: BotGuideStep[];
-  accent: string;
-}) {
-  const [activeId, setActiveId] = useState<string>(steps[0]?.id ?? '');
-  const [progress, setProgress] = useState(0);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const stripRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (docHeight > 0) {
-        setProgress(Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)));
-      } else {
-        setProgress(0);
-      }
-
-      const threshold = 175;
-      let current = steps[0]?.id ?? '';
-      for (const s of steps) {
-        const el = document.getElementById(s.id);
-        if (!el) continue;
-        if (el.getBoundingClientRect().top <= threshold) {
-          current = s.id;
-        }
-      }
-      setActiveId(current);
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, [steps]);
-
-  useEffect(() => {
-    const container = stripRef.current;
-    if (!container || !activeId) return;
-    const pill = container.querySelector<HTMLElement>(`[data-bot-step="${activeId}"]`);
-    if (!pill) return;
-    const targetLeft =
-      pill.offsetLeft - container.clientWidth / 2 + pill.clientWidth / 2;
-    container.scrollTo({ left: targetLeft, behavior: 'smooth' });
-  }, [activeId]);
-
-  const jumpTo = useCallback((id: string) => {
-    haptic.select();
-    setActiveId(id);
-    const el = document.getElementById(id);
-    if (!el) return;
-    const offset = 155;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  }, []);
-
-  const activeIdx = Math.max(
-    0,
-    steps.findIndex(s => s.id === activeId),
-  );
-  const activeStep = steps[activeIdx] ?? steps[0];
-  const canPrev = activeIdx > 0;
-  const canNext = activeIdx < steps.length - 1;
-
-  return (
-    <div
-      className="ga-sticky-steps clay"
-      style={{ '--accent': accent } as CSSProperties}
-    >
-      <div className="ga-sticky-steps__bar" aria-hidden="true">
-        <div
-          className="ga-sticky-steps__fill"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-
-      <div className="ga-sticky-steps__top">
-        <button
-          type="button"
-          className="ga-sticky-steps__current"
-          onClick={() => {
-            haptic.tap('light');
-            setDrawerOpen(v => !v);
-          }}
-        >
-          <span className="ga-sticky-steps__badge num">
-            گام {faDigits(activeIdx + 1)} از {faDigits(steps.length)}
-          </span>
-          <span className="ga-sticky-steps__title">{activeStep?.title}</span>
-        </button>
-
-        <div className="ga-sticky-steps__actions">
-          <button
-            type="button"
-            className="ga-sticky-steps__nav"
-            disabled={!canPrev}
-            onClick={() => canPrev && jumpTo(steps[activeIdx - 1].id)}
-            aria-label="گام قبلی"
-          >
-            <ChevronRight size={15} />
-          </button>
-          <button
-            type="button"
-            className="ga-sticky-steps__nav"
-            disabled={!canNext}
-            onClick={() => canNext && jumpTo(steps[activeIdx + 1].id)}
-            aria-label="گام بعدی"
-          >
-            <ChevronLeft size={15} />
-          </button>
-          <button
-            type="button"
-            className={`ga-sticky-steps__toggle ${drawerOpen ? 'is-open' : ''}`}
-            onClick={() => {
-              haptic.tap('light');
-              setDrawerOpen(v => !v);
-            }}
-            aria-label="فهرست مراحل"
-          >
-            <ListOrdered size={15} />
-          </button>
-        </div>
-      </div>
-
-      <div ref={stripRef} className="ga-sticky-steps__pills">
-        {steps.map((s, idx) => {
-          const isActive = s.id === activeId;
-          const isDone = idx < activeIdx;
-          return (
-            <button
-              key={s.id}
-              type="button"
-              data-bot-step={s.id}
-              className={`ga-step-pill ${isActive ? 'is-active' : ''} ${
-                isDone ? 'is-done' : ''
-              }`}
-              onClick={() => {
-                jumpTo(s.id);
-                setDrawerOpen(false);
-              }}
-            >
-              <span className="ga-step-pill__num num">
-                {isDone ? <Check size={11} /> : faDigits(s.index)}
-              </span>
-              <span className="ga-step-pill__label">{s.title}</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {drawerOpen && (
-        <div className="ga-sticky-steps__drawer">
-          {steps.map((s, idx) => {
-            const isActive = s.id === activeId;
-            const isDone = idx < activeIdx;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                className={`ga-drawer-item ${isActive ? 'is-active' : ''}`}
-                onClick={() => {
-                  jumpTo(s.id);
-                  setDrawerOpen(false);
-                }}
-              >
-                <span className="ga-step-pill__num num">
-                  {isDone ? <Check size={11} /> : faDigits(s.index)}
-                </span>
-                <span>{s.title}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
 /* ─── Lightweight Markdown Renderer for Bot Guides ─── */
 const INLINE_TOKEN = /(\*\*[^*\n]+\*\*|`[^`\n]+`|\[[^\]\n]+\]\([^)\s]+\))/g;
 
@@ -552,6 +308,26 @@ function GuideMarkdownBody({ body }: { body: string }) {
             <h3 key={index} className="ga-h3">
               {renderInline(lines[0].slice(4))}
             </h3>
+          );
+        }
+
+        const rawSingleLine = block.trim();
+        const imgMatch = /^!\[([^\]]*)\]\(([^)\s]+)\)$/.exec(rawSingleLine);
+        if (imgMatch) {
+          const altText = cleanGuideText(imgMatch[1]);
+          const imgSrc = imgMatch[2].trim();
+          return (
+            <figure key={index} className="ga-figure">
+              <div className="ga-figure__frame">
+                <img
+                  src={imgSrc}
+                  alt={altText}
+                  loading="lazy"
+                  className="ga-figure__img"
+                />
+              </div>
+              {altText && <figcaption className="ga-figure__cap">{altText}</figcaption>}
+            </figure>
           );
         }
 
