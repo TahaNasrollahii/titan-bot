@@ -275,24 +275,22 @@ function ProductView({ product }: { product: ProductType }) {
                 }
                 return <p key={i}>{block.text}</p>;
               })}
-            </div>
-            {product.description.length > 220 && (
-              <button className="section-link" onClick={() => setExpanded(e => !e)}>
-                {expanded ? 'بستن' : 'ادامه‌ی توضیحات'}
-              </button>
-            )}
-            {getProductKeywords(product).length > 0 && (
-              <div className="pd__keywords">
-                <span className="pd__keywords-label">کلمات کلیدی:</span>
-                <div className="pd__keywords-list">
-                  {getProductKeywords(product).map(kw => (
-                    <span key={kw} className="pd__keyword-chip">
-                      {kw}
-                    </span>
-                  ))}
+              {getProductKeywords(product).length > 0 && (
+                <div className="pd__keywords">
+                  <span className="pd__keywords-label">کلمات کلیدی:</span>
+                  <div className="pd__keywords-list">
+                    {getProductKeywords(product).map(kw => (
+                      <span key={kw} className="pd__keyword-chip">
+                        {kw}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+            <button className="section-link" onClick={() => setExpanded(e => !e)}>
+              {expanded ? 'بستن توضیحات' : 'بارگزاری بیشتر'}
+            </button>
           </section>
         )}
 

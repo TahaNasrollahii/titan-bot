@@ -269,6 +269,7 @@ export const guidesApi = {
       EPIC_GAMES_ACCOUNT_GUIDE,
       EPIC_GAMES_LINK_CONSOLE_GUIDE,
       EPIC_GAMES_2FA_GUIDE,
+      EPIC_GAMES_CHANGE_REGION_GUIDE,
       RANKS_GUIDE,
       toGuideSummary,
     } = await import('@/screens/guides/guidesData');
@@ -303,6 +304,14 @@ export const guidesApi = {
           updatedAt: EPIC_GAMES_2FA_GUIDE.updatedAt,
         };
       }
+      if (item.slug === EPIC_GAMES_CHANGE_REGION_GUIDE.slug) {
+        return {
+          ...item,
+          title: EPIC_GAMES_CHANGE_REGION_GUIDE.title,
+          summary: EPIC_GAMES_CHANGE_REGION_GUIDE.summary,
+          updatedAt: EPIC_GAMES_CHANGE_REGION_GUIDE.updatedAt,
+        };
+      }
       return item;
     });
     const matchesConsoleFilter =
@@ -318,6 +327,12 @@ export const guidesApi = {
     if (matchesConsoleFilter && !list.some(item => item.slug === EPIC_GAMES_2FA_GUIDE.slug)) {
       list = [...list, toGuideSummary(EPIC_GAMES_2FA_GUIDE)];
     }
+    if (
+      matchesConsoleFilter &&
+      !list.some(item => item.slug === EPIC_GAMES_CHANGE_REGION_GUIDE.slug)
+    ) {
+      list = [...list, toGuideSummary(EPIC_GAMES_CHANGE_REGION_GUIDE)];
+    }
     const matchesRanksFilter =
       !query.game && !query.product && (!query.category || query.category === 'tournament');
     if (matchesRanksFilter && !list.some(item => item.slug === RANKS_GUIDE.slug)) {
@@ -330,6 +345,7 @@ export const guidesApi = {
       EPIC_GAMES_ACCOUNT_GUIDE,
       EPIC_GAMES_LINK_CONSOLE_GUIDE,
       EPIC_GAMES_2FA_GUIDE,
+      EPIC_GAMES_CHANGE_REGION_GUIDE,
       RANKS_GUIDE,
     } = await import('@/screens/guides/guidesData');
     try {
@@ -370,11 +386,24 @@ export const guidesApi = {
           updatedAt: EPIC_GAMES_2FA_GUIDE.updatedAt,
         };
       }
+      if (slug === EPIC_GAMES_CHANGE_REGION_GUIDE.slug) {
+        return {
+          ...remote,
+          title: EPIC_GAMES_CHANGE_REGION_GUIDE.title,
+          summary: EPIC_GAMES_CHANGE_REGION_GUIDE.summary,
+          body: EPIC_GAMES_CHANGE_REGION_GUIDE.body,
+          faqs: EPIC_GAMES_CHANGE_REGION_GUIDE.faqs,
+          metaTitle: EPIC_GAMES_CHANGE_REGION_GUIDE.metaTitle,
+          metaDescription: EPIC_GAMES_CHANGE_REGION_GUIDE.metaDescription,
+          updatedAt: EPIC_GAMES_CHANGE_REGION_GUIDE.updatedAt,
+        };
+      }
       return remote;
     } catch (err) {
       if (slug === EPIC_GAMES_ACCOUNT_GUIDE.slug) return EPIC_GAMES_ACCOUNT_GUIDE;
       if (slug === EPIC_GAMES_LINK_CONSOLE_GUIDE.slug) return EPIC_GAMES_LINK_CONSOLE_GUIDE;
       if (slug === EPIC_GAMES_2FA_GUIDE.slug) return EPIC_GAMES_2FA_GUIDE;
+      if (slug === EPIC_GAMES_CHANGE_REGION_GUIDE.slug) return EPIC_GAMES_CHANGE_REGION_GUIDE;
       if (slug === RANKS_GUIDE.slug) return RANKS_GUIDE;
       throw err;
     }
