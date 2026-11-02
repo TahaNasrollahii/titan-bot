@@ -51,6 +51,12 @@ function TeamView({ team }: { team: TeamType }) {
   const [username, setUsername] = useState('');
   const [selected, setSelected] = useState<TeamMember | null>(null);
 
+  const invitations = useQuery({
+    queryKey: ['team', String(team.id), 'invitations'],
+    queryFn: () => teamsApi.invitations(team.id),
+    enabled: captain,
+  });
+
   const refresh = (data?: TeamType) => {
     if (data) queryClient.setQueryData(['team', String(team.id)], data);
     else void queryClient.invalidateQueries({ queryKey: ['team', String(team.id)] });
@@ -64,6 +70,7 @@ function TeamView({ team }: { team: TeamType }) {
       toast.success('دعوت‌نامه ارسال شد');
       setUsername('');
       setInviting(false);
+      void queryClient.invalidateQueries({ queryKey: ['team', String(team.id), 'invitations'] });
     },
     onError: fail,
   });
@@ -100,6 +107,7 @@ function TeamView({ team }: { team: TeamType }) {
   });
 
   const inviteLink = team.inviteCode ? miniAppLink(`join-${team.inviteCode}`) : null;
+  const pendingInvitations = invitations.data?.filter(i => i.status === 'pending') ?? [];
 
   return (
     <Screen title={team.name} fallback="/teams">
@@ -127,7 +135,7 @@ function TeamView({ team }: { team: TeamType }) {
 
       {captain && inviteLink && (
         <section className="section">
-          <h2 className="pd__label">دعوت هم‌تیمی</h2>
+          <h2 className="pd__label">عضوگیری و دعوت به تیم</h2>
           <div className="invite-box">
             <code>{team.inviteCode}</code>
             <button className="icon-btn" aria-label="کد جدید" onClick={() => regenerate.mutate()} disabled={regenerate.isPending}>
@@ -142,10 +150,54 @@ function TeamView({ team }: { team: TeamType }) {
             >
               ارسال لینک در تلگرام
             </Button>
-            <Button variant="glass" icon={<UserPlus size={18} />} onClick={() => setInviting(true)}>
-              با آیدی
-            </Button>
           </div>
+
+          <form
+            className="stack"
+            style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--line)', '--gap': '8px' } as CSSProperties}
+            onSubmit={e => {
+              e.preventDefault();
+              if (username.trim()) invite.mutate();
+            }}
+          >
+            <label className="text-xs muted" style={{ fontWeight: 700 }}>
+              دعوت مستقیم با شناسه بازی (Game ID)
+            </label>
+            <div className="row" style={{ '--gap': '8px' } as CSSProperties}>
+              <input
+                className="input ltr"
+                style={{ flex: 1 }}
+                placeholder="مثلا: ShadowHunter"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                aria-label="شناسه بازی بازیکن"
+              />
+              <Button type="submit" disabled={!username.trim()} loading={invite.isPending} icon={<UserPlus size={18} />}>
+                ارسال دعوت
+              </Button>
+            </div>
+          </form>
+
+          {pendingInvitations.length > 0 && (
+            <div className="stack" style={{ marginTop: 12, '--gap': '6px' } as CSSProperties}>
+              <span className="text-xs muted" style={{ fontWeight: 700 }}>
+                در انتظار پاسخ ({faDigits(pendingInvitations.length)})
+              </span>
+              <div className="list">
+                {pendingInvitations.map(inv => (
+                  <div key={inv.id} className="list-row">
+                    <Avatar name={inv.invitedUser.displayName} src={inv.invitedUser.avatar} seed={inv.invitedUser.avatarSeed} size={34} />
+                    <div className="list-row__body">
+                      <div className="list-row__title ltr" style={{ textAlign: 'right' }}>
+                        {inv.invitedUser.displayName}
+                      </div>
+                    </div>
+                    <span className="badge">در انتظار تایید</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
       )}
 

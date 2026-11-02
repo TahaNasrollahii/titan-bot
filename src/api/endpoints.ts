@@ -238,6 +238,7 @@ export const teamsApi = {
   removeMember: (id: number, userId: number) => api<void>(`teams/${id}/members/${userId}/`, { method: 'DELETE' }),
   promote: (id: number, userId: number) => api<Team>(`teams/${id}/members/${userId}/promote/`, { method: 'POST' }),
   regenerateInvite: (id: number) => api<Team>(`teams/${id}/invite-code/regenerate/`, { method: 'POST' }),
+  invitations: (id: number) => api<TeamInvitation[]>(`teams/${id}/invitations/`),
   invite: (id: number, username: string) =>
     api<TeamInvitation>(`teams/${id}/invitations/`, { method: 'POST', body: { username } }),
   join: (code: string) => api<Team>('teams/join/', { method: 'POST', body: { code } }),
@@ -270,6 +271,9 @@ export const guidesApi = {
       EPIC_GAMES_LINK_CONSOLE_GUIDE,
       EPIC_GAMES_2FA_GUIDE,
       EPIC_GAMES_CHANGE_REGION_GUIDE,
+      EPIC_GAMES_CHANGE_PASSWORD_GUIDE,
+      CREATE_TEAM_GUIDE,
+      INVITE_TEAM_GUIDE,
       RANKS_GUIDE,
       toGuideSummary,
     } = await import('@/screens/guides/guidesData');
@@ -312,6 +316,30 @@ export const guidesApi = {
           updatedAt: EPIC_GAMES_CHANGE_REGION_GUIDE.updatedAt,
         };
       }
+      if (item.slug === EPIC_GAMES_CHANGE_PASSWORD_GUIDE.slug) {
+        return {
+          ...item,
+          title: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.title,
+          summary: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.summary,
+          updatedAt: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.updatedAt,
+        };
+      }
+      if (item.slug === CREATE_TEAM_GUIDE.slug) {
+        return {
+          ...item,
+          title: CREATE_TEAM_GUIDE.title,
+          summary: CREATE_TEAM_GUIDE.summary,
+          updatedAt: CREATE_TEAM_GUIDE.updatedAt,
+        };
+      }
+      if (item.slug === INVITE_TEAM_GUIDE.slug) {
+        return {
+          ...item,
+          title: INVITE_TEAM_GUIDE.title,
+          summary: INVITE_TEAM_GUIDE.summary,
+          updatedAt: INVITE_TEAM_GUIDE.updatedAt,
+        };
+      }
       return item;
     });
     const matchesConsoleFilter =
@@ -333,8 +361,20 @@ export const guidesApi = {
     ) {
       list = [...list, toGuideSummary(EPIC_GAMES_CHANGE_REGION_GUIDE)];
     }
+    if (
+      matchesConsoleFilter &&
+      !list.some(item => item.slug === EPIC_GAMES_CHANGE_PASSWORD_GUIDE.slug)
+    ) {
+      list = [...list, toGuideSummary(EPIC_GAMES_CHANGE_PASSWORD_GUIDE)];
+    }
     const matchesRanksFilter =
       !query.game && !query.product && (!query.category || query.category === 'tournament');
+    if (matchesRanksFilter && !list.some(item => item.slug === CREATE_TEAM_GUIDE.slug)) {
+      list = [...list, toGuideSummary(CREATE_TEAM_GUIDE)];
+    }
+    if (matchesRanksFilter && !list.some(item => item.slug === INVITE_TEAM_GUIDE.slug)) {
+      list = [...list, toGuideSummary(INVITE_TEAM_GUIDE)];
+    }
     if (matchesRanksFilter && !list.some(item => item.slug === RANKS_GUIDE.slug)) {
       list = [...list, toGuideSummary(RANKS_GUIDE)];
     }
@@ -346,6 +386,9 @@ export const guidesApi = {
       EPIC_GAMES_LINK_CONSOLE_GUIDE,
       EPIC_GAMES_2FA_GUIDE,
       EPIC_GAMES_CHANGE_REGION_GUIDE,
+      EPIC_GAMES_CHANGE_PASSWORD_GUIDE,
+      CREATE_TEAM_GUIDE,
+      INVITE_TEAM_GUIDE,
       RANKS_GUIDE,
     } = await import('@/screens/guides/guidesData');
     try {
@@ -398,12 +441,51 @@ export const guidesApi = {
           updatedAt: EPIC_GAMES_CHANGE_REGION_GUIDE.updatedAt,
         };
       }
+      if (slug === EPIC_GAMES_CHANGE_PASSWORD_GUIDE.slug) {
+        return {
+          ...remote,
+          title: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.title,
+          summary: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.summary,
+          body: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.body,
+          faqs: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.faqs,
+          metaTitle: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.metaTitle,
+          metaDescription: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.metaDescription,
+          updatedAt: EPIC_GAMES_CHANGE_PASSWORD_GUIDE.updatedAt,
+        };
+      }
+      if (slug === CREATE_TEAM_GUIDE.slug) {
+        return {
+          ...remote,
+          title: CREATE_TEAM_GUIDE.title,
+          summary: CREATE_TEAM_GUIDE.summary,
+          body: CREATE_TEAM_GUIDE.body,
+          faqs: CREATE_TEAM_GUIDE.faqs,
+          metaTitle: CREATE_TEAM_GUIDE.metaTitle,
+          metaDescription: CREATE_TEAM_GUIDE.metaDescription,
+          updatedAt: CREATE_TEAM_GUIDE.updatedAt,
+        };
+      }
+      if (slug === INVITE_TEAM_GUIDE.slug) {
+        return {
+          ...remote,
+          title: INVITE_TEAM_GUIDE.title,
+          summary: INVITE_TEAM_GUIDE.summary,
+          body: INVITE_TEAM_GUIDE.body,
+          faqs: INVITE_TEAM_GUIDE.faqs,
+          metaTitle: INVITE_TEAM_GUIDE.metaTitle,
+          metaDescription: INVITE_TEAM_GUIDE.metaDescription,
+          updatedAt: INVITE_TEAM_GUIDE.updatedAt,
+        };
+      }
       return remote;
     } catch (err) {
       if (slug === EPIC_GAMES_ACCOUNT_GUIDE.slug) return EPIC_GAMES_ACCOUNT_GUIDE;
       if (slug === EPIC_GAMES_LINK_CONSOLE_GUIDE.slug) return EPIC_GAMES_LINK_CONSOLE_GUIDE;
       if (slug === EPIC_GAMES_2FA_GUIDE.slug) return EPIC_GAMES_2FA_GUIDE;
       if (slug === EPIC_GAMES_CHANGE_REGION_GUIDE.slug) return EPIC_GAMES_CHANGE_REGION_GUIDE;
+      if (slug === EPIC_GAMES_CHANGE_PASSWORD_GUIDE.slug) return EPIC_GAMES_CHANGE_PASSWORD_GUIDE;
+      if (slug === CREATE_TEAM_GUIDE.slug) return CREATE_TEAM_GUIDE;
+      if (slug === INVITE_TEAM_GUIDE.slug) return INVITE_TEAM_GUIDE;
       if (slug === RANKS_GUIDE.slug) return RANKS_GUIDE;
       throw err;
     }

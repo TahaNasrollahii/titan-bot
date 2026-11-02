@@ -13,7 +13,7 @@ const LOCAL_GAME_ICONS: Record<string, string> = {
 };
 
 const LOCAL_GAME_LOGOS: Record<string, string> = {
-  'call-of-duty': '/images/glossy-cod-logo.webp',
+  'call-of-duty': '/images/glossy-cod-logo-v2.webp',
   fortnite: '/images/glossy-fortnite-logo.webp',
   valorant: '/images/glossy-valorant-logo.webp',
 };
