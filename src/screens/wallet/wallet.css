@@ -5,11 +5,37 @@
   overflow: hidden;
   padding: 20px;
   border-radius: 26px;
-  min-height: 200px;
+  min-height: 206px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   color: #3b2300;
+}
+
+.wallet-card__art {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  width: 98px;
+  height: 98px;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wallet-card__sub {
+  position: absolute;
+}
+
+.wallet-card__sub--a {
+  top: -6px;
+  right: -4px;
+}
+
+.wallet-card__sub--b {
+  bottom: 2px;
+  left: -4px;
 }
 
 .wallet-card__shine {

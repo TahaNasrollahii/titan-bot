@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { BookOpen, CalendarClock, ChevronLeft } from 'lucide-react';
+import { BookOpen, ChevronLeft } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
 import { Link } from 'react-router';
 
@@ -67,7 +67,7 @@ export default function Tournaments() {
       {activeMine.length > 0 && (
         <Link to={`/tournaments/${activeMine[0].tournament.slug}`} className="my-next card--press" onClick={() => haptic.tap()}>
           <span className="my-next__icon">
-            <CalendarClock size={22} />
+            <Icon3D name="crossed-swords" size={26} anim="wiggle" />
           </span>
           <span className="list-row__body">
             <span className="text-xs muted">مسابقه‌ی بعدی تو</span>
@@ -81,7 +81,10 @@ export default function Tournaments() {
       {/* Ranks Timeline Strip (links to /guides/ranks) */}
       <div className="t-ranks-strip clay">
         <div className="t-ranks-strip__head">
-          <strong>مسیر پیشرفت و رنک‌ها</strong>
+          <strong className="row" style={{ '--gap': '6px' } as CSSProperties}>
+            <Icon3D name="crown" size={20} anim="float" />
+            مسیر پیشرفت و رنک‌ها
+          </strong>
           <Link to="/guides/ranks" className="t-ranks-strip__link" onClick={() => haptic.tap()}>
             <span>آموزش رنک‌ها</span>
             <ChevronLeft size={15} />
@@ -125,7 +128,7 @@ export default function Tournaments() {
       <div className="t-guide-banner clay">
         <div className="t-guide-banner__main">
           <span className="tone-icon t-guide-banner__icon" style={{ '--tone': '226 69 63' } as CSSProperties}>
-            <Icon3D name="trophy" size={24} />
+            <Icon3D name="trophy" size={26} anim="bounce" />
           </span>
           <div className="t-guide-banner__copy">
             <strong>چطور در مسابقات شرکت کنم؟</strong>
@@ -156,6 +159,7 @@ export default function Tournaments() {
 
       <div className="rail chips-rail" style={{ marginTop: 12 }}>
         <button className="chip" aria-pressed={!game} onClick={() => (haptic.select(), setGame(undefined))}>
+          <Icon3D name="joystick" size={18} />
           همه‌ی بازی‌ها
         </button>
         {games.data

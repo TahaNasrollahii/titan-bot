@@ -8,7 +8,7 @@ import { useMe } from '@/auth/session';
 import { haptic } from '@/lib/telegram';
 import { GameTile, ProductCard, TournamentCard } from '@/ui/cards';
 import { ErrorState } from '@/ui/Empty';
-import { Icon3D } from '@/ui/Icon3D';
+import { Icon3D, type Icon3DAnim, type Icon3DName } from '@/ui/Icon3D';
 import { PlayerCard } from '@/ui/PlayerCard';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
@@ -16,13 +16,20 @@ import { Skeleton } from '@/ui/Skeleton';
 import { HeroCarousel } from './HeroCarousel';
 import './home.css';
 
-const FEATURED_GUIDES = [
+const FEATURED_GUIDES: {
+  to: string;
+  badge: string;
+  title: string;
+  sub: string;
+  icon: Icon3DName;
+  tone: string;
+}[] = [
   {
     to: '/guides/how-to-buy',
     badge: 'خرید و تحویل',
     title: 'آموزش خرید و فعال‌سازی محصولات',
     sub: 'مراحل سفارش، ثبت اکانت بازی و تحویل فوری',
-    icon: '/icons/store.webp',
+    icon: 'shopping-bags',
     tone: '226 69 63',
   },
   {
@@ -30,7 +37,7 @@ const FEATURED_GUIDES = [
     badge: 'مسابقات',
     title: 'چطور در مسابقات شرکت کنم؟',
     sub: 'ثبت‌نام انفرادی و تیمی، قوانین براکت و جوایز',
-    icon: '/icons/tournament.webp',
+    icon: 'trophy',
     tone: '240 193 75',
   },
   {
@@ -38,7 +45,7 @@ const FEATURED_GUIDES = [
     badge: 'رنک‌بندی سایت',
     title: 'آموزش کامل رنک‌ها و امتیازات تایتان',
     sub: '۵ سطح از برنز تا تایتان، نحوه کسب امتیاز و XP',
-    icon: '/icons/guides.svg',
+    icon: 'crown',
     tone: '157 111 255',
   },
 ];
@@ -68,14 +75,33 @@ export default function Home() {
           </div>
 
           <nav className="quick" aria-label="دسترسی سریع">
-            <Quick to="/orders" icon="/icons/cart.webp" tone="255 146 64" label="سفارش‌ها" />
-            <Quick to="/teams" icon="/icons/team.webp" tone="91 140 255" label="تیم من" />
-            <Quick to="/tournaments" icon="/icons/tournament.webp" tone="240 193 75" label="مسابقات" />
-            <Quick to="/guides" icon="/icons/guides.svg" tone="157 111 255" label="آموزش‌ها" />
-            <Quick to="/support" icon="/icons/support.svg" tone="226 69 63" label="پشتیبانی" />
+            <Quick to="/orders" sticker="package" anim="float" tone="255 146 64" label="سفارش‌ها" />
+            <Quick to="/teams" sticker="busts-in-silhouette" anim="pulse" tone="91 140 255" label="تیم من" />
+            <Quick to="/tournaments" sticker="trophy" anim="bounce" tone="240 193 75" label="مسابقات" />
+            <Quick to="/guides" sticker="bookmark" anim="float" tone="157 111 255" label="آموزش‌ها" />
+            <Quick to="/support" sticker="headphone" anim="wiggle" tone="226 69 63" label="پشتیبانی" />
           </nav>
 
-          <Section title="دسته‌بندی‌ها" to="/store">
+          <Link to="/fortnite-shop" className="home-fn clay card--press" onClick={() => haptic.tap('medium')}>
+            <span className="home-fn__spark home-fn__spark--a" aria-hidden>
+              <Icon3D name="sparkles" size={22} anim="pulse" />
+            </span>
+            <span className="home-fn__spark home-fn__spark--b" aria-hidden>
+              <Icon3D name="crown" size={20} anim="float" />
+            </span>
+            <img className="home-fn__art" src="/images/hero/characters/fortnite-girl.webp" alt="" draggable={false} />
+            <div className="home-fn__body">
+              <span className="badge badge--cream">
+                <Icon3D name="fire" size={14} anim="pulse" />
+                آپدیت زنده امروز
+              </span>
+              <strong>آیتم‌شاپ روزانه فورتنایت</strong>
+              <p>اسکین‌ها، باندل‌ها و ایموت‌های امروز با پرداخت ریالی</p>
+            </div>
+            <ChevronLeft size={20} className="home-fn__chev" />
+          </Link>
+
+          <Section title="دسته‌بندی‌ها" sticker="joystick" to="/store">
             <div className="rail rail--tall">
               {home.data
                 ? home.data.categories.map(game => <GameTile key={game.slug} game={game} />)
@@ -84,7 +110,7 @@ export default function Home() {
           </Section>
 
           {home.data && home.data.heroTournaments.length > 0 && (
-            <Section title="تورنمنت‌های داغ" to="/tournaments">
+            <Section title="تورنمنت‌های داغ" sticker="trophy" to="/tournaments">
               <div className="rail">
                 {home.data.heroTournaments.map(t => (
                   <TournamentCard key={t.id} t={t} compact />
@@ -93,7 +119,7 @@ export default function Home() {
             </Section>
           )}
 
-          <Section title="پرفروش‌ها" to="/store">
+          <Section title="پرفروش‌ها" sticker="fire" to="/store">
             <div className="rail rail--products">
               {bestsellers.data
                 ? bestsellers.data.results.map(p => <ProductCard key={p.id} product={p} />)
@@ -101,7 +127,7 @@ export default function Home() {
             </div>
           </Section>
 
-          <Section title="آموزش‌ها و راهنما" to="/guides">
+          <Section title="آموزش‌ها و راهنما" sticker="bookmark" to="/guides">
             <div className="stack">
               {FEATURED_GUIDES.map(item => (
                 <Link
@@ -112,7 +138,7 @@ export default function Home() {
                   onClick={() => haptic.tap()}
                 >
                   <span className="tone-icon home-guide__icon">
-                    <img src={item.icon} alt="" width={23} height={23} draggable={false} />
+                    <Icon3D name={item.icon} size={28} anim="float" />
                   </span>
                   <div className="home-guide__body">
                     <span className="home-guide__badge">{item.badge}</span>
@@ -126,12 +152,12 @@ export default function Home() {
           </Section>
 
           {home.data && home.data.announcements.length > 0 && (
-            <Section title="اطلاعیه‌ها">
+            <Section title="اطلاعیه‌ها" sticker="bell">
               <div className="stack">
                 {home.data.announcements.map(a => (
                   <div key={a.id} className="clay announce">
                     <span className="clay announce__icon">
-                      <Icon3D name="sparkles" size={26} />
+                      <Icon3D name="sparkles" size={26} anim="pulse" />
                     </span>
                     <div>
                       <strong>{a.title}</strong>
@@ -148,11 +174,24 @@ export default function Home() {
   );
 }
 
-function Section({ title, to, children }: { title: string; to?: string; children: ReactNode }) {
+function Section({
+  title,
+  sticker,
+  to,
+  children,
+}: {
+  title: string;
+  sticker?: Icon3DName;
+  to?: string;
+  children: ReactNode;
+}) {
   return (
     <section className="section">
       <div className="section-head">
-        <h2 className="section-title">{title}</h2>
+        <h2 className="section-title">
+          {sticker && <Icon3D name={sticker} size={22} />}
+          {title}
+        </h2>
         {to && (
           <Link to={to} className="section-link">
             همه <ChevronLeft size={16} />
@@ -164,11 +203,23 @@ function Section({ title, to, children }: { title: string; to?: string; children
   );
 }
 
-function Quick({ to, icon, tone, label }: { to: string; icon: string; tone: string; label: string }) {
+function Quick({
+  to,
+  sticker,
+  anim,
+  tone,
+  label,
+}: {
+  to: string;
+  sticker: Icon3DName;
+  anim?: Icon3DAnim;
+  tone: string;
+  label: string;
+}) {
   return (
     <Link to={to} className="quick__item" onClick={() => haptic.tap()}>
       <span className="tone-icon quick__icon card--press" style={{ '--tone': tone } as CSSProperties}>
-        <img src={icon} alt="" width={26} height={26} draggable={false} />
+        <Icon3D name={sticker} size={34} anim={anim} />
       </span>
       <span>{label}</span>
     </Link>

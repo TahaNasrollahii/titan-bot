@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ArrowDownLeft, ArrowUpRight, Gift, Plus, RotateCcw, Settings2, ShoppingBag, Trophy, Wallet as WalletIcon } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { m } from 'motion/react';
 import { useState, type CSSProperties } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
@@ -12,7 +12,7 @@ import { useWallet } from '@/lib/queries';
 import { haptic, openExternal } from '@/lib/telegram';
 import { Button } from '@/ui/Button';
 import { Empty, ErrorState } from '@/ui/Empty';
-import { Icon3D } from '@/ui/Icon3D';
+import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { Screen } from '@/ui/Screen';
 import { Sheet } from '@/ui/Sheet';
 import { Skeleton, SkeletonList } from '@/ui/Skeleton';
@@ -24,13 +24,13 @@ const MIN = 10_000;
 const MAX = 50_000_000;
 const PRESETS = [50_000, 100_000, 200_000, 500_000, 1_000_000, 2_000_000];
 
-const KIND: Record<string, { label: string; icon: typeof Plus }> = {
-  topup: { label: 'شارژ کیف پول', icon: ArrowDownLeft },
-  order_payment: { label: 'خرید از فروشگاه', icon: ShoppingBag },
-  tournament_fee: { label: 'ورودی تورنمنت', icon: Trophy },
-  refund: { label: 'بازگشت وجه', icon: RotateCcw },
-  prize: { label: 'جایزه', icon: Gift },
-  adjustment: { label: 'اصلاح موجودی', icon: Settings2 },
+const KIND: Record<string, { label: string; sticker: Icon3DName }> = {
+  topup: { label: 'شارژ کیف پول', sticker: 'coin' },
+  order_payment: { label: 'خرید از فروشگاه', sticker: 'shopping-bags' },
+  tournament_fee: { label: 'ورودی تورنمنت', sticker: 'trophy' },
+  refund: { label: 'بازگشت وجه', sticker: 'sparkles' },
+  prize: { label: 'جایزه تورنمنت', sticker: 'wrapped-gift' },
+  adjustment: { label: 'اصلاح موجودی', sticker: 'gear' },
 };
 
 export default function Wallet() {
@@ -55,13 +55,22 @@ export default function Wallet() {
         transition={{ type: 'spring', damping: 20, stiffness: 160 }}
       >
         <div className="wallet-card__shine" aria-hidden />
+        <div className="wallet-card__art" aria-hidden>
+          <span className="wallet-card__sub wallet-card__sub--a">
+            <Icon3D name="coin" size={32} anim="bounce" />
+          </span>
+          <Icon3D name="money-bag" size={76} anim="float" />
+          <span className="wallet-card__sub wallet-card__sub--b">
+            <Icon3D name="gem-stone" size={28} anim="pulse" />
+          </span>
+        </div>
         <div className="row">
           <span className="wallet-card__chip">
-            <WalletIcon size={18} />
+            <Icon3D name="credit-card" size={22} />
           </span>
           <span className="wallet-card__brand">TITAN WALLET</span>
         </div>
-        <div className="wallet-card__label">موجودی</div>
+        <div className="wallet-card__label">موجودی کیف پول</div>
         {wallet.data ? (
           <div className="wallet-card__balance num">
             {num(wallet.data.balance)} <small>تومان</small>
@@ -76,7 +85,10 @@ export default function Wallet() {
 
       <section className="section">
         <div className="section-head">
-          <h2 className="section-title">تراکنش‌ها</h2>
+          <h2 className="section-title">
+            <Icon3D name="receipt" size={22} />
+            تراکنش‌ها
+          </h2>
         </div>
         {transactions.isError ? (
           <ErrorState error={transactions.error} onRetry={() => transactions.refetch()} />
@@ -84,7 +96,7 @@ export default function Wallet() {
           <SkeletonList count={5} h={62} />
         ) : transactions.data.results.length === 0 ? (
           <Empty
-            icon={<Icon3D name="receipt" size={52} />}
+            icon={<Icon3D name="receipt" size={52} anim="float" />}
             title="هنوز تراکنشی نداری"
             text="بعد از اولین شارژ یا خرید، این‌جا نمایش داده می‌شود."
           />
@@ -113,13 +125,12 @@ function TransactionList({ items }: { items: WalletTransaction[] }) {
           <div className="tx-day">{day}</div>
           <div className="list">
             {list.map(tx => {
-              const kind = KIND[tx.kind] ?? { label: tx.kind, icon: ArrowUpRight };
+              const kind = KIND[tx.kind] ?? { label: tx.kind, sticker: 'receipt' as Icon3DName };
               const positive = tx.amount > 0;
-              const Icon = positive ? kind.icon : ArrowUpRight;
               return (
                 <div key={tx.id} className="list-row">
                   <span className={`list-row__icon tx-icon ${positive ? 'is-in' : 'is-out'}`}>
-                    <Icon size={18} />
+                    <Icon3D name={kind.sticker} size={23} />
                   </span>
                   <div className="list-row__body">
                     <div className="list-row__title">{tx.description || kind.label}</div>

@@ -56,6 +56,22 @@
   filter: drop-shadow(0 12px 14px rgba(90, 0, 20, 0.45));
 }
 
+.hero__spark {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero__spark--a {
+  top: 12px;
+  left: 42%;
+}
+
+.hero__spark--b {
+  bottom: 14px;
+  left: 14px;
+}
+
 .hero__body {
   position: absolute;
   inset: 18px 18px 18px auto;
@@ -103,6 +119,9 @@
 
 .hero__cta {
   margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: 9px 18px;
   border-radius: 999px;
   font-size: 13.5px;
@@ -152,6 +171,89 @@
   border-radius: 21px;
   display: grid;
   place-items: center;
+}
+
+/* ================================================================ home Fortnite spotlight */
+.home-fn {
+  --c: #2c1f5e;
+  --hi: 22%;
+  --lo: 40%;
+  position: relative;
+  margin-top: 28px;
+  padding: 16px 18px 16px 118px;
+  min-height: 112px;
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #fff;
+  border: 1px solid rgba(167, 139, 250, 0.24);
+}
+
+.home-fn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 22% 50%, rgba(167, 139, 250, 0.35), transparent 65%);
+  pointer-events: none;
+}
+
+.home-fn__art {
+  position: absolute;
+  left: 6px;
+  bottom: 0;
+  width: 112px;
+  height: 136px;
+  object-fit: contain;
+  object-position: bottom;
+  filter: drop-shadow(0 8px 12px rgba(12, 4, 30, 0.6));
+  pointer-events: none;
+}
+
+.home-fn__spark {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.home-fn__spark--a {
+  top: -8px;
+  left: 96px;
+}
+
+.home-fn__spark--b {
+  bottom: 8px;
+  left: 8px;
+}
+
+.home-fn__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.home-fn__body strong {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.home-fn__body p {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.4;
+}
+
+.home-fn__chev {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  opacity: 0.75;
 }
 
 /* Rails of game tiles need headroom for the characters stepping out. */

@@ -62,6 +62,7 @@ export default function Profile() {
       {me.badges.length > 0 && (
         <section className="section">
           <h2 className="section-title" style={{ marginBottom: 12 }}>
+            <Icon3D name="sparkles" size={22} />
             نشان‌ها
           </h2>
           <div className="rail">
@@ -79,27 +80,27 @@ export default function Profile() {
         <div className="list">
           <Row
             to="/wallet"
-            icon="/icons/dashboard.webp"
+            sticker="money-bag"
             tone="255 196 75"
             title="کیف پول"
             sub={wallet.data ? toman(wallet.data.balance) : undefined}
           />
-          <Row to="/orders" icon="/icons/cart.webp" tone="255 146 64" title="سفارش‌ها" />
-          <Row to="/wishlist" icon="/icons/favorite.webp" tone="255 92 138" title="علاقه‌مندی‌ها" />
-          <Row to="/me/accounts" icon="/icons/accounts.webp" tone="56 200 232" title="اکانت‌های بازی" />
+          <Row to="/orders" sticker="package" tone="255 146 64" title="سفارش‌ها" />
+          <Row to="/wishlist" sticker="heart-with-ribbon" tone="255 92 138" title="علاقه‌مندی‌ها" />
+          <Row to="/me/accounts" sticker="video-game" tone="56 200 232" title="اکانت‌های بازی" />
         </div>
         <div className="list">
-          <Row to="/tournaments" icon="/icons/tournament.webp" tone="240 193 75" title="تورنمنت‌ها" />
-          <Row to="/teams" icon="/icons/team.webp" tone="91 140 255" title="تیم‌های من" />
-          <Row to="/invitations" icon="/icons/email.webp" tone="45 212 191" title="دعوت‌نامه‌ها" count={pendingInvites} />
-          <Row to="/friends" icon="/icons/account.webp" tone="139 124 255" title="دوستان" />
+          <Row to="/tournaments" sticker="trophy" tone="240 193 75" title="تورنمنت‌ها" />
+          <Row to="/teams" sticker="busts-in-silhouette" tone="91 140 255" title="تیم‌های من" />
+          <Row to="/invitations" sticker="envelope-with-arrow" tone="45 212 191" title="دعوت‌نامه‌ها" count={pendingInvites} />
+          <Row to="/friends" sticker="bust-in-silhouette" tone="139 124 255" title="دوستان" />
         </div>
         <div className="list">
-          <Row to="/guides" icon="/icons/guides.svg" tone="157 111 255" title="آموزش‌ها و راهنمای سایت" sub="خرید، اکانت، تورنومنت و رنک‌ها" />
-          <Row to="/guides/ranks" icon="/icons/tournament.webp" tone="245 158 11" title="سیستم رنک‌بندی و امتیازات" sub="برنز تا تایتان" />
-          <Row to="/notifications" icon="/icons/notif.webp" tone="47 210 122" title="اعلان‌ها" count={unread.data?.count} />
-          <Row to="/support" icon="/icons/support.svg" tone="226 69 63" title="پشتیبانی آنلاین" />
-          <Row to="/settings" icon="/icons/about-us.webp" tone="196 160 255" title="تنظیمات" />
+          <Row to="/guides" sticker="bookmark" tone="157 111 255" title="آموزش‌ها و راهنمای سایت" sub="خرید، اکانت، تورنومنت و رنک‌ها" />
+          <Row to="/guides/ranks" sticker="crown" tone="245 158 11" title="سیستم رنک‌بندی و امتیازات" sub="برنز تا تایتان" />
+          <Row to="/notifications" sticker="bell" tone="47 210 122" title="اعلان‌ها" count={unread.data?.count} />
+          <Row to="/support" sticker="headphone" tone="226 69 63" title="پشتیبانی آنلاین" />
+          <Row to="/settings" sticker="gear" tone="196 160 255" title="تنظیمات" />
         </div>
       </section>
     </Screen>
@@ -110,7 +111,7 @@ function Stat({ icon, tone, value, label }: { icon: Icon3DName; tone: string; va
   return (
     <div className="stat" style={{ '--tone': tone } as CSSProperties}>
       <span className="tone-icon stat__icon">
-        <Icon3D name={icon} size={22} />
+        <Icon3D name={icon} size={24} anim="float" />
       </span>
       <span className="stat__value num">{value}</span>
       <span className="stat__label">{label}</span>
@@ -120,14 +121,14 @@ function Stat({ icon, tone, value, label }: { icon: Icon3DName; tone: string; va
 
 function Row({
   to,
-  icon,
+  sticker,
   tone,
   title,
   sub,
   count,
 }: {
   to: string;
-  icon: string;
+  sticker: Icon3DName;
   tone: string;
   title: string;
   sub?: string;
@@ -136,7 +137,7 @@ function Row({
   return (
     <Link to={to} className="list-row" onClick={() => haptic.tap()}>
       <span className="tone-icon list-row__icon" style={{ '--tone': tone } as CSSProperties}>
-        <img src={icon} alt="" width={21} height={21} draggable={false} />
+        <Icon3D name={sticker} size={25} />
       </span>
       <div className="list-row__body">
         <div className="list-row__title">{title}</div>

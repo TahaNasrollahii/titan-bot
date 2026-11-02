@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router';
 import { catalogApi } from '@/api/endpoints';
 import { haptic } from '@/lib/telegram';
 import { GameTile } from '@/ui/cards';
-import { Icon3D } from '@/ui/Icon3D';
+import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { Img } from '@/ui/Img';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
@@ -211,14 +211,23 @@ function StorePromoCarousel() {
               }}
             >
               <Img className="store-hero__art" src={slide.art} alt={slide.title} contain priority />
+              <span className="hero__spark hero__spark--a" aria-hidden>
+                <Icon3D name="sparkles" size={24} anim="pulse" />
+              </span>
+              <span className="hero__spark hero__spark--b" aria-hidden>
+                <Icon3D name="crown" size={22} anim="float" />
+              </span>
               <span className="store-hero__body">
                 <span className="clay clay--cream store-hero__badge">
-                  <Icon3D name="fire" size={16} />
+                  <Icon3D name="fire" size={16} anim="pulse" />
                   {slide.badge}
                 </span>
                 <strong className="store-hero__title">{slide.title}</strong>
                 <span className="store-hero__line num">{slide.line}</span>
-                <span className="clay clay--white store-hero__cta">{slide.cta}</span>
+                <span className="clay clay--white store-hero__cta">
+                  <Icon3D name="high-voltage" size={15} />
+                  {slide.cta}
+                </span>
               </span>
             </button>
           </m.div>
@@ -245,12 +254,12 @@ function StorePromoCarousel() {
   );
 }
 
-export const SORTS = [
-  { value: '-popularity', label: 'پرطرفدار' },
-  { value: '-created_at', label: 'جدیدترین' },
-  { value: 'price', label: 'ارزان‌ترین' },
-  { value: '-price', label: 'گران‌ترین' },
-  { value: '-rating_avg', label: 'بهترین امتیاز' },
+export const SORTS: { value: string; label: string; sticker: Icon3DName }[] = [
+  { value: '-popularity', label: 'پرطرفدار', sticker: 'fire' },
+  { value: '-created_at', label: 'جدیدترین', sticker: 'sparkles' },
+  { value: 'price', label: 'ارزان‌ترین', sticker: 'coin' },
+  { value: '-price', label: 'گران‌ترین', sticker: 'gem-stone' },
+  { value: '-rating_avg', label: 'بهترین امتیاز', sticker: 'glowing-star' },
 ];
 
 export default function Store() {
@@ -269,12 +278,20 @@ export default function Store() {
         <div className="fn-banner__glow" aria-hidden />
         <div className="fn-banner__text">
           <span className="clay clay--cream fn-banner__badge">
-            <Icon3D name="sparkles" size={14} /> هر روز تازه
+            <Icon3D name="sparkles" size={14} anim="pulse" /> هر روز تازه
           </span>
           <strong>آیتم‌شاپ امروز فورتنایت</strong>
           <span>اسکین‌ها و باندل‌های امروز را ببین و وی‌باکس بخر</span>
         </div>
-        <Icon3D name="video-game" size={58} className="fn-banner__art" />
+        <div className="fn-banner__art-wrap" aria-hidden>
+          <span className="fn-banner__mini fn-banner__mini--a">
+            <Icon3D name="crown" size={20} anim="float" />
+          </span>
+          <Icon3D name="video-game" size={58} anim="wiggle" className="fn-banner__art" />
+          <span className="fn-banner__mini fn-banner__mini--b">
+            <Icon3D name="fire" size={18} anim="pulse" />
+          </span>
+        </div>
         <ChevronLeft size={22} />
       </Link>
 
@@ -282,7 +299,10 @@ export default function Store() {
 
       <section className="section">
         <div className="section-head">
-          <h2 className="section-title">بازی‌ها</h2>
+          <h2 className="section-title">
+            <Icon3D name="joystick" size={22} />
+            بازی‌ها
+          </h2>
         </div>
         <div className="games-grid">
           {sortedGames
@@ -293,7 +313,10 @@ export default function Store() {
 
       <section className="section">
         <div className="section-head">
-          <h2 className="section-title">همه محصولات</h2>
+          <h2 className="section-title">
+            <Icon3D name="shopping-bags" size={22} />
+            همه محصولات
+          </h2>
         </div>
         <div className="rail chips-rail" role="tablist" aria-label="مرتب‌سازی">
           {SORTS.map(sort => (
@@ -306,6 +329,7 @@ export default function Store() {
                 setOrdering(sort.value);
               }}
             >
+              <Icon3D name={sort.sticker} size={17} />
               {sort.label}
             </button>
           ))}

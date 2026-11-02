@@ -20,15 +20,50 @@
   pointer-events: none;
 }
 
-.sup-hero__icon {
-  --c: var(--surface-2);
+.sup-hero__stage {
   position: relative;
-  width: 104px;
-  height: 104px;
-  border-radius: 50%;
   display: grid;
   place-items: center;
   margin-bottom: 6px;
+}
+
+.sup-hero__icon {
+  --c: var(--surface-2);
+  position: relative;
+  z-index: 1;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.sup-hero__icon img {
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+}
+
+.sup-hero__float {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sup-hero__float--a {
+  top: -4px;
+  right: -12px;
+}
+
+.sup-hero__float--b {
+  bottom: 2px;
+  left: -14px;
+}
+
+.sup-hero__float--c {
+  top: 8px;
+  left: -16px;
 }
 
 .sup-hero h1 {

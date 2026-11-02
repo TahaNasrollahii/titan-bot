@@ -1,5 +1,6 @@
 import { AnimatePresence, m } from 'motion/react';
-import { ChevronRight, KeyRound, Link2, MessageSquareText, Phone } from 'lucide-react';
+import { ChevronRight, KeyRound, MessageSquareText, Phone } from 'lucide-react';
+import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
 
 import { ApiError, errorText } from '@/api/client';
@@ -26,6 +27,18 @@ export function LinkAccount({ telegramUser }: { telegramUser: TelegramUser }) {
   return (
     <div className="link">
       <div className="link__hero">
+        <span className="link__float link__float--1" aria-hidden>
+          <Icon3D name="crown" size={30} anim="float" />
+        </span>
+        <span className="link__float link__float--2" aria-hidden>
+          <Icon3D name="sparkles" size={24} anim="pulse" />
+        </span>
+        <span className="link__float link__float--3" aria-hidden>
+          <Icon3D name="joystick" size={28} anim="wiggle" />
+        </span>
+        <span className="link__float link__float--4" aria-hidden>
+          <Icon3D name="trophy" size={26} anim="bounce" />
+        </span>
         <m.div
           className="link__orbit"
           initial={{ opacity: 0, scale: 0.85 }}
@@ -35,7 +48,7 @@ export function LinkAccount({ telegramUser }: { telegramUser: TelegramUser }) {
           <Avatar name={name || 'T'} src={telegramUser.photoUrl || null} seed={telegramUser.id % 97} size={76} />
           <span className="link__bridge" aria-hidden>
             <span />
-            <Link2 size={18} />
+            <Icon3D name="high-voltage" size={24} anim="pulse" />
             <span />
           </span>
           <span className="link__titan">
@@ -109,23 +122,31 @@ function Intro({ name, onUseAnother, onNeedsCode }: { name?: string; onUseAnothe
 
   return (
     <m.section className="link__panel" {...fade}>
-      <h1 className="link__title">{name ? `سلام ${name}!` : 'سلام!'}</h1>
+      <div className="link__welcome-chip">
+        <Icon3D name="sparkles" size={16} anim="pulse" />
+        <span>باشگاه گیمرهای تایتان</span>
+      </div>
+      <h1 className="link__title">{name ? `سلام ${name}! 👋` : 'سلام رفیق! 👋'}</h1>
       <p className="link__lead">
         حساب تلگرامت را یک بار به تایتان وصل کن. اگر در سایت تایتان حساب داری، همان حساب با کیف پول و سفارش‌هایت باز
         می‌شود.
       </p>
 
       <ul className="link__perks">
-        <li>
-          <span><Icon3D name="money-bag" size={26} /></span>
+        <li style={{ '--tone': '255 184 56' } as CSSProperties}>
+          <span className="tone-icon"><Icon3D name="money-bag" size={26} anim="float" /></span>
           کیف پول، سفارش‌ها و تیمت؛ همه‌جا یکی
         </li>
-        <li>
-          <span><Icon3D name="bell" size={26} /></span>
+        <li style={{ '--tone': '82 178 255' } as CSSProperties}>
+          <span className="tone-icon"><Icon3D name="bell" size={26} anim="wiggle" /></span>
           اعلان تحویل سفارش و شروع مسابقه، همین‌جا در تلگرام
         </li>
-        <li>
-          <span><Icon3D name="shield" size={26} /></span>
+        <li style={{ '--tone': '196 122 255' } as CSSProperties}>
+          <span className="tone-icon"><Icon3D name="trophy" size={26} anim="bounce" /></span>
+          شرکت در تورنمنت‌ها و دریافت امتیاز و رنک تایتان
+        </li>
+        <li style={{ '--tone': '66 214 148' } as CSSProperties}>
+          <span className="tone-icon"><Icon3D name="shield" size={26} anim="pulse" /></span>
           بدون رمز و کد پیامکی؛ تلگرام شماره‌ات را تأیید می‌کند
         </li>
       </ul>

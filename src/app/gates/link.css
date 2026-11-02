@@ -8,7 +8,7 @@
 .link__hero {
   display: grid;
   place-items: center;
-  padding: 18px 0 26px;
+  padding: 20px 0 28px;
   position: relative;
 }
 
@@ -17,8 +17,49 @@
   position: absolute;
   width: 280px;
   height: 200px;
-  background: radial-gradient(closest-side, rgba(226, 69, 63, 0.4), transparent);
-  filter: blur(10px);
+  background: radial-gradient(closest-side, rgba(226, 69, 63, 0.45), rgba(255, 232, 163, 0.1) 60%, transparent);
+  filter: blur(12px);
+}
+
+.link__float {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.link__float--1 {
+  top: 2px;
+  right: 16%;
+}
+
+.link__float--2 {
+  top: 10px;
+  left: 16%;
+}
+
+.link__float--3 {
+  bottom: 4px;
+  right: 18%;
+}
+
+.link__float--4 {
+  bottom: 6px;
+  left: 18%;
+}
+
+.link__welcome-chip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px 5px 9px;
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: 900;
+  color: var(--cream);
+  background: rgba(255, 232, 163, 0.14);
+  border: 1px solid rgba(255, 232, 163, 0.28);
+  margin-bottom: -6px;
 }
 
 .link__orbit {

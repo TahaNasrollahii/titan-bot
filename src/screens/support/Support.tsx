@@ -100,10 +100,21 @@ function StartChat({ onStarted }: { onStarted: (token: string) => void }) {
   return (
     <Screen title="پشتیبانی" noTabs>
       <div className="clay sup-hero">
-        <span className="clay sup-hero__icon">
-          <Icon3D name="headphone" size={64} />
-        </span>
-        <h1>پشتیبانی تایتان</h1>
+        <div className="sup-hero__stage" aria-hidden>
+          <span className="sup-hero__float sup-hero__float--a">
+            <Icon3D name="sparkles" size={24} anim="pulse" />
+          </span>
+          <span className="clay sup-hero__icon">
+            <img src="/images/support-robot.webp" alt="" width={84} height={84} draggable={false} />
+          </span>
+          <span className="sup-hero__float sup-hero__float--b">
+            <Icon3D name="headphone" size={26} anim="wiggle" />
+          </span>
+          <span className="sup-hero__float sup-hero__float--c">
+            <Icon3D name="speech-balloon" size={22} anim="float" />
+          </span>
+        </div>
+        <h1>پشتیبانی آنلاین تایتان</h1>
         <span className={`sup-status ${online ? 'is-online' : ''}`}>
           <span className="live-dot" />
           {online ? (minutes ? `آنلاین؛ پاسخ معمولاً زیر ${faDigits(minutes)} دقیقه` : 'پشتیبان‌ها آنلاین‌اند') : 'الان آفلاین؛ پاسخ را در تلگرام می‌گیری'}

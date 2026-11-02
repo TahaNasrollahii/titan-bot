@@ -96,14 +96,23 @@ export function HeroCarousel({ promos, tournaments, games }: { promos: Promo[]; 
               }}
             >
               {slide.art && <Img className="hero__art" src={slide.art} alt="" contain priority={index === 0} />}
+              <span className="hero__spark hero__spark--a" aria-hidden>
+                <Icon3D name="sparkles" size={24} anim="pulse" />
+              </span>
+              <span className="hero__spark hero__spark--b" aria-hidden>
+                <Icon3D name={slide.key.startsWith('t') ? 'trophy' : 'crown'} size={22} anim="float" />
+              </span>
               <span className="hero__body">
                 <span className="clay clay--cream hero__badge">
-                  {slide.live ? <span className="live-dot" /> : <Icon3D name="fire" size={16} />}
+                  {slide.live ? <span className="live-dot" /> : <Icon3D name="fire" size={16} anim="pulse" />}
                   {slide.live ? 'زنده' : slide.badge}
                 </span>
                 <strong className="hero__title">{slide.title}</strong>
                 {slide.line && <span className="hero__line num">{slide.line}</span>}
-                <span className="clay clay--white hero__cta">{slide.cta}</span>
+                <span className="clay clay--white hero__cta">
+                  <Icon3D name="high-voltage" size={15} />
+                  {slide.cta}
+                </span>
               </span>
             </button>
           </div>
