@@ -27,23 +27,23 @@ export function PlayerCard({ user, children }: { user: Me; children?: ReactNode 
     >
       <span className="player__aura" aria-hidden />
       <span className="player__decor player__decor--a" aria-hidden>
-        <Icon3D name="sparkles" size={24} anim="pulse" />
+        <Icon3D name="sparkles" size={24} />
       </span>
       <span className="player__decor player__decor--b" aria-hidden>
-        <Icon3D name="trophy" size={34} anim="float" />
+        <Icon3D name="trophy" size={34} />
       </span>
       <div className="player__who">
         <RankAvatar user={user} size={64} />
         <div className="player__id">
           <strong>{name}</strong>
           <Link to="/guides/ranks" className="player__tier">
-            <Icon3D name="crown" size={18} anim="float" />
+            <Icon3D name="crown" size={18} />
             {rankName}، سطح {faDigits(user.level)}
           </Link>
         </div>
         <Link to="/guides/ranks" className="player__points">
           <span className="player__points-val num">
-            <Icon3D name="glowing-star" size={18} anim="pulse" />
+            <Icon3D name="glowing-star" size={18} />
             {num(user.points)}
           </span>
           <small>امتیاز کلاب</small>
@@ -60,7 +60,7 @@ export function PlayerCard({ user, children }: { user: Me; children?: ReactNode 
       </div>
       {!user.username && (
         <Link to="/me/edit" className="clay clay--cream player__nudge">
-          <Icon3D name="video-game" size={18} anim="wiggle" />
+          <Icon3D name="video-game" size={18} />
           آیدی بازی‌ات را تنظیم کن تا دوستانت پیدایت کنند
         </Link>
       )}

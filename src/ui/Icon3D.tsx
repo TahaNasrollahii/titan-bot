@@ -8,23 +8,10 @@ export type Icon3DName =
   | 'red-heart' | 'rocket' | 'shield' | 'shopping-bags' | 'shopping-cart' | 'sparkles' | 'speech-balloon'
   | 'ticket' | 'trophy' | 'video-game' | 'wrapped-gift';
 
-export type Icon3DAnim = 'float' | 'pulse' | 'wiggle' | 'bounce';
-
-export function Icon3D({
-  name,
-  size = 32,
-  anim,
-  className = '',
-}: {
-  name: Icon3DName;
-  size?: number;
-  anim?: Icon3DAnim;
-  className?: string;
-}) {
-  const animClass = anim ? `icon3d--${anim}` : '';
+export function Icon3D({ name, size = 32, className = '' }: { name: Icon3DName; size?: number; className?: string }) {
   return (
     <img
-      className={`icon3d ${animClass} ${className}`.trim()}
+      className={`icon3d ${className}`.trim()}
       src={`/clay/${name}.webp`}
       alt=""
       width={size}

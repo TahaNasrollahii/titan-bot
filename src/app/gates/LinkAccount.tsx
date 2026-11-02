@@ -28,16 +28,16 @@ export function LinkAccount({ telegramUser }: { telegramUser: TelegramUser }) {
     <div className="link">
       <div className="link__hero">
         <span className="link__float link__float--1" aria-hidden>
-          <Icon3D name="crown" size={30} anim="float" />
+          <Icon3D name="crown" size={30} />
         </span>
         <span className="link__float link__float--2" aria-hidden>
-          <Icon3D name="sparkles" size={24} anim="pulse" />
+          <Icon3D name="sparkles" size={24} />
         </span>
         <span className="link__float link__float--3" aria-hidden>
-          <Icon3D name="joystick" size={28} anim="wiggle" />
+          <Icon3D name="joystick" size={28} />
         </span>
         <span className="link__float link__float--4" aria-hidden>
-          <Icon3D name="trophy" size={26} anim="bounce" />
+          <Icon3D name="trophy" size={26} />
         </span>
         <m.div
           className="link__orbit"
@@ -48,7 +48,7 @@ export function LinkAccount({ telegramUser }: { telegramUser: TelegramUser }) {
           <Avatar name={name || 'T'} src={telegramUser.photoUrl || null} seed={telegramUser.id % 97} size={76} />
           <span className="link__bridge" aria-hidden>
             <span />
-            <Icon3D name="high-voltage" size={24} anim="pulse" />
+            <Icon3D name="high-voltage" size={24} />
             <span />
           </span>
           <span className="link__titan">
@@ -123,7 +123,7 @@ function Intro({ name, onUseAnother, onNeedsCode }: { name?: string; onUseAnothe
   return (
     <m.section className="link__panel" {...fade}>
       <div className="link__welcome-chip">
-        <Icon3D name="sparkles" size={16} anim="pulse" />
+        <Icon3D name="sparkles" size={16} />
         <span>باشگاه گیمرهای تایتان</span>
       </div>
       <h1 className="link__title">{name ? `سلام ${name}! 👋` : 'سلام رفیق! 👋'}</h1>
@@ -134,19 +134,19 @@ function Intro({ name, onUseAnother, onNeedsCode }: { name?: string; onUseAnothe
 
       <ul className="link__perks">
         <li style={{ '--tone': '255 184 56' } as CSSProperties}>
-          <span className="tone-icon"><Icon3D name="money-bag" size={26} anim="float" /></span>
+          <span className="tone-icon"><Icon3D name="money-bag" size={26} /></span>
           کیف پول، سفارش‌ها و تیمت؛ همه‌جا یکی
         </li>
         <li style={{ '--tone': '82 178 255' } as CSSProperties}>
-          <span className="tone-icon"><Icon3D name="bell" size={26} anim="wiggle" /></span>
+          <span className="tone-icon"><Icon3D name="bell" size={26} /></span>
           اعلان تحویل سفارش و شروع مسابقه، همین‌جا در تلگرام
         </li>
         <li style={{ '--tone': '196 122 255' } as CSSProperties}>
-          <span className="tone-icon"><Icon3D name="trophy" size={26} anim="bounce" /></span>
+          <span className="tone-icon"><Icon3D name="trophy" size={26} /></span>
           شرکت در تورنمنت‌ها و دریافت امتیاز و رنک تایتان
         </li>
         <li style={{ '--tone': '66 214 148' } as CSSProperties}>
-          <span className="tone-icon"><Icon3D name="shield" size={26} anim="pulse" /></span>
+          <span className="tone-icon"><Icon3D name="shield" size={26} /></span>
           بدون رمز و کد پیامکی؛ تلگرام شماره‌ات را تأیید می‌کند
         </li>
       </ul>

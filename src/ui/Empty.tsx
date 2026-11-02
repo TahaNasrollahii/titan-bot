@@ -13,10 +13,10 @@ export function Empty({ icon, title, text, action }: { icon: ReactNode; title: s
         <span className="empty__glow" aria-hidden />
         <div className="empty__art">{icon}</div>
         <span className="empty__orbit empty__orbit--a" aria-hidden>
-          <Icon3D name="sparkles" size={22} anim="pulse" />
+          <Icon3D name="sparkles" size={22} />
         </span>
         <span className="empty__orbit empty__orbit--b" aria-hidden>
-          <Icon3D name="glowing-star" size={18} anim="float" />
+          <Icon3D name="glowing-star" size={18} />
         </span>
       </div>
       <div className="empty__title">{title}</div>
@@ -30,7 +30,7 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
   const offline = error instanceof ApiError && error.code === 'network_error';
   return (
     <Empty
-      icon={<Icon3D name={offline ? 'hourglass-not-done' : 'high-voltage'} size={48} anim="wiggle" />}
+      icon={<Icon3D name={offline ? 'hourglass-not-done' : 'high-voltage'} size={48} />}
       title={offline ? 'اتصال برقرار نشد' : 'مشکلی پیش آمد'}
       text={errorText(error)}
       action={

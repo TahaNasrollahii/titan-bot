@@ -212,14 +212,14 @@ function StorePromoCarousel() {
             >
               <Img className="store-hero__art" src={slide.art} alt={slide.title} contain priority />
               <span className="hero__spark hero__spark--a" aria-hidden>
-                <Icon3D name="sparkles" size={24} anim="pulse" />
+                <Icon3D name="sparkles" size={24} />
               </span>
               <span className="hero__spark hero__spark--b" aria-hidden>
-                <Icon3D name="crown" size={22} anim="float" />
+                <Icon3D name="crown" size={22} />
               </span>
               <span className="store-hero__body">
                 <span className="clay clay--cream store-hero__badge">
-                  <Icon3D name="fire" size={16} anim="pulse" />
+                  <Icon3D name="fire" size={16} />
                   {slide.badge}
                 </span>
                 <strong className="store-hero__title">{slide.title}</strong>
@@ -278,18 +278,18 @@ export default function Store() {
         <div className="fn-banner__glow" aria-hidden />
         <div className="fn-banner__text">
           <span className="clay clay--cream fn-banner__badge">
-            <Icon3D name="sparkles" size={14} anim="pulse" /> هر روز تازه
+            <Icon3D name="sparkles" size={14} /> هر روز تازه
           </span>
           <strong>آیتم‌شاپ امروز فورتنایت</strong>
           <span>اسکین‌ها و باندل‌های امروز را ببین و وی‌باکس بخر</span>
         </div>
         <div className="fn-banner__art-wrap" aria-hidden>
           <span className="fn-banner__mini fn-banner__mini--a">
-            <Icon3D name="crown" size={20} anim="float" />
+            <Icon3D name="crown" size={20} />
           </span>
-          <Icon3D name="video-game" size={58} anim="wiggle" className="fn-banner__art" />
+          <Icon3D name="video-game" size={58} className="fn-banner__art" />
           <span className="fn-banner__mini fn-banner__mini--b">
-            <Icon3D name="fire" size={18} anim="pulse" />
+            <Icon3D name="fire" size={18} />
           </span>
         </div>
         <ChevronLeft size={22} />

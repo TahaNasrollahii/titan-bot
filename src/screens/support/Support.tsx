@@ -102,16 +102,16 @@ function StartChat({ onStarted }: { onStarted: (token: string) => void }) {
       <div className="clay sup-hero">
         <div className="sup-hero__stage" aria-hidden>
           <span className="sup-hero__float sup-hero__float--a">
-            <Icon3D name="sparkles" size={24} anim="pulse" />
+            <Icon3D name="sparkles" size={24} />
           </span>
           <span className="clay sup-hero__icon">
             <img src="/images/support-robot.webp" alt="" width={84} height={84} draggable={false} />
           </span>
           <span className="sup-hero__float sup-hero__float--b">
-            <Icon3D name="headphone" size={26} anim="wiggle" />
+            <Icon3D name="headphone" size={26} />
           </span>
           <span className="sup-hero__float sup-hero__float--c">
-            <Icon3D name="speech-balloon" size={22} anim="float" />
+            <Icon3D name="speech-balloon" size={22} />
           </span>
         </div>
         <h1>پشتیبانی آنلاین تایتان</h1>

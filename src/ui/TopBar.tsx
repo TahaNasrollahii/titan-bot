@@ -42,7 +42,7 @@ function Brand() {
       <div className="topbar__brand-meta">
         <span className="topbar__brand-name">تایتان</span>
         <span className="topbar__brand-tag">
-          <Icon3D name="fire" size={14} anim="pulse" />
+          <Icon3D name="fire" size={14} />
           کلاب گیمرها
         </span>
       </div>
@@ -58,7 +58,7 @@ function BrandActions() {
   return (
     <>
       <Link to="/wallet" className="wallet-chip num" aria-label="کیف پول" onClick={() => haptic.tap()}>
-        <Icon3D name="coin" size={30} anim="float" />
+        <Icon3D name="coin" size={30} />
         {wallet.data ? compactToman(wallet.data.balance) : '…'}
       </Link>
       <Link to="/search" className="icon-btn" aria-label="جستجو" onClick={() => haptic.tap()}>

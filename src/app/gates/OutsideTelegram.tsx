@@ -8,17 +8,17 @@ export function OutsideTelegram() {
     <div className="gate">
       <div className="gate__stage">
         <span className="gate__sticker gate__sticker--1" aria-hidden>
-          <Icon3D name="crown" size={32} anim="float" />
+          <Icon3D name="crown" size={32} />
         </span>
         <span className="gate__sticker gate__sticker--2" aria-hidden>
-          <Icon3D name="sparkles" size={26} anim="pulse" />
+          <Icon3D name="sparkles" size={26} />
         </span>
         <img className="gate__logo" src="/titan-logo.webp" alt="" />
         <span className="gate__sticker gate__sticker--3" aria-hidden>
-          <Icon3D name="trophy" size={30} anim="bounce" />
+          <Icon3D name="trophy" size={30} />
         </span>
         <span className="gate__sticker gate__sticker--4" aria-hidden>
-          <Icon3D name="joystick" size={28} anim="wiggle" />
+          <Icon3D name="joystick" size={28} />
         </span>
       </div>
       <h1 className="gate__title">تایتان را در تلگرام باز کنید</h1>

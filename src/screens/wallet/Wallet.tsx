@@ -57,11 +57,11 @@ export default function Wallet() {
         <div className="wallet-card__shine" aria-hidden />
         <div className="wallet-card__art" aria-hidden>
           <span className="wallet-card__sub wallet-card__sub--a">
-            <Icon3D name="coin" size={32} anim="bounce" />
+            <Icon3D name="coin" size={32} />
           </span>
-          <Icon3D name="money-bag" size={76} anim="float" />
+          <Icon3D name="money-bag" size={76} />
           <span className="wallet-card__sub wallet-card__sub--b">
-            <Icon3D name="gem-stone" size={28} anim="pulse" />
+            <Icon3D name="gem-stone" size={28} />
           </span>
         </div>
         <div className="row">
@@ -96,7 +96,7 @@ export default function Wallet() {
           <SkeletonList count={5} h={62} />
         ) : transactions.data.results.length === 0 ? (
           <Empty
-            icon={<Icon3D name="receipt" size={52} anim="float" />}
+            icon={<Icon3D name="receipt" size={52} />}
             title="هنوز تراکنشی نداری"
             text="بعد از اولین شارژ یا خرید، این‌جا نمایش داده می‌شود."
           />

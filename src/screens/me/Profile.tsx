@@ -111,7 +111,7 @@ function Stat({ icon, tone, value, label }: { icon: Icon3DName; tone: string; va
   return (
     <div className="stat" style={{ '--tone': tone } as CSSProperties}>
       <span className="tone-icon stat__icon">
-        <Icon3D name={icon} size={24} anim="float" />
+        <Icon3D name={icon} size={24} />
       </span>
       <span className="stat__value num">{value}</span>
       <span className="stat__label">{label}</span>

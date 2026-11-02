@@ -67,7 +67,7 @@ export default function Tournaments() {
       {activeMine.length > 0 && (
         <Link to={`/tournaments/${activeMine[0].tournament.slug}`} className="my-next card--press" onClick={() => haptic.tap()}>
           <span className="my-next__icon">
-            <Icon3D name="crossed-swords" size={26} anim="wiggle" />
+            <Icon3D name="crossed-swords" size={26} />
           </span>
           <span className="list-row__body">
             <span className="text-xs muted">مسابقه‌ی بعدی تو</span>
@@ -82,7 +82,7 @@ export default function Tournaments() {
       <div className="t-ranks-strip clay">
         <div className="t-ranks-strip__head">
           <strong className="row" style={{ '--gap': '6px' } as CSSProperties}>
-            <Icon3D name="crown" size={20} anim="float" />
+            <Icon3D name="crown" size={20} />
             مسیر پیشرفت و رنک‌ها
           </strong>
           <Link to="/guides/ranks" className="t-ranks-strip__link" onClick={() => haptic.tap()}>
@@ -128,7 +128,7 @@ export default function Tournaments() {
       <div className="t-guide-banner clay">
         <div className="t-guide-banner__main">
           <span className="tone-icon t-guide-banner__icon" style={{ '--tone': '226 69 63' } as CSSProperties}>
-            <Icon3D name="trophy" size={26} anim="bounce" />
+            <Icon3D name="trophy" size={26} />
           </span>
           <div className="t-guide-banner__copy">
             <strong>چطور در مسابقات شرکت کنم؟</strong>

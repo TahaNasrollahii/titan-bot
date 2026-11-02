@@ -8,7 +8,7 @@ import { useMe } from '@/auth/session';
 import { haptic } from '@/lib/telegram';
 import { GameTile, ProductCard, TournamentCard } from '@/ui/cards';
 import { ErrorState } from '@/ui/Empty';
-import { Icon3D, type Icon3DAnim, type Icon3DName } from '@/ui/Icon3D';
+import { Icon3D, type Icon3DName } from '@/ui/Icon3D';
 import { PlayerCard } from '@/ui/PlayerCard';
 import { Screen } from '@/ui/Screen';
 import { Skeleton } from '@/ui/Skeleton';
@@ -75,24 +75,24 @@ export default function Home() {
           </div>
 
           <nav className="quick" aria-label="دسترسی سریع">
-            <Quick to="/orders" sticker="package" anim="float" tone="255 146 64" label="سفارش‌ها" />
-            <Quick to="/teams" sticker="busts-in-silhouette" anim="pulse" tone="91 140 255" label="تیم من" />
-            <Quick to="/tournaments" sticker="trophy" anim="bounce" tone="240 193 75" label="مسابقات" />
-            <Quick to="/guides" sticker="bookmark" anim="float" tone="157 111 255" label="آموزش‌ها" />
-            <Quick to="/support" sticker="headphone" anim="wiggle" tone="226 69 63" label="پشتیبانی" />
+            <Quick to="/orders" sticker="package" tone="255 146 64" label="سفارش‌ها" />
+            <Quick to="/teams" sticker="busts-in-silhouette" tone="91 140 255" label="تیم من" />
+            <Quick to="/tournaments" sticker="trophy" tone="240 193 75" label="مسابقات" />
+            <Quick to="/guides" sticker="bookmark" tone="157 111 255" label="آموزش‌ها" />
+            <Quick to="/support" sticker="headphone" tone="226 69 63" label="پشتیبانی" />
           </nav>
 
           <Link to="/fortnite-shop" className="home-fn clay card--press" onClick={() => haptic.tap('medium')}>
             <span className="home-fn__spark home-fn__spark--a" aria-hidden>
-              <Icon3D name="sparkles" size={22} anim="pulse" />
+              <Icon3D name="sparkles" size={22} />
             </span>
             <span className="home-fn__spark home-fn__spark--b" aria-hidden>
-              <Icon3D name="crown" size={20} anim="float" />
+              <Icon3D name="crown" size={20} />
             </span>
-            <img className="home-fn__art" src="/images/hero/characters/fortnite-girl.webp" alt="" draggable={false} />
+            <img className="home-fn__art" src="/images/hero/characters/fortnite.webp" alt="" draggable={false} />
             <div className="home-fn__body">
               <span className="badge badge--cream">
-                <Icon3D name="fire" size={14} anim="pulse" />
+                <Icon3D name="fire" size={14} />
                 آپدیت زنده امروز
               </span>
               <strong>آیتم‌شاپ روزانه فورتنایت</strong>
@@ -138,7 +138,7 @@ export default function Home() {
                   onClick={() => haptic.tap()}
                 >
                   <span className="tone-icon home-guide__icon">
-                    <Icon3D name={item.icon} size={28} anim="float" />
+                    <Icon3D name={item.icon} size={28} />
                   </span>
                   <div className="home-guide__body">
                     <span className="home-guide__badge">{item.badge}</span>
@@ -157,7 +157,7 @@ export default function Home() {
                 {home.data.announcements.map(a => (
                   <div key={a.id} className="clay announce">
                     <span className="clay announce__icon">
-                      <Icon3D name="sparkles" size={26} anim="pulse" />
+                      <Icon3D name="sparkles" size={26} />
                     </span>
                     <div>
                       <strong>{a.title}</strong>
@@ -206,20 +206,18 @@ function Section({
 function Quick({
   to,
   sticker,
-  anim,
   tone,
   label,
 }: {
   to: string;
   sticker: Icon3DName;
-  anim?: Icon3DAnim;
   tone: string;
   label: string;
 }) {
   return (
     <Link to={to} className="quick__item" onClick={() => haptic.tap()}>
       <span className="tone-icon quick__icon card--press" style={{ '--tone': tone } as CSSProperties}>
-        <Icon3D name={sticker} size={34} anim={anim} />
+        <Icon3D name={sticker} size={34} />
       </span>
       <span>{label}</span>
     </Link>
