@@ -89,3 +89,4 @@ export function CrewIcon({ icon, size, stroke, strokeWidth }: CrewIconProps) {
       );
   }
 }
+

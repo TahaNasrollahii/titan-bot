@@ -409,3 +409,4 @@ export const CREW_FAQ_ITEMS: CrewFaqItem[] = [
       'بله؛ به شرطی که پلتفرم شما به یک حساب واحد Epic Games متصل باشد، تمام اسکین‌ها، پس‌ها و وی‌باکس دریافتی روی PC، PS4، PS5، Xbox، Nintendo Switch و موبایل در دسترس خواهند بود.',
   },
 ];
+
