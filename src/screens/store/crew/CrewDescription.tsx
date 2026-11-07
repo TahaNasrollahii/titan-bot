@@ -1,47 +1,53 @@
 import { useRef, useState, type MouseEvent, type PointerEvent } from 'react';
 import { Link } from 'react-router';
 
-import type { Product } from '@/api/types';
+import type { Product, ProductVariant } from '@/api/types';
 import { haptic, openExternal } from '@/lib/telegram';
 
-import {
-  CREW_ACTIVATION_CONTENT,
-  CREW_ACTIVATION_INFO,
-  CREW_BENEFIT_BLOCKS,
-  CREW_BENEFITS_HEADER,
-  CREW_COMPARISON_CONTENT,
-  CREW_COMPARISON_ROWS,
-  CREW_COMPARISON_TOTAL,
-  CREW_FAQ_HEADER,
-  CREW_FAQ_ITEMS,
-  CREW_HERO_CONTENT,
-  CREW_INTRO_CONTENT,
-  CREW_PRICE_DELIVERY_CONTENT,
-  CREW_RELATED_HEADER,
-  CREW_RELATED_LINKS,
-  CREW_SUPPORT_CONTENT,
-  resolveCrewPricing,
-} from './content';
+import { CREW_ACTIVATION_INFO } from './content';
 import { CrewIcon } from './CrewIcon';
+import {
+  getFortniteBotTemplate,
+  resolveFortniteBotPricing,
+} from './fortniteTemplates';
 import './crew.css';
 
 interface CrewBotDescriptionProps {
   product: Product;
+  selectedVariant?: ProductVariant | null;
 }
 
-export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
-  const [expanded, setExpanded] = useState(false);
-  const [active, setActive] = useState(0);
+export function CrewBotDescription({
+  product,
+  selectedVariant = null,
+}: CrewBotDescriptionProps) {
+  const currentSlug = product.slug || 'fortnite-crew';
+  const [expandedSlug, setExpandedSlug] = useState<string | null>(null);
+  const expanded = expandedSlug === currentSlug;
+  const setExpanded = (next: boolean) => {
+    setExpandedSlug(next ? currentSlug : null);
+  };
+
+  const [activeState, setActiveState] = useState<{ slug: string; idx: number }>({
+    slug: currentSlug,
+    idx: 0,
+  });
   const startXRef = useRef<number | null>(null);
   const draggedRef = useRef(false);
 
-  const pricing = resolveCrewPricing(product);
-  const items = CREW_BENEFIT_BLOCKS;
+  const template = getFortniteBotTemplate(product.slug, product);
+  const pricing = resolveFortniteBotPricing(template, product, selectedVariant);
+  const items = template.benefitBlocks;
   const n = items.length;
+  const active =
+    activeState.slug === currentSlug ? ((activeState.idx % n) + n) % n : 0;
 
   const go = (index: number) => {
     haptic.select();
-    setActive(((index % n) + n) % n);
+    setActiveState({
+      slug: currentSlug,
+      idx: ((index % n) + n) % n,
+    });
   };
 
   const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
@@ -222,15 +228,15 @@ export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
             </button>
           </div>
 
-          <p className="cbot__hint">{CREW_HERO_CONTENT.carouselHint}</p>
+          <p className="cbot__hint">{template.hero.carouselHint}</p>
         </div>
 
         <div className="cbot__hero-text">
-          <span className="cbot__eyebrow">{CREW_HERO_CONTENT.eyebrow}</span>
-          <h3 className="cbot__h-main">{CREW_HERO_CONTENT.title}</h3>
-          <p className="cbot__p">{CREW_HERO_CONTENT.lead}</p>
+          <span className="cbot__eyebrow">{template.hero.eyebrow}</span>
+          <h3 className="cbot__h-main">{template.hero.title}</h3>
+          <p className="cbot__p">{template.hero.lead}</p>
           <div className="cbot__chips">
-            {CREW_HERO_CONTENT.factChips.map(chip => (
+            {template.hero.factChips.map(chip => (
               <span key={chip} className="cbot__fact-chip">
                 {chip}
               </span>
@@ -246,32 +252,32 @@ export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
       >
         {/* 2. INTRO */}
         <section className="cbot__sec">
-          <span className="cbot__kicker">{CREW_INTRO_CONTENT.kicker}</span>
-          <h3 className="cbot__h2">{CREW_INTRO_CONTENT.title}</h3>
+          <span className="cbot__kicker">{template.intro.kicker}</span>
+          <h3 className="cbot__h2">{template.intro.title}</h3>
           <p className="cbot__p">
-            {CREW_INTRO_CONTENT.p1BeforeLink}
+            {template.intro.p1BeforeLink}
             <button
               type="button"
               className="cbot__ext-link"
-              onClick={() => openExternal(CREW_INTRO_CONTENT.p1LinkHref)}
+              onClick={() => openExternal(template.intro.p1LinkHref)}
             >
-              {CREW_INTRO_CONTENT.p1LinkLabel}
+              {template.intro.p1LinkLabel}
             </button>
-            {CREW_INTRO_CONTENT.p1AfterLink}
+            {template.intro.p1AfterLink}
           </p>
-          <p className="cbot__p">{CREW_INTRO_CONTENT.p2}</p>
-          <p className="cbot__p">{CREW_INTRO_CONTENT.p3}</p>
+          <p className="cbot__p">{template.intro.p2}</p>
+          <p className="cbot__p">{template.intro.p3}</p>
         </section>
 
         {/* 3. BENEFITS */}
         <section className="cbot__sec">
           <div className="cbot__sec-head">
-            <span className="cbot__kicker">{CREW_BENEFITS_HEADER.kicker}</span>
-            <h3 className="cbot__h2">{CREW_BENEFITS_HEADER.title}</h3>
+            <span className="cbot__kicker">{template.benefitsHeader.kicker}</span>
+            <h3 className="cbot__h2">{template.benefitsHeader.title}</h3>
           </div>
 
           <div className="cbot__benefits">
-            {CREW_BENEFIT_BLOCKS.map(item => (
+            {items.map(item => (
               <article key={item.id} id={item.id} className="cbot__benefit-card">
                 <div className="cbot__benefit-top">
                   <span
@@ -312,13 +318,13 @@ export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
         {/* 4. ACTIVATION STEPS */}
         <section className="cbot__sec">
           <div className="cbot__sec-head">
-            <span className="cbot__kicker">{CREW_ACTIVATION_CONTENT.kicker}</span>
-            <h3 className="cbot__h2">{CREW_ACTIVATION_CONTENT.title}</h3>
-            <p className="cbot__p">{CREW_ACTIVATION_CONTENT.lead}</p>
+            <span className="cbot__kicker">{template.activation.kicker}</span>
+            <h3 className="cbot__h2">{template.activation.title}</h3>
+            <p className="cbot__p">{template.activation.lead}</p>
           </div>
 
           <div className="cbot__steps">
-            {CREW_ACTIVATION_CONTENT.steps.map(step => {
+            {template.activation.steps.map(step => {
               const showExtraInfo =
                 step.placeholderKey === 'CREW_ACTIVATION_INFO' &&
                 CREW_ACTIVATION_INFO.trim().length > 0;
@@ -339,13 +345,13 @@ export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
         {/* 5. PRICE & DELIVERY */}
         <section className="cbot__sec">
           <div className="cbot__sec-head">
-            <span className="cbot__kicker">{CREW_PRICE_DELIVERY_CONTENT.kicker}</span>
-            <h3 className="cbot__h2">{CREW_PRICE_DELIVERY_CONTENT.title}</h3>
+            <span className="cbot__kicker">{template.priceDelivery.kicker}</span>
+            <h3 className="cbot__h2">{template.priceDelivery.title}</h3>
           </div>
 
           <div className="cbot__tiles">
             <div className="cbot__tile">
-              <span className="cbot__tile-label">{CREW_PRICE_DELIVERY_CONTENT.tiles[0].label}</span>
+              <span className="cbot__tile-label">{pricing.tile1Label}</span>
               <strong className="cbot__tile-val cbot__tile-val--accent">
                 {pricing.priceFormatted}
               </strong>
@@ -353,108 +359,108 @@ export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
             </div>
 
             <div className="cbot__tile">
-              <span className="cbot__tile-label">{CREW_PRICE_DELIVERY_CONTENT.tiles[1].label}</span>
-              <strong className="cbot__tile-val">{CREW_PRICE_DELIVERY_CONTENT.tiles[1].value}</strong>
-              <span className="cbot__tile-sub">{CREW_PRICE_DELIVERY_CONTENT.tiles[1].sub}</span>
+              <span className="cbot__tile-label">{template.priceDelivery.tile2Label}</span>
+              <strong className="cbot__tile-val">{template.priceDelivery.tile2Value}</strong>
+              <span className="cbot__tile-sub">{template.priceDelivery.tile2Sub}</span>
             </div>
 
             <div className="cbot__tile">
-              <span className="cbot__tile-label">{CREW_PRICE_DELIVERY_CONTENT.tiles[2].label}</span>
+              <span className="cbot__tile-label">{template.priceDelivery.tile3Label}</span>
               <strong className="cbot__tile-val cbot__tile-val--sm">
-                {CREW_PRICE_DELIVERY_CONTENT.tiles[2].value}
+                {template.priceDelivery.tile3Value}
               </strong>
-              <span className="cbot__tile-sub">{CREW_PRICE_DELIVERY_CONTENT.tiles[2].sub}</span>
+              <span className="cbot__tile-sub">{template.priceDelivery.tile3Sub}</span>
             </div>
           </div>
 
           <p className="cbot__p">
-            {CREW_PRICE_DELIVERY_CONTENT.guideNoteBefore}
+            {template.priceDelivery.guideNoteBefore}
             <Link
-              to={CREW_PRICE_DELIVERY_CONTENT.guideLinkHref}
+              to={template.priceDelivery.guideLinkHref}
               className="cbot__inline-link"
               onClick={() => haptic.tap('light')}
             >
-              {CREW_PRICE_DELIVERY_CONTENT.guideLinkLabel}
+              {template.priceDelivery.guideLinkLabel}
             </Link>
-            {CREW_PRICE_DELIVERY_CONTENT.guideNoteAfter}
+            {template.priceDelivery.guideNoteAfter}
           </p>
         </section>
 
         {/* 6. COMPARISON */}
         <section className="cbot__sec">
           <div className="cbot__sec-head">
-            <span className="cbot__kicker">{CREW_COMPARISON_CONTENT.kicker}</span>
-            <h3 className="cbot__h2">{CREW_COMPARISON_CONTENT.title}</h3>
+            <span className="cbot__kicker">{template.comparison.kicker}</span>
+            <h3 className="cbot__h2">{template.comparison.title}</h3>
           </div>
-          <p className="cbot__p">{CREW_COMPARISON_CONTENT.p1}</p>
+          <p className="cbot__p">{template.comparison.p1}</p>
           <p className="cbot__p">
-            {CREW_COMPARISON_CONTENT.p2BeforeVbucks}
+            {template.comparison.p2BeforeVbucks}
             <Link
-              to={CREW_COMPARISON_CONTENT.shopLinkHref}
+              to={template.comparison.shopLinkHref}
               className="cbot__inline-link"
               onClick={() => haptic.tap('light')}
             >
-              {CREW_COMPARISON_CONTENT.shopLinkLabel}
+              {template.comparison.shopLinkLabel}
             </Link>
-            {CREW_COMPARISON_CONTENT.p2BetweenLinks}
+            {template.comparison.p2BetweenLinks}
             <Link
-              to={CREW_COMPARISON_CONTENT.vbucksLinkHref}
+              to={template.comparison.vbucksLinkHref}
               className="cbot__inline-link"
               onClick={() => haptic.tap('light')}
             >
-              {CREW_COMPARISON_CONTENT.vbucksLinkLabel}
+              {template.comparison.vbucksLinkLabel}
             </Link>
-            {CREW_COMPARISON_CONTENT.p2BeforeEpic}
+            {template.comparison.p2BeforeEpic}
             <button
               type="button"
               className="cbot__ext-link"
-              onClick={() => openExternal(CREW_COMPARISON_CONTENT.epicLinkHref)}
+              onClick={() => openExternal(template.comparison.epicLinkHref)}
             >
-              {CREW_COMPARISON_CONTENT.epicLinkLabel}
+              {template.comparison.epicLinkLabel}
             </button>
-            {CREW_COMPARISON_CONTENT.p2AfterEpic}
+            {template.comparison.p2AfterEpic}
           </p>
 
           <div className="cbot__table">
-            <div className="cbot__table-head">{CREW_COMPARISON_CONTENT.tableHeader}</div>
-            {CREW_COMPARISON_ROWS.map(row => (
+            <div className="cbot__table-head">{template.comparison.tableHeader}</div>
+            {template.comparison.rows.map(row => (
               <div key={row.label} className="cbot__table-row">
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>
             ))}
             <div className="cbot__table-total">
-              <span>{CREW_COMPARISON_TOTAL.label}</span>
-              <strong>{CREW_COMPARISON_TOTAL.value}</strong>
+              <span>{template.comparison.total.label}</span>
+              <strong>{template.comparison.total.value}</strong>
             </div>
           </div>
         </section>
 
         {/* 7. SUPPORT */}
         <section className="cbot__sec">
-          <span className="cbot__kicker">{CREW_SUPPORT_CONTENT.kicker}</span>
-          <h3 className="cbot__h2">{CREW_SUPPORT_CONTENT.title}</h3>
+          <span className="cbot__kicker">{template.support.kicker}</span>
+          <h3 className="cbot__h2">{template.support.title}</h3>
           <p className="cbot__p">
-            {CREW_SUPPORT_CONTENT.pBeforeTerms}
+            {template.support.pBeforeTerms}
             <Link
-              to={CREW_SUPPORT_CONTENT.termsLinkHref}
+              to={template.support.termsLinkHref}
               className="cbot__inline-link"
               onClick={() => haptic.tap('light')}
             >
-              {CREW_SUPPORT_CONTENT.termsLinkLabel}
+              {template.support.termsLinkLabel}
             </Link>
-            {CREW_SUPPORT_CONTENT.pAfterTerms}
+            {template.support.pAfterTerms}
           </p>
         </section>
 
         {/* 8. RELATED LINKS */}
         <section className="cbot__sec">
           <div className="cbot__sec-head">
-            <span className="cbot__kicker">{CREW_RELATED_HEADER.kicker}</span>
-            <h3 className="cbot__h2">{CREW_RELATED_HEADER.title}</h3>
+            <span className="cbot__kicker">{template.relatedHeader.kicker}</span>
+            <h3 className="cbot__h2">{template.relatedHeader.title}</h3>
           </div>
           <div className="cbot__rel-chips">
-            {CREW_RELATED_LINKS.map(item => (
+            {template.relatedLinks.map(item => (
               <Link
                 key={item.href}
                 to={item.href}
@@ -470,12 +476,12 @@ export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
         {/* 9. FAQ */}
         <section className="cbot__sec">
           <div className="cbot__sec-head">
-            <span className="cbot__kicker">{CREW_FAQ_HEADER.kicker}</span>
-            <h3 className="cbot__h2">{CREW_FAQ_HEADER.title}</h3>
-            <p className="cbot__p">{CREW_FAQ_HEADER.subtitle}</p>
+            <span className="cbot__kicker">{template.faqHeader.kicker}</span>
+            <h3 className="cbot__h2">{template.faqHeader.title}</h3>
+            <p className="cbot__p">{template.faqHeader.subtitle}</p>
           </div>
           <div className="cbot__faqs">
-            {CREW_FAQ_ITEMS.map(faq => (
+            {template.faqItems.map(faq => (
               <details
                 key={faq.id}
                 className="cbot__faq"
@@ -561,9 +567,7 @@ export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
             </span>
             <span className="cbot__more-text">
               <span className="cbot__more-title">بیشتر بخوانید</span>
-              <span className="cbot__more-sub">
-                مشاهده ۷ مزیت، مراحل فعال‌سازی و سؤالات متداول
-              </span>
+              <span className="cbot__more-sub">{template.readMoreSub}</span>
             </span>
             <span className="cbot__more-arrow" aria-hidden="true">
               <svg
@@ -585,4 +589,3 @@ export function CrewBotDescription({ product }: CrewBotDescriptionProps) {
     </div>
   );
 }
-

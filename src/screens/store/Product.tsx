@@ -22,6 +22,7 @@ import { toast } from '@/ui/Toast';
 
 import './product.css';
 import { CrewBotDescription } from './crew/CrewDescription';
+import { isFortniteBotTemplateProduct } from './crew/fortniteTemplates';
 import { enrichProductSeo, getProductKeywords, parseDescriptionBlocks } from './productSeo';
 
 const FEATURE_ICONS: Record<string, Icon3DName> = {
@@ -253,10 +254,10 @@ function ProductView({ product }: { product: ProductType }) {
           <ChevronLeft size={18} className="list-row__chev" />
         </Link>
 
-        {product.slug === 'fortnite-crew' || product.slug === 'fortnite-crew-pack' ? (
+        {isFortniteBotTemplateProduct(product.slug, product) ? (
           <section className="pd__section">
             <h2 className="pd__label">توضیحات</h2>
-            <CrewBotDescription product={product} />
+            <CrewBotDescription product={product} selectedVariant={variant} />
           </section>
         ) : (
           product.description && (
