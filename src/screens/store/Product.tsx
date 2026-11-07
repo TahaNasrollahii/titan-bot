@@ -21,6 +21,7 @@ import { Skeleton } from '@/ui/Skeleton';
 import { toast } from '@/ui/Toast';
 
 import './product.css';
+import { CrewBotDescription } from './crew/CrewDescription';
 import { enrichProductSeo, getProductKeywords, parseDescriptionBlocks } from './productSeo';
 
 const FEATURE_ICONS: Record<string, Icon3DName> = {
@@ -252,46 +253,53 @@ function ProductView({ product }: { product: ProductType }) {
           <ChevronLeft size={18} className="list-row__chev" />
         </Link>
 
-        {product.description && (
+        {product.slug === 'fortnite-crew' || product.slug === 'fortnite-crew-pack' ? (
           <section className="pd__section">
             <h2 className="pd__label">توضیحات</h2>
-            <div className={`pd__desc ${expanded ? 'is-open' : ''}`}>
-              {parseDescriptionBlocks(product.description).map((block, i) => {
-                if (block.type === 'heading') {
-                  return (
-                    <h3 key={i} className="pd__desc-heading">
-                      {block.text}
-                    </h3>
-                  );
-                }
-                if (block.type === 'list') {
-                  return (
-                    <ul key={i} className="pd__desc-list">
-                      {block.items.map((item, j) => (
-                        <li key={j}>{item}</li>
-                      ))}
-                    </ul>
-                  );
-                }
-                return <p key={i}>{block.text}</p>;
-              })}
-              {getProductKeywords(product).length > 0 && (
-                <div className="pd__keywords">
-                  <span className="pd__keywords-label">کلمات کلیدی:</span>
-                  <div className="pd__keywords-list">
-                    {getProductKeywords(product).map(kw => (
-                      <span key={kw} className="pd__keyword-chip">
-                        {kw}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-            <button className="section-link" onClick={() => setExpanded(e => !e)}>
-              {expanded ? 'بستن توضیحات' : 'بارگزاری بیشتر'}
-            </button>
+            <CrewBotDescription product={product} />
           </section>
+        ) : (
+          product.description && (
+            <section className="pd__section">
+              <h2 className="pd__label">توضیحات</h2>
+              <div className={`pd__desc ${expanded ? 'is-open' : ''}`}>
+                {parseDescriptionBlocks(product.description).map((block, i) => {
+                  if (block.type === 'heading') {
+                    return (
+                      <h3 key={i} className="pd__desc-heading">
+                        {block.text}
+                      </h3>
+                    );
+                  }
+                  if (block.type === 'list') {
+                    return (
+                      <ul key={i} className="pd__desc-list">
+                        {block.items.map((item, j) => (
+                          <li key={j}>{item}</li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  return <p key={i}>{block.text}</p>;
+                })}
+                {getProductKeywords(product).length > 0 && (
+                  <div className="pd__keywords">
+                    <span className="pd__keywords-label">کلمات کلیدی:</span>
+                    <div className="pd__keywords-list">
+                      {getProductKeywords(product).map(kw => (
+                        <span key={kw} className="pd__keyword-chip">
+                          {kw}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <button className="section-link" onClick={() => setExpanded(e => !e)}>
+                {expanded ? 'بستن توضیحات' : 'بارگزاری بیشتر'}
+              </button>
+            </section>
+          )
         )}
 
         {Object.entries(product.specs).filter(([k]) => k !== 'keywords').length > 0 && (

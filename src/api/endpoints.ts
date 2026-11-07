@@ -1,5 +1,9 @@
 import { api } from './client';
-import { DEFAULT_CLASH_PRODUCT_DETAIL, DEFAULT_CLASH_PRODUCT_SUMMARY } from './compat';
+import {
+  DEFAULT_CLASH_PRODUCT_DETAIL,
+  DEFAULT_CLASH_PRODUCT_SUMMARY,
+  DEFAULT_FORTNITE_CREW_PRODUCT_DETAIL,
+} from './compat';
 import type {
   BracketRound,
   Cart,
@@ -167,6 +171,9 @@ export const catalogApi = {
       return await api<Product>(`products/${encodeURIComponent(slug)}/`);
     } catch (err) {
       if (slug === 'clash-of-clans-gems') return DEFAULT_CLASH_PRODUCT_DETAIL;
+      if (slug === 'fortnite-crew' || slug === 'fortnite-crew-pack') {
+        return DEFAULT_FORTNITE_CREW_PRODUCT_DETAIL;
+      }
       throw err;
     }
   },
@@ -274,6 +281,7 @@ export const guidesApi = {
       EPIC_GAMES_CHANGE_PASSWORD_GUIDE,
       CREATE_TEAM_GUIDE,
       INVITE_TEAM_GUIDE,
+      FORTNITE_CREW_BUYING_GUIDE,
       RANKS_GUIDE,
       toGuideSummary,
     } = await import('@/screens/guides/guidesData');
@@ -367,6 +375,18 @@ export const guidesApi = {
     ) {
       list = [...list, toGuideSummary(EPIC_GAMES_CHANGE_PASSWORD_GUIDE)];
     }
+    const matchesCrewPurchaseFilter =
+      (!query.product ||
+        query.product === 'fortnite-crew' ||
+        query.product === 'fortnite-crew-pack') &&
+      (!query.game || query.game === 'fortnite') &&
+      (!query.category || query.category === 'purchase');
+    if (
+      matchesCrewPurchaseFilter &&
+      !list.some(item => item.slug === FORTNITE_CREW_BUYING_GUIDE.slug)
+    ) {
+      list = [...list, toGuideSummary(FORTNITE_CREW_BUYING_GUIDE)];
+    }
     const matchesRanksFilter =
       !query.game && !query.product && (!query.category || query.category === 'tournament');
     if (matchesRanksFilter && !list.some(item => item.slug === CREATE_TEAM_GUIDE.slug)) {
@@ -389,6 +409,7 @@ export const guidesApi = {
       EPIC_GAMES_CHANGE_PASSWORD_GUIDE,
       CREATE_TEAM_GUIDE,
       INVITE_TEAM_GUIDE,
+      FORTNITE_CREW_BUYING_GUIDE,
       RANKS_GUIDE,
     } = await import('@/screens/guides/guidesData');
     try {
@@ -486,6 +507,7 @@ export const guidesApi = {
       if (slug === EPIC_GAMES_CHANGE_PASSWORD_GUIDE.slug) return EPIC_GAMES_CHANGE_PASSWORD_GUIDE;
       if (slug === CREATE_TEAM_GUIDE.slug) return CREATE_TEAM_GUIDE;
       if (slug === INVITE_TEAM_GUIDE.slug) return INVITE_TEAM_GUIDE;
+      if (slug === FORTNITE_CREW_BUYING_GUIDE.slug) return FORTNITE_CREW_BUYING_GUIDE;
       if (slug === RANKS_GUIDE.slug) return RANKS_GUIDE;
       throw err;
     }

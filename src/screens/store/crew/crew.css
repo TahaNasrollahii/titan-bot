@@ -1,0 +1,701 @@
+/* ==========================================================================
+   Fortnite Crew Description for Telegram Mini-App (titan-bot)
+   Compact, mobile-first parity with titan-front's CrewDescription
+   ========================================================================== */
+
+@keyframes cbotBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+.cbot {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 14px;
+  border-radius: 22px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  overflow-x: clip;
+  color: #f4eaec;
+}
+
+.cbot--collapsed {
+  gap: 14px;
+  padding-bottom: 16px;
+}
+
+/* ---------- Hero & 7-Card Fanned Carousel ---------- */
+.cbot__hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cbot__carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cbot__stage {
+  position: relative;
+  width: 100%;
+  height: 250px;
+}
+
+.cbot__glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 240px;
+  height: 240px;
+  margin: -120px 0 0 -120px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(242, 184, 75, 0.26),
+    rgba(160, 30, 60, 0.16) 45%,
+    transparent 70%
+  );
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+.cbot__deck {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.76);
+}
+
+.cbot__card {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  color: #f4eaec;
+  transition:
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.45s ease;
+}
+
+.cbot__card-inner {
+  width: 220px;
+  height: 300px;
+  border-radius: 26px;
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.52);
+  padding: 22px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cbot__card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.cbot__card-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cbot__card-num {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.cbot__card-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cbot__card-tag {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.cbot__card-title {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.cbot__card-more {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cbot__controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cbot__nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4eaec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cbot__dots {
+  display: flex;
+  align-items: center;
+}
+
+.cbot__dot-btn {
+  min-width: 20px;
+  min-height: 34px;
+  padding: 0 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cbot__dot-bar {
+  display: block;
+  height: 7px;
+  border-radius: 999px;
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+}
+
+.cbot__hint {
+  margin: 0;
+  font-size: 11px;
+  color: #a98a92;
+  text-align: center;
+}
+
+.cbot__hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cbot__eyebrow {
+  align-self: flex-start;
+  font-size: 11px;
+  color: #f2b84b;
+  border: 1px solid rgba(242, 184, 75, 0.4);
+  border-radius: 999px;
+  padding: 3px 11px;
+}
+
+.cbot__h-main {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.cbot__p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.85;
+  color: #cdb4ba;
+}
+
+.cbot__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cbot__fact-chip {
+  font-size: 11px;
+  color: #e6cfd5;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+/* ---------- Collapsible Body ---------- */
+.cbot__more {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.cbot__more:not(.cbot__more--expanded) {
+  max-height: 54px;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, transparent 94%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, transparent 94%);
+}
+
+/* ---------- Sections ---------- */
+.cbot__sec {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cbot__sec-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cbot__kicker {
+  font-size: 11px;
+  font-weight: 600;
+  color: #f2b84b;
+}
+
+.cbot__h2 {
+  margin: 0;
+  font-size: 17.5px;
+  font-weight: 800;
+  line-height: 1.45;
+  color: #fff;
+}
+
+.cbot__h3 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.cbot__inline-link,
+.cbot__ext-link {
+  display: inline;
+  padding: 0;
+  font: inherit;
+  color: #f2b84b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 700;
+}
+
+/* ---------- 7 Compact Benefit Cards ---------- */
+.cbot__benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cbot__benefit-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  scroll-margin-top: 70px;
+}
+
+.cbot__benefit-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cbot__benefit-icon {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: grid;
+  place-items: center;
+}
+
+.cbot__benefit-titles {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cbot__benefit-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding-top: 2px;
+  font-size: 12px;
+}
+
+.cbot__lnk {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: #f2b84b;
+  text-decoration: none;
+}
+
+.cbot__lnk--sec {
+  color: #cdb4ba;
+  font-weight: 500;
+}
+
+/* ---------- 4 Activation Steps ---------- */
+.cbot__steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.cbot__step {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.cbot__step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid #f2b84b;
+  color: #f2b84b;
+  font-size: 12px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+.cbot__step-title {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cbot__step-text {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #cdb4ba;
+}
+
+/* ---------- Price & Delivery Tiles ---------- */
+.cbot__tiles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cbot__tile {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cbot__tile-label {
+  font-size: 11.5px;
+  color: #a98a92;
+}
+
+.cbot__tile-val {
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.cbot__tile-val--accent {
+  color: #f2b84b;
+}
+
+.cbot__tile-val--sm {
+  font-size: 15px;
+}
+
+.cbot__tile-sub {
+  font-size: 12px;
+  color: #cdb4ba;
+}
+
+/* ---------- Comparison Table ---------- */
+.cbot__table {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 14px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cbot__table-head {
+  padding: 8px 0 6px;
+  font-size: 11.5px;
+  color: #a98a92;
+}
+
+.cbot__table-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 9px 0;
+  font-size: 12.5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.cbot__table-total {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 11px 0;
+  font-size: 13px;
+  color: #f2b84b;
+  border-top: 1px solid rgba(242, 184, 75, 0.4);
+}
+
+/* ---------- Related Links ---------- */
+.cbot__rel-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.cbot__rel-chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #f4eaec;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- FAQs ---------- */
+.cbot__faqs {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cbot__faq {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cbot__faq-sum {
+  cursor: pointer;
+  list-style: none;
+  min-height: 46px;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cbot__faq-sum::-webkit-details-marker {
+  display: none;
+}
+
+.cbot__faq-plus {
+  font-size: 20px;
+  color: #f2b84b;
+  font-weight: 300;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.cbot__faq[open] .cbot__faq-plus {
+  transform: rotate(45deg);
+}
+
+.cbot__faq-ans {
+  margin: 0;
+  padding: 0 0 12px;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: #cdb4ba;
+}
+
+/* ---------- Read More Gate & Read Less Button ---------- */
+.cbot__gate {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: -8px;
+}
+
+.cbot__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.cbot__divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(242, 184, 75, 0.45), transparent);
+}
+
+.cbot__divider-diamond {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  background: #f2b84b;
+  box-shadow: 0 0 10px rgba(242, 184, 75, 0.85);
+}
+
+.cbot__more-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 62px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  text-align: right;
+  color: #f6f1ee;
+  background: linear-gradient(
+    145deg,
+    rgba(242, 184, 75, 0.22) 0%,
+    rgba(226, 69, 63, 0.16) 52%,
+    rgba(38, 10, 16, 0.9) 100%
+  );
+  border: 1px solid rgba(242, 184, 75, 0.48);
+  box-shadow:
+    0 18px 36px -12px rgba(242, 184, 75, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.cbot__more-btn:active {
+  transform: scale(0.985);
+}
+
+.cbot__more-glow {
+  position: absolute;
+  top: -26px;
+  right: 16%;
+  width: 120px;
+  height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(242, 184, 75, 0.32), transparent 70%);
+  filter: blur(12px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cbot__more-badge {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: #f2b84b;
+  background: radial-gradient(
+    circle at 30% 25%,
+    rgba(242, 184, 75, 0.28),
+    rgba(255, 255, 255, 0.04)
+  );
+  border: 1px solid rgba(242, 184, 75, 0.42);
+}
+
+.cbot__more-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cbot__more-title {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #f6f1ee;
+}
+
+.cbot__more-sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(242, 184, 75, 0.92);
+}
+
+.cbot__more-arrow {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  color: #14080a;
+  background: linear-gradient(135deg, #f2b84b, #d99a26);
+  box-shadow: 0 6px 14px -4px rgba(242, 184, 75, 0.65);
+}
+
+.cbot__more-arrow svg {
+  animation: cbotBob 1.8s ease-in-out infinite;
+}
+
+.cbot__less-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: -6px;
+}
+
+.cbot__less-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #f2b84b;
+  background: rgba(242, 184, 75, 0.1);
+  border: 1px solid rgba(242, 184, 75, 0.36);
+}

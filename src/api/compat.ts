@@ -139,6 +139,68 @@ export const DEFAULT_CLASH_PRODUCT_DETAIL: Product = {
   gallery: [],
 };
 
+export const DEFAULT_FORTNITE_CREW_PRODUCT_DETAIL: Product = {
+  id: 33,
+  slug: 'fortnite-crew',
+  title: 'خرید کروپک فورتنایت (Fortnite Crew) از تایتان',
+  subtitle:
+    'اشتراک ماهانه کروپک فورتنایت شامل ۱٬۰۰۰ وی‌باکس، باندل اسکین ماهانه، دسترسی به هر ۴ پس فورتنایت و Rocket Pass راکت لیگ با پرداخت ریالی',
+  image: '/images/fortnite-crew-subscription-banner.webp',
+  imageAlt: 'خرید اشتراک ماهانه کروپک فورتنایت (Fortnite Crew Pack) از فروشگاه تایتان',
+  sku: 'TITAN-33',
+  mpn: 'FN-CREW-1M',
+  price: 589000,
+  originalPrice: 790000,
+  discountPercent: 25,
+  hasVariants: false,
+  priceMax: null,
+  rating: 0,
+  reviewCount: 0,
+  badges: ['bestseller', 'discount', 'new'],
+  inStock: true,
+  vendor: 'Epic Games',
+  deliveryType: 'account',
+  credentialType: 'email_password',
+  game: {
+    slug: 'fortnite',
+    title: 'فورتنایت',
+    titleEn: 'Fortnite',
+    iconImage: '/images/categories/fortnite.webp',
+    accentColor: '#00d4ff',
+  },
+  category: { slug: 'bundle', name: 'باندل و اشتراک' },
+  platforms: [
+    { slug: 'pc', name: 'PC', icon: null },
+    { slug: 'playstation', name: 'PlayStation', icon: null },
+    { slug: 'xbox', name: 'Xbox', icon: null },
+    { slug: 'nintendo', name: 'Nintendo', icon: null },
+    { slug: 'mobile', name: 'Mobile', icon: null },
+  ],
+  isWishlisted: false,
+  description: '',
+  deliveryInfo: 'شارژ و فعال‌سازی مستقیم روی اکانت (۱۵ دقیقه تا ۲ ساعت)',
+  requiresGameAccount: true,
+  stock: null,
+  features: [
+    { title: 'تضمین تحویل سفارش', description: 'پیگیری و بازگشت وجه طبق قوانین', icon: 'shield' },
+    { title: 'تحویل ۱۵ دقیقه تا ۲ ساعت', description: 'شارژ مستقیم روی اکانت متصل', icon: 'flame' },
+    { title: 'پشتیبانی ۲۴ ساعته', description: 'همراه شما تا تکمیل سفارش', icon: 'chat' },
+  ],
+  tags: [
+    'شامل ۱٬۰۰۰ وی‌باکس ماهانه',
+    'باندل اسکین ماهانه جدید در هر ماه',
+    'شامل Battle Pass + OG + LEGO + Music Pass',
+    'شامل Rocket Pass راکت لیگ',
+  ],
+  specs: {
+    region: 'گلوبال — قابل فعال‌سازی روی تمامی ریجن‌های اکانت اپیک گیمز',
+    delivery: 'بین ۱۵ دقیقه تا حداکثر ۲ ساعت پس از ثبت سفارش',
+    activation: 'شارژ مستقیم از طریق اکانت اپیک گیمز یا ایکس‌باکس لینک‌شده (بدون تمدید خودکار)',
+  },
+  variants: [],
+  gallery: [],
+};
+
 export function sanitizeApiPayload<T>(input: T): T {
   if (input === null || input === undefined) return input;
   if (typeof input === 'string') {
