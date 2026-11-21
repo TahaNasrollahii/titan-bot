@@ -178,7 +178,7 @@ export const FORTNITE_CREW_BOT_TEMPLATE: FortniteBotTemplate = {
   defaultPriceToman: CREW_DEFAULT_PRICE_TOMAN,
   defaultOriginalPriceToman: CREW_DEFAULT_ORIGINAL_PRICE_TOMAN,
   defaultDiscountPct: 25,
-  readMoreSub: 'مشاهده ۷ مزیت، مراحل فعال‌سازی و سؤالات متداول',
+  readMoreSub: 'مشاهده ۶ مزیت، مراحل فعال‌سازی و سؤالات متداول',
   hero: CREW_HERO_CONTENT,
   intro: CREW_INTRO_CONTENT,
   benefitsHeader: CREW_BENEFITS_HEADER,
