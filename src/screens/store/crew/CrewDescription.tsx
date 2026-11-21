@@ -141,8 +141,25 @@ export function CrewBotDescription({
                       }}
                     >
                       <div className="cbot__card-top">
-                        <div className="cbot__card-icon">
-                          <CrewIcon icon={item.icon} size={30} stroke={item.ink} strokeWidth={1.6} />
+                        <div
+                          className={`cbot__card-icon${
+                            item.image ? ' cbot__card-icon--media' : ''
+                          }`}
+                        >
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt=""
+                              aria-hidden="true"
+                              width={58}
+                              height={58}
+                              loading="eager"
+                              decoding="async"
+                              className="cbot__card-icon-img"
+                            />
+                          ) : (
+                            <CrewIcon icon={item.icon} size={30} stroke={item.ink} strokeWidth={1.6} />
+                          )}
                         </div>
                         <span className="cbot__card-num">۰{i + 1}</span>
                       </div>
@@ -281,11 +298,25 @@ export function CrewBotDescription({
               <article key={item.id} id={item.id} className="cbot__benefit-card">
                 <div className="cbot__benefit-top">
                   <span
-                    className="cbot__benefit-icon"
+                    className={`cbot__benefit-icon${
+                      item.image ? ' cbot__benefit-icon--media' : ''
+                    }`}
                     style={{ background: item.grad }}
-                    aria-hidden="true"
+                    aria-hidden={item.image ? undefined : 'true'}
                   >
-                    <CrewIcon icon={item.icon} size={20} stroke={item.ink} strokeWidth={1.8} />
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.imageAlt || item.title}
+                        width={40}
+                        height={40}
+                        loading="lazy"
+                        decoding="async"
+                        className="cbot__benefit-icon-img"
+                      />
+                    ) : (
+                      <CrewIcon icon={item.icon} size={20} stroke={item.ink} strokeWidth={1.8} />
+                    )}
                   </span>
                   <div className="cbot__benefit-titles">
                     <span className="cbot__kicker">{item.kicker}</span>

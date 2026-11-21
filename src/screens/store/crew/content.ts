@@ -25,6 +25,8 @@ export interface CrewBenefitBlock {
   glow: string;
   ink: string;
   icon: CrewIconName;
+  image?: string;
+  imageAlt?: string;
 }
 
 export interface CrewActivationStep {
@@ -125,6 +127,8 @@ export const CREW_BENEFIT_BLOCKS: CrewBenefitBlock[] = [
     glow: 'rgba(92,200,255,0.45)',
     ink: '#a8e3ff',
     icon: 'coin',
+    image: '/images/crew/vbucks.webp',
+    imageAlt: 'آیکون ۱٬۰۰۰ وی‌باکس ماهانه در اشتراک کروپک فورتنایت',
   },
   {
     id: 'b-2',
@@ -141,6 +145,8 @@ export const CREW_BENEFIT_BLOCKS: CrewBenefitBlock[] = [
     glow: 'rgba(196,122,255,0.45)',
     ink: '#e0bcff',
     icon: 'medal',
+    image: '/images/crew/battle-pass.webp',
+    imageAlt: 'آیکون بتل‌پس اصلی فورتنایت (Battle Pass) در اشتراک کروپک',
   },
   {
     id: 'b-3',
@@ -157,6 +163,8 @@ export const CREW_BENEFIT_BLOCKS: CrewBenefitBlock[] = [
     glow: 'rgba(255,158,68,0.45)',
     ink: '#ffd0a1',
     icon: 'sun',
+    image: '/images/crew/og-pass.webp',
+    imageAlt: 'آیکون پس کلاسیک فورتنایت (OG Pass) در اشتراک کروپک',
   },
   {
     id: 'b-4',
@@ -173,6 +181,8 @@ export const CREW_BENEFIT_BLOCKS: CrewBenefitBlock[] = [
     glow: 'rgba(255,210,63,0.45)',
     ink: '#ffe899',
     icon: 'cube',
+    image: '/images/crew/lego-pass.webp',
+    imageAlt: 'آیکون لگو پس فورتنایت (LEGO Pass) در اشتراک کروپک',
   },
   {
     id: 'b-5',
@@ -189,6 +199,8 @@ export const CREW_BENEFIT_BLOCKS: CrewBenefitBlock[] = [
     glow: 'rgba(255,94,196,0.45)',
     ink: '#ffb3e2',
     icon: 'note',
+    image: '/images/crew/music-pass.webp',
+    imageAlt: 'آیکون موزیک پس فورتنایت فستیوال (Music Pass) در اشتراک کروپک',
   },
   {
     id: 'b-6',
@@ -205,6 +217,8 @@ export const CREW_BENEFIT_BLOCKS: CrewBenefitBlock[] = [
     glow: 'rgba(63,255,224,0.45)',
     ink: '#a8fff0',
     icon: 'bolt',
+    image: '/images/crew/rocket-pass.webp',
+    imageAlt: 'آیکون Rocket Pass پریمیوم راکت لیگ در اشتراک کروپک فورتنایت',
   },
 ];
 
