@@ -201,6 +201,82 @@ export const DEFAULT_FORTNITE_CREW_PRODUCT_DETAIL: Product = {
   gallery: [],
 };
 
+export const LEGACY_VALORANT_POINT_SLUGS = new Set([
+  'valorant-points-375',
+  'valorant-point-825',
+  'valorant-points-1700',
+  'valorant-point-2925',
+  'valorant-point-4325',
+  'valorant-point-8900',
+]);
+
+export const DEFAULT_VALORANT_POINTS_PRODUCT_DETAIL: Product = {
+  id: 5,
+  slug: 'valorant-points',
+  title: 'خرید ولورانت پوینت (Valorant Points)',
+  subtitle:
+    'شارژ مستقیم و سریع ولورانت پوینت (VP) در بسته‌های ۳۷۵ تا ۸٬۹۰۰ پوینت برای بتل‌پس، اسکین و باندل',
+  image: '/images/games/valorant-character.webp',
+  imageAlt: 'خرید ولورانت پوینت (Valorant Points / VP) از فروشگاه تایتان',
+  sku: 'TITAN-VP',
+  mpn: 'VALORANT-POINTS',
+  price: 180000,
+  originalPrice: 202000,
+  discountPercent: 11,
+  hasVariants: true,
+  priceMax: 10300000,
+  rating: 4.0,
+  reviewCount: 3,
+  badges: ['bestseller', 'discount'],
+  inStock: true,
+  vendor: 'Riot Games',
+  deliveryType: 'account',
+  credentialType: 'email_password',
+  game: {
+    slug: 'valorant',
+    title: 'ولورانت',
+    titleEn: 'Valorant',
+    iconImage: '/images/categories/valorant.webp',
+    accentColor: '#ef2f5a',
+  },
+  category: { slug: 'game-currency', name: 'ارز بازی' },
+  platforms: [
+    { slug: 'pc', name: 'PC', icon: null },
+    { slug: 'playstation', name: 'PlayStation', icon: null },
+    { slug: 'xbox', name: 'Xbox', icon: null },
+  ],
+  isWishlisted: false,
+  description: '',
+  deliveryInfo: 'شارژ مستقیم روی اکانت رایوت گیمز (کمتر از ۱۵ دقیقه)',
+  requiresGameAccount: true,
+  stock: null,
+  features: [
+    { title: 'تضمین تحویل سفارش', description: 'شارژ قانونی بدون بن شدن', icon: 'shield' },
+    { title: 'تحویل کمتر از ۱۵ دقیقه', description: 'شارژ مستقیم روی اکانت Riot', icon: 'flame' },
+    { title: 'پشتیبانی ۲۴ ساعته', description: 'چت آنلاین و تیکت', icon: 'chat' },
+  ],
+  tags: [
+    'شامل تمام بسته‌های ۳۷۵ تا ۸٬۹۰۰ VP',
+    'شارژ مستقیم و قانونی اکانت Riot',
+    'تحویل سریع کمتر از ۱۵ دقیقه',
+    'مناسب بتل‌پس، نایت مارکت و باندل کامل',
+  ],
+  specs: {
+    region: 'ترکیه / گلوبال (مطابق ریجن اکانت Riot)',
+    delivery: 'کمتر از ۱۵ دقیقه',
+    activation: 'شارژ مستقیم روی اکانت Riot Games',
+  },
+  variants: [
+    { id: 99101, label: '۳۷۵ ولورانت پوینت (375 VP)', price: 180000, originalPrice: 202000, discountPercent: 11, inStock: true },
+    { id: 99102, label: '۸۲۵ ولورانت پوینت (825 VP)', price: 900000, originalPrice: null, discountPercent: 0, inStock: true },
+    { id: 99103, label: '۱٬۷۰۰ ولورانت پوینت (1700 VP)', price: 1600000, originalPrice: null, discountPercent: 0, inStock: true },
+    { id: 99104, label: '۲٬۹۲۵ ولورانت پوینت (2925 VP)', price: 2300000, originalPrice: null, discountPercent: 0, inStock: true },
+    { id: 99105, label: '۴٬۳۲۵ ولورانت پوینت (4325 VP)', price: 5800000, originalPrice: null, discountPercent: 0, inStock: true },
+    { id: 99106, label: '۸٬۹۰۰ ولورانت پوینت (8900 VP)', price: 10300000, originalPrice: null, discountPercent: 0, inStock: true },
+  ],
+  gallery: [],
+};
+
 export function sanitizeApiPayload<T>(input: T): T {
   if (input === null || input === undefined) return input;
   if (typeof input === 'string') {
@@ -304,6 +380,30 @@ export function sanitizeApiPayload<T>(input: T): T {
               accentColor: '#f59e0b',
             }
           : obj.game,
+      } as unknown as T;
+    }
+
+    if (
+      typeof obj.slug === 'string' &&
+      LEGACY_VALORANT_POINT_SLUGS.has(obj.slug) &&
+      'price' in obj &&
+      !('variants' in obj)
+    ) {
+      return {
+        ...obj,
+        slug: 'valorant-points',
+        title: 'خرید ولورانت پوینت (Valorant Points)',
+        subtitle:
+          'شارژ مستقیم و سریع ولورانت پوینت (VP) در بسته‌های ۳۷۵ تا ۸٬۹۰۰ پوینت برای بتل‌پس، اسکین و باندل',
+        image:
+          obj.image && !String(obj.image).includes('375')
+            ? obj.image
+            : '/images/games/valorant-character.webp',
+        hasVariants: true,
+        price: 180000,
+        originalPrice: 202000,
+        discountPercent: 11,
+        priceMax: 10300000,
       } as unknown as T;
     }
 

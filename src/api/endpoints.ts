@@ -3,6 +3,7 @@ import {
   DEFAULT_CLASH_PRODUCT_DETAIL,
   DEFAULT_CLASH_PRODUCT_SUMMARY,
   DEFAULT_FORTNITE_CREW_PRODUCT_DETAIL,
+  DEFAULT_VALORANT_POINTS_PRODUCT_DETAIL,
 } from './compat';
 import type {
   BracketRound,
@@ -173,6 +174,9 @@ export const catalogApi = {
       if (slug === 'clash-of-clans-gems') return DEFAULT_CLASH_PRODUCT_DETAIL;
       if (slug === 'fortnite-crew' || slug === 'fortnite-crew-pack') {
         return DEFAULT_FORTNITE_CREW_PRODUCT_DETAIL;
+      }
+      if (slug === 'valorant-points') {
+        return DEFAULT_VALORANT_POINTS_PRODUCT_DETAIL;
       }
       throw err;
     }

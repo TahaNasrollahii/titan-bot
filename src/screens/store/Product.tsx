@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { BadgeCheck, BookOpen, ChevronLeft, Heart, Minus, Plus, ShoppingCart, Star, Zap } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, Navigate, useNavigate, useParams } from 'react-router';
 
 import { errorText } from '@/api/client';
+import { LEGACY_VALORANT_POINT_SLUGS } from '@/api/compat';
 import { cartApi, catalogApi, guidesApi } from '@/api/endpoints';
 import type { Product as ProductType, ProductVariant } from '@/api/types';
 import { faDigits, num, timeAgo } from '@/lib/format';
@@ -36,7 +37,16 @@ const FEATURE_ICONS: Record<string, Icon3DName> = {
 
 export default function Product() {
   const { slug = '' } = useParams();
-  const product = useQuery({ queryKey: ['product', slug], queryFn: () => catalogApi.product(slug) });
+  const isLegacyVp = LEGACY_VALORANT_POINT_SLUGS.has(slug);
+  const product = useQuery({
+    queryKey: ['product', slug],
+    queryFn: () => catalogApi.product(slug),
+    enabled: !isLegacyVp,
+  });
+
+  if (isLegacyVp) {
+    return <Navigate to="/product/valorant-points" replace />;
+  }
 
   if (product.isError)
     return (

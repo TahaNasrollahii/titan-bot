@@ -100,7 +100,7 @@ export function productImage(product: Pick<ProductSummary, 'id' | 'slug' | 'imag
         : gameSlug === 'clash-of-clans'
           ? '/images/products/goblin_transparent.webp'
           : gameSlug === 'valorant' || product.slug?.includes('valorant')
-            ? '/images/products/Jett-Inspired%20Agent%20with%20Turkish%20375%20VP%20Badge.webp'
+            ? '/images/games/valorant-character.webp'
             : product.slug.includes('v-bucks') || product.slug.includes('vbucks')
               ? '/images/products/vbucks.webp'
               : LOCAL_CHARACTERS[product.id % LOCAL_CHARACTERS.length])
