@@ -734,3 +734,246 @@
   border: 1px solid rgba(242, 184, 75, 0.36);
 }
 
+/* ---------- Interactive 6-Package Selector Grid (Mini-App) ---------- */
+.cbot__pkg-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cbot__pkg-card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 13px 14px;
+  border-radius: 15px;
+  text-align: right;
+  color: #eef2f7;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 70, 85, 0.16), transparent 60%),
+    rgba(13, 19, 29, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.cbot__pkg-card:active {
+  transform: scale(0.985);
+}
+
+.cbot__pkg-card--popular {
+  border-color: rgba(255, 70, 85, 0.38);
+}
+
+.cbot__pkg-card--active {
+  border-color: #ff4655;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255, 70, 85, 0.28), transparent 64%),
+    rgba(28, 16, 26, 0.88);
+  box-shadow: 0 0 0 1px rgba(255, 70, 85, 0.32);
+}
+
+.cbot__pkg-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cbot__pkg-amount {
+  font-size: 17px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.cbot__pkg-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  color: #ff8c96;
+  background: rgba(255, 70, 85, 0.14);
+  border: 1px solid rgba(255, 70, 85, 0.35);
+}
+
+.cbot__pkg-title {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #f4f6fa;
+}
+
+.cbot__pkg-desc {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #c5ccd8;
+}
+
+.cbot__pkg-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cbot__pkg-price {
+  font-size: 14.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #ff6b78;
+}
+
+.cbot__pkg-act {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #7ee8fa;
+}
+
+.cbot__topics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cbot__topics-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #9fb0c7;
+}
+
+.cbot__topics-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cbot__topic-pill {
+  font-size: 11px;
+  color: #d6dde8;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Valorant Tactical Crimson Theme (.cbot--valorant) ---------- */
+.cbot--valorant {
+  color: #eef2f7;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 70, 85, 0.06) 0%,
+    rgba(15, 25, 35, 0.45) 100%
+  );
+  border-color: rgba(255, 70, 85, 0.16);
+}
+
+.cbot--valorant .cbot__glow {
+  background: radial-gradient(
+    circle,
+    rgba(255, 70, 85, 0.3),
+    rgba(15, 25, 35, 0.42) 48%,
+    transparent 72%
+  );
+}
+
+.cbot--valorant .cbot__eyebrow {
+  color: #ff6b78;
+  border-color: rgba(255, 70, 85, 0.45);
+  background: rgba(255, 70, 85, 0.08);
+}
+
+.cbot--valorant .cbot__p,
+.cbot--valorant .cbot__step-text,
+.cbot--valorant .cbot__tile-sub,
+.cbot--valorant .cbot__faq-ans {
+  color: #c5ccd8;
+}
+
+.cbot--valorant .cbot__hint,
+.cbot--valorant .cbot__tile-label,
+.cbot--valorant .cbot__table-head {
+  color: #93a0b4;
+}
+
+.cbot--valorant .cbot__kicker,
+.cbot--valorant .cbot__inline-link,
+.cbot--valorant .cbot__ext-link,
+.cbot--valorant .cbot__lnk,
+.cbot--valorant .cbot__tile-val--accent,
+.cbot--valorant .cbot__faq-plus {
+  color: #ff6b78;
+}
+
+.cbot--valorant .cbot__lnk--sec {
+  color: #9fb0c7;
+}
+
+.cbot--valorant .cbot__step-num {
+  border-color: #ff4655;
+  color: #ff6b78;
+}
+
+.cbot--valorant .cbot__table-total {
+  color: #ff6b78;
+  border-top-color: rgba(255, 70, 85, 0.42);
+}
+
+.cbot--valorant .cbot__divider-line {
+  background: linear-gradient(90deg, transparent, rgba(255, 70, 85, 0.52), transparent);
+}
+
+.cbot--valorant .cbot__divider-diamond {
+  background: #ff4655;
+  box-shadow: 0 0 10px rgba(255, 70, 85, 0.9);
+}
+
+.cbot--valorant .cbot__more-btn {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 70, 85, 0.24) 0%,
+    rgba(24, 34, 48, 0.78) 54%,
+    rgba(12, 18, 28, 0.95) 100%
+  );
+  border-color: rgba(255, 70, 85, 0.52);
+  box-shadow:
+    0 18px 36px -12px rgba(255, 70, 85, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.cbot--valorant .cbot__more-glow {
+  background: radial-gradient(circle, rgba(255, 70, 85, 0.36), transparent 70%);
+}
+
+.cbot--valorant .cbot__more-badge {
+  color: #ff6b78;
+  background: radial-gradient(
+    circle at 30% 25%,
+    rgba(255, 70, 85, 0.3),
+    rgba(255, 255, 255, 0.04)
+  );
+  border-color: rgba(255, 70, 85, 0.48);
+}
+
+.cbot--valorant .cbot__more-sub {
+  color: #ff949d;
+}
+
+.cbot--valorant .cbot__more-arrow {
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff4655, #d92638);
+  box-shadow: 0 6px 14px -4px rgba(255, 70, 85, 0.65);
+}
+
+.cbot--valorant .cbot__less-btn {
+  color: #ff7a85;
+  background: rgba(255, 70, 85, 0.1);
+  border-color: rgba(255, 70, 85, 0.38);
+}
+

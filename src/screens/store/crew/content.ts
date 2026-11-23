@@ -8,7 +8,14 @@ export type CrewIconName =
   | 'sun'
   | 'cube'
   | 'note'
-  | 'bolt';
+  | 'bolt'
+  | 'vp-emblem'
+  | 'vp-skins'
+  | 'vp-battlepass'
+  | 'vp-nightmarket'
+  | 'vp-melee'
+  | 'vp-packages'
+  | 'vp-region';
 
 export interface CrewBenefitBlock {
   id: string;

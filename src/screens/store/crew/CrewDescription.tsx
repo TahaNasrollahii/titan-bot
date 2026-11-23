@@ -2,6 +2,7 @@ import { useRef, useState, type MouseEvent, type PointerEvent } from 'react';
 import { Link } from 'react-router';
 
 import type { Product, ProductVariant } from '@/api/types';
+import { num } from '@/lib/format';
 import { haptic, openExternal } from '@/lib/telegram';
 
 import { CREW_ACTIVATION_INFO } from './content';
@@ -15,11 +16,13 @@ import './crew.css';
 interface CrewBotDescriptionProps {
   product: Product;
   selectedVariant?: ProductVariant | null;
+  onSelectVariant?: (variant: ProductVariant) => void;
 }
 
 export function CrewBotDescription({
   product,
   selectedVariant = null,
+  onSelectVariant,
 }: CrewBotDescriptionProps) {
   const currentSlug = product.slug || 'fortnite-crew';
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null);
@@ -92,8 +95,41 @@ export function CrewBotDescription({
     }
   };
 
+  const isValorant = template.theme === 'valorant';
+  const accentColor = isValorant ? '#ff4655' : '#f2b84b';
+
+  const renderSmartLink = (href: string, label: string, secondary = false) => {
+    const cls = `cbot__lnk${secondary ? ' cbot__lnk--sec' : ''}`;
+    if (href.startsWith('#')) {
+      return (
+        <button
+          type="button"
+          className={cls}
+          onClick={() => {
+            haptic.tap('light');
+            document
+              .getElementById(href.slice(1))
+              ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+        >
+          {label} <span aria-hidden="true">↓</span>
+        </button>
+      );
+    }
+    return (
+      <Link to={href} className={cls} onClick={() => haptic.tap('light')}>
+        {label} <span aria-hidden="true">←</span>
+      </Link>
+    );
+  };
+
   return (
-    <div id="crew-bot-root" className={`cbot ${!expanded ? 'cbot--collapsed' : ''}`}>
+    <div
+      id="crew-bot-root"
+      className={`cbot${isValorant ? ' cbot--valorant' : ''} ${
+        !expanded ? 'cbot--collapsed' : ''
+      }`}
+    >
       {/* 1. HERO + CAROUSEL */}
       <div className="cbot__hero">
         <div className="cbot__carousel">
@@ -136,7 +172,7 @@ export function CrewBotDescription({
                         background: item.grad,
                         border:
                           abs === 0
-                            ? '1px solid rgba(242,184,75,0.65)'
+                            ? `1px solid ${accentColor}a8`
                             : '1px solid rgba(255,255,255,0.14)',
                       }}
                     >
@@ -215,7 +251,7 @@ export function CrewBotDescription({
                       className="cbot__dot-bar"
                       style={{
                         width: isCurrent ? '22px' : '7px',
-                        background: isCurrent ? '#f2b84b' : 'rgba(255,255,255,0.22)',
+                        background: isCurrent ? accentColor : 'rgba(255,255,255,0.22)',
                       }}
                     />
                   </button>
@@ -326,25 +362,68 @@ export function CrewBotDescription({
                 <p className="cbot__p">{item.p1}</p>
                 <p className="cbot__p">{item.p2}</p>
                 <div className="cbot__benefit-links">
-                  <Link
-                    to={item.href}
-                    className="cbot__lnk"
-                    onClick={() => haptic.tap('light')}
-                  >
-                    {item.link} <span aria-hidden="true">←</span>
-                  </Link>
-                  <Link
-                    to={item.href2}
-                    className="cbot__lnk cbot__lnk--sec"
-                    onClick={() => haptic.tap('light')}
-                  >
-                    {item.link2} <span aria-hidden="true">←</span>
-                  </Link>
+                  {renderSmartLink(item.href, item.link)}
+                  {renderSmartLink(item.href2, item.link2, true)}
                 </div>
               </article>
             ))}
           </div>
         </section>
+
+        {/* 3b. INTERACTIVE PACKAGE SELECTOR (Mini-App) */}
+        {template.packageGuide && (
+          <section id="packages" className="cbot__sec">
+            <div className="cbot__sec-head">
+              <span className="cbot__kicker">{template.packageGuide.kicker}</span>
+              <h3 className="cbot__h2">{template.packageGuide.title}</h3>
+              <p className="cbot__p">{template.packageGuide.subtitle}</p>
+            </div>
+
+            <div className="cbot__pkg-grid">
+              {template.packageGuide.items.map(pkg => {
+                const matchedVariant = product.variants.find(v =>
+                  v.label.includes(pkg.matchKey),
+                );
+                const isSelected = Boolean(
+                  matchedVariant && selectedVariant?.id === matchedVariant.id,
+                );
+                const livePrice = matchedVariant?.price ?? pkg.fallbackPriceToman;
+
+                return (
+                  <button
+                    key={pkg.matchKey}
+                    type="button"
+                    className={`cbot__pkg-card${
+                      isSelected ? ' cbot__pkg-card--active' : ''
+                    }${pkg.popular ? ' cbot__pkg-card--popular' : ''}`}
+                    onClick={() => {
+                      haptic.select();
+                      if (matchedVariant && onSelectVariant) {
+                        onSelectVariant(matchedVariant);
+                      }
+                      document
+                        .querySelector('.variants')
+                        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }}
+                  >
+                    <div className="cbot__pkg-top">
+                      <span className="cbot__pkg-amount">{pkg.amountLabel}</span>
+                      <span className="cbot__pkg-badge">{pkg.badge}</span>
+                    </div>
+                    <h4 className="cbot__pkg-title">{pkg.title}</h4>
+                    <p className="cbot__pkg-desc">{pkg.description}</p>
+                    <div className="cbot__pkg-foot">
+                      <span className="cbot__pkg-price">{num(livePrice)} تومان</span>
+                      <span className="cbot__pkg-act">
+                        {isSelected ? 'انتخاب‌شده ✓' : 'انتخاب بسته ↑'}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* 4. ACTIVATION STEPS */}
         <section className="cbot__sec">
@@ -418,7 +497,7 @@ export function CrewBotDescription({
         </section>
 
         {/* 6. COMPARISON */}
-        <section className="cbot__sec">
+        <section id="vp-comparison" className="cbot__sec">
           <div className="cbot__sec-head">
             <span className="cbot__kicker">{template.comparison.kicker}</span>
             <h3 className="cbot__h2">{template.comparison.title}</h3>
@@ -529,6 +608,21 @@ export function CrewBotDescription({
             ))}
           </div>
         </section>
+
+        {template.seoTopics && template.seoTopics.length > 0 && (
+          <div className="cbot__topics">
+            <span className="cbot__topics-label">
+              عبارات مرتبط با {product.title || template.hero.title}:
+            </span>
+            <div className="cbot__topics-list">
+              {template.seoTopics.map(topic => (
+                <span key={topic} className="cbot__topic-pill">
+                  {topic}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {expanded && (
           <div className="cbot__less-wrap">

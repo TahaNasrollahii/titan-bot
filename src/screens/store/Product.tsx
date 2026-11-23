@@ -267,7 +267,11 @@ function ProductView({ product }: { product: ProductType }) {
         {isFortniteBotTemplateProduct(product.slug, product) ? (
           <section className="pd__section">
             <h2 className="pd__label">توضیحات</h2>
-            <CrewBotDescription product={product} selectedVariant={variant} />
+            <CrewBotDescription
+              product={product}
+              selectedVariant={variant}
+              onSelectVariant={setVariant}
+            />
           </section>
         ) : (
           product.description && (

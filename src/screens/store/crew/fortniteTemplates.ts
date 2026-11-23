@@ -25,8 +25,19 @@ import {
   type CrewRelatedLink,
 } from './content';
 
+export interface BotPackageGuideItem {
+  matchKey: string;
+  amountLabel: string;
+  badge: string;
+  title: string;
+  description: string;
+  fallbackPriceToman: number;
+  popular?: boolean;
+}
+
 export interface FortniteBotTemplate {
   slugs: string[];
+  theme?: 'gold' | 'valorant';
   defaultPriceToman: number;
   defaultOriginalPriceToman: number;
   defaultDiscountPct: number;
@@ -53,6 +64,13 @@ export interface FortniteBotTemplate {
     title: string;
   };
   benefitBlocks: CrewBenefitBlock[];
+  packageGuide?: {
+    kicker: string;
+    title: string;
+    subtitle: string;
+    items: BotPackageGuideItem[];
+  };
+  seoTopics?: string[];
   activation: {
     kicker: string;
     title: string;
@@ -1338,12 +1356,399 @@ export const FORTNITE_FINAL_RECKONING_BOT_TEMPLATE: FortniteBotTemplate = {
   ],
 };
 
+/* ==========================================================================
+   6. VALORANT POINTS (/product/valorant-points)
+   ========================================================================== */
+export const VALORANT_POINTS_BOT_TEMPLATE: FortniteBotTemplate = {
+  slugs: ['valorant-points'],
+  theme: 'valorant',
+  defaultPriceToman: 180000,
+  defaultOriginalPriceToman: 202000,
+  defaultDiscountPct: 11,
+  readMoreSub:
+    'مشاهده راهنمای ۶ بسته VP، جدول قیمت اسکین‌ها، نحوه شارژ و سؤالات متداول',
+  hero: {
+    eyebrow: 'ارز رسمی Riot Games · VALORANT POINTS (VP)',
+    title: 'خرید ولورانت پوینت (VP)',
+    lead: 'با خرید ولورانت پوینت از تایتان، حساب Riot Games خود را در کمتر از ۱۵ دقیقه و با پرداخت ریالی شارژ کنید. هر ۶ بسته رسمی (از ۳۷۵ تا ۸٬۹۰۰ VP) در همین صفحه یکپارچه شده‌اند تا بتل‌پس اکت جدید، اسکین‌های استور روزانه، پیشنهادهای Night Market و باندل‌های کامل ولورانت را بدون دغدغه ریجن فعال نمایید.',
+    factChips: [
+      'بسته‌های ۳۷۵ تا ۸٬۹۰۰ VP',
+      'شارژ مستقیم اکانت Riot',
+      'تحویل زیر ۱۵ دقیقه',
+      'ریجن ترکیه، اروپا و گلوبال',
+      'مشترک روی PC، PS5 و Xbox',
+    ],
+    carouselHint: 'کارت‌ها را بکشید · با زدن کارتِ جلو، به توضیح همان بخش می‌روید',
+  },
+  intro: {
+    kicker: 'معرفی ولورانت پوینت',
+    title: 'ولورانت پوینت (VP) چیست و چرا تنها راه خرید اسکین و بتل‌پس است؟',
+    p1BeforeLink:
+      'ولورانت پوینت (VP) تنها واحد پول پریمیوم درون‌بازی در شوتر تاکتیکی ۵ به ۵ ',
+    p1LinkLabel: 'VALORANT ساخته شرکت Riot Games',
+    p1LinkHref: 'https://playvalorant.com',
+    p1AfterLink:
+      ' است. تمامی اسکین‌های اسلحه، چاقوهای کلکسیونی (Melee)، بتل‌پس هر اکت و باندل‌های قهرمانی VCT منحصراً با ولورانت پوینت قابل خریداری هستند.',
+    p2: 'استور داخل بازی هر ۲۴ ساعت یک‌بار (ساعت ۰۳:۳۰ بامداد به وقت ایران) بروزرسانی می‌شود؛ بنابراین داشتن موجودی آماده VP روی اکانت کمک می‌کند به محض ظاهر شدن اسکین کمیابی مثل Kuronami Vandal، Reaver یا Prime در استور یا Night Market، بلافاصله آن را تهیه کنید.',
+    p3: 'در تایتان کافی است بسته دلخواه خود را از بخش «انتخاب بسته» بالای صفحه انتخاب کنید تا شارژ VP به صورت مستقیم، رسمی و بدون ریسک روی حساب Riot Games شما اعمال گردد.',
+  },
+  benefitsHeader: {
+    kicker: 'کاربردها و مزایا',
+    title: 'با شارژ ولورانت پوینت چه امکاناتی در بازی Valorant باز می‌شود؟',
+  },
+  benefitBlocks: [
+    {
+      id: 'b-0',
+      tag: 'اسکین‌های استور',
+      kicker: 'مزیت اول · استور روزانه و باندل‌ها',
+      title: 'خرید اسکین‌های پریمیوم، Exclusive و Ultra با فینیشر اختصاصی',
+      p1: 'مجموعه‌های ماندگاری مثل Kuronami، Reaver، Prime، Prelude to Chaos، Araxys، RGX و Elderflame با افکت صوتی، انیمیشن ریلود و فینیشر سینمایی تنها با VP قابل تهیه هستند.',
+      p2: 'هر اسکینی که با VP می‌خرید برای همیشه در کلکسیون اکانت شما باقی می‌ماند و با Radianite Points قابل ارتقا است.',
+      link: 'همه محصولات ولورانت',
+      href: '/store/valorant',
+      link2: 'جدول قیمت اسکین‌ها',
+      href2: '#vp-comparison',
+      grad: 'linear-gradient(155deg,#48121d 0%,#8a1c31 55%,#ff5864 135%)',
+      glow: 'rgba(255,70,85,0.45)',
+      ink: '#ff9ea6',
+      icon: 'vp-emblem',
+      image: '/images/glossy-valorant-logo.webp',
+      imageAlt: 'خرید ولورانت پوینت رسمی برای تهیه اسکین‌های استور Valorant',
+    },
+    {
+      id: 'b-1',
+      tag: 'Battle Pass',
+      kicker: 'مزیت دوم · بهترین ارزش خرید اکت',
+      title: 'فعال‌سازی بتل‌پس ولورانت (۱٬۰۰۰ VP) و دریافت Radianite Points',
+      p1: 'بتل‌پس هر اکت با قیمت ثابت ۱٬۰۰۰ VP عرضه می‌شود و شامل ۵۰ تایر اصلی از اسکین‌های سلاح، نایف اختصاصی فصل، کارت پلیر، گان‌بادی و اسپری است.',
+      p2: 'بتل‌پس اقتصادی‌ترین منبع دریافت Radianite Points (تا ۱۶۰ رادیانیت در هر اکت) برای باز کردن افکت و رنگ‌بندی سلاح‌های شماست.',
+      link: 'انتخاب بسته ۱٬۷۰۰ VP',
+      href: '#packages',
+      link2: 'تورنومنت‌های ولورانت تایتان',
+      href2: '/tournaments',
+      grad: 'linear-gradient(155deg,#0d2e33 0%,#146368 55%,#45f3df 135%)',
+      glow: 'rgba(94,234,212,0.42)',
+      ink: '#99f6e4',
+      icon: 'vp-battlepass',
+    },
+    {
+      id: 'b-2',
+      tag: 'Night Market',
+      kicker: 'مزیت سوم · رویداد تخفیفی پایان اکت',
+      title: 'شکار اسکین‌های تخفیف‌خورده در نایت مارکت (Night Market)',
+      p1: 'در هفته‌های پایانی هر اکت، رویداد Night Market شش کارت شانسی با تخفیف‌های استثنایی ۱۰٪ تا ۴۹٪ برای اسکین‌های تا سقف ۱٬۷۷۵ VP و چاقوهای زیر ۳٬۵۵۰ VP باز می‌کند.',
+      p2: 'با شارژ سریع بسته‌های اقتصادی ۳۷۵، ۸۲۵ یا ۱٬۷۰۰ VP در تایتان، واندال و فانتوم‌های محبوب را با نصف قیمت معمول شکار کنید.',
+      link: 'بررسی بسته‌های اقتصادی',
+      href: '#packages',
+      link2: 'راهنماهای آموزشی خرید',
+      href2: '/guides',
+      grad: 'linear-gradient(155deg,#24123e 0%,#522382 55%,#c084fc 135%)',
+      glow: 'rgba(192,132,252,0.44)',
+      ink: '#e9d5ff',
+      icon: 'vp-nightmarket',
+    },
+    {
+      id: 'b-3',
+      tag: 'Melee & Bundles',
+      kicker: 'مزیت چهارم · چاقوهای کلکسیونی و باندل VCT',
+      title: 'خرید کارامبیت، باترفلای نایف و باندل کامل همراه نایف رایگان',
+      p1: 'چاقوهای خاص مانند Reaver Karambit، Kuronami No Yaiba، Xenohunter و باندل‌های محدود سالانه VCT Champions از محبوب‌ترین آیتم‌های کلکسیونی ولورانت هستند.',
+      p2: 'با خرید یک‌جای Full Bundle استور با بسته‌های ۴٬۳۲۵ یا ۸٬۹۰۰ VP، چاقوی مجموعه و تمام اکسسوری‌های باندل را رایگان دریافت می‌کنید.',
+      link: 'مشاهده بسته‌های ۴٬۳۲۵ و ۸٬۹۰۰ VP',
+      href: '#packages',
+      link2: 'فروشگاه ولورانت',
+      href2: '/store/valorant',
+      grad: 'linear-gradient(155deg,#3d121e 0%,#7a1f36 55%,#ff6b78 135%)',
+      glow: 'rgba(255,95,109,0.44)',
+      ink: '#ffb3ba',
+      icon: 'vp-melee',
+      image: '/images/games/valorant-character.webp',
+      imageAlt: 'خرید نایف، کارامبیت و اسکین‌های کلکسیونی ولورانت با VP',
+    },
+    {
+      id: 'b-4',
+      tag: '۶ بسته رسمی',
+      kicker: 'مزیت پنجم · تنوع بسته‌ها همراه Bonus VP',
+      title: 'پوشش کامل از ۳۷۵ تا ۸٬۹۰۰ ولورانت پوینت متناسب با بودجه',
+      p1: 'هر ۶ پکیج رسمی Riot Games در همین صفحه تجمیع شده‌اند تا از تکمیل کسری کوچک اکانت تا خرید مگا باندل‌ها، دقیقاً بسته موردنیازتان را سفارش دهید.',
+      p2: 'در بسته‌های بزرگ‌تر، درصد بیشتری ولورانت پوینت جایزه (Bonus VP) دریافت می‌کنید و هزینه هر ۱۰۰ پوینت کاهش می‌یابد.',
+      link: 'راهنمای انتخاب سریع بسته',
+      href: '#packages',
+      link2: 'پشتیبانی آنلاین تایتان',
+      href2: '/support',
+      grad: 'linear-gradient(155deg,#0f2540 0%,#1d4e80 55%,#38bdf8 135%)',
+      glow: 'rgba(56,189,248,0.42)',
+      ink: '#bae6fd',
+      icon: 'vp-packages',
+    },
+    {
+      id: 'b-5',
+      tag: 'همه ریجن‌ها',
+      kicker: 'مزیت ششم · ریجن ترکیه، اروپا و گلوبال',
+      title: 'شارژ مستقیم و مطمئن مطابق ریجن اکانت Riot Games شما',
+      p1: 'بدون نگرانی از خطای Region Mismatch در گیفت کارت‌ها، کارشناسان تایتان بسته انتخابی را دقیقاً مطابق ریجن ثبت‌شده روی حساب Riot شما (ترکیه، اروپا یا گلوبال) شارژ می‌کنند.',
+      p2: 'تمامی پرداخت‌ها از درگاه رسمی Riot انجام شده و حساب شما در برابر بن شدن یا منفی شدن موجودی کاملاً ایمن است.',
+      link: 'مدیریت اکانت‌های بازی من',
+      href: '/me/accounts',
+      link2: 'ارتباط با پشتیبانی',
+      href2: '/support',
+      grad: 'linear-gradient(155deg,#0d2e24 0%,#16654e 55%,#34d399 135%)',
+      glow: 'rgba(52,211,153,0.4)',
+      ink: '#a7f3d0',
+      icon: 'vp-region',
+    },
+    {
+      id: 'b-6',
+      tag: 'PC · PS5 · Xbox',
+      kicker: 'مزیت هفتم · Cross-Progression رسمی',
+      title: 'کیف پول و لاکر مشترک روی PC، پلی‌استیشن ۵ و ایکس‌باکس',
+      p1: 'حساب Riot Games دارای کیف پول و کلکسیون یکپارچه بین نسخه PC و نسخه‌های کنسولی PlayStation 5 و Xbox Series X|S است.',
+      p2: 'ولورانت پوینت شارژشده و تمام اسکین‌های خریداری‌شده هم‌زمان روی PC و کنسول در دسترس شما خواهند بود.',
+      link: 'مرکز آموزش تایتان',
+      href: '/guides',
+      link2: 'همه بازی‌های فروشگاه',
+      href2: '/store',
+      grad: 'linear-gradient(155deg,#1d1942 0%,#3c3485 55%,#818cf8 135%)',
+      glow: 'rgba(129,140,248,0.42)',
+      ink: '#c7d2fe',
+      icon: 'vp-skins',
+    },
+  ],
+  packageGuide: {
+    kicker: 'راهنمای انتخاب سریع بسته',
+    title: 'کدام بسته ولورانت پوینت برای خرید شما مناسب‌تر است؟',
+    subtitle:
+      'روی هر کارت بزنید تا همان بسته در بخش انتخاب بسته بالای صفحه برایتان فعال شود.',
+    items: [
+      {
+        matchKey: '375',
+        amountLabel: '۳۷۵ VP',
+        badge: 'تکمیل کسری',
+        title: 'بسته اقتصادی ۳۷۵ ولورانت پوینت',
+        description:
+          'مناسب جبران کسری کوچک موجودی اکانت برای بتل‌پس یا خرید آیتم‌های تخفیف‌خورده Night Market.',
+        fallbackPriceToman: 180000,
+      },
+      {
+        matchKey: '825',
+        amountLabel: '۸۲۵ VP',
+        badge: 'مناسب Night Market',
+        title: 'بسته ۸۲۵ ولورانت پوینت',
+        description:
+          'ایده‌آل برای خرید اسکین‌های Select یا شکار اسکین پریمیوم با تخفیف بالا در نایت مارکت.',
+        fallbackPriceToman: 900000,
+      },
+      {
+        matchKey: '1700',
+        amountLabel: '۱٬۷۰۰ VP',
+        badge: 'پرفروش‌ترین برای بتل‌پس',
+        title: 'بسته ۱٬۷۰۰ ولورانت پوینت',
+        description:
+          'انتخاب اول برای فعال‌سازی کامل بتل‌پس اکت (۱٬۰۰۰ VP) به همراه ۷۰۰ پوینت ذخیره در اکانت.',
+        fallbackPriceToman: 1600000,
+        popular: true,
+      },
+      {
+        matchKey: '2925',
+        amountLabel: '۲٬۹۲۵ VP',
+        badge: 'ویژه اسکین‌های محبوب',
+        title: 'بسته ۲٬۹۲۵ ولورانت پوینت',
+        description:
+          'کافی برای خرید هر اسکین پریمیوم یا Exclusive استور (مثل Kuronami، Reaver، Prime و Araxys).',
+        fallbackPriceToman: 2300000,
+        popular: true,
+      },
+      {
+        matchKey: '4325',
+        amountLabel: '۴٬۳۲۵ VP',
+        badge: 'مخصوص چاقو و کارامبیت',
+        title: 'بسته ۴٬۳۲۵ ولورانت پوینت',
+        description:
+          'مناسب خرید چاقوها، باترفلای نایف و کارامبیت‌های کلکسیونی (۳٬۵۵۰ تا ۴٬۳۵۰ VP).',
+        fallbackPriceToman: 5800000,
+      },
+      {
+        matchKey: '8900',
+        amountLabel: '۸٬۹۰۰ VP',
+        badge: 'حداکثر Bonus VP',
+        title: 'بسته کامل ۸٬۹۰۰ ولورانت پوینت',
+        description:
+          'به‌صرفه‌ترین پکیج برای خرید یک‌جای Full Bundle استور (۷٬۱۰۰ تا ۸٬۷۰۰ VP) همراه با نایف رایگان باندل.',
+        fallbackPriceToman: 10300000,
+      },
+    ],
+  },
+  activation: {
+    kicker: 'فرآیند شارژ سفارش',
+    title: 'چطور ولورانت پوینت روی اکانت شما شارژ می‌شود؟',
+    lead: 'شارژ ولورانت پوینت در تایتان به‌صورت مستقیم روی حساب Riot Games شما انجام شده و نیازی به کارت دلاری ندارد.',
+    steps: [
+      {
+        num: '۱',
+        title: 'انتخاب مقدار VP و پرداخت',
+        text: 'بسته دلخواه (۳۷۵ تا ۸٬۹۰۰ VP) را انتخاب کرده و مبلغ سفارش را با کارت شتاب یا کیف پول تایتان بپردازید.',
+      },
+      {
+        num: '۲',
+        title: 'ثبت مشخصات اکانت Riot',
+        text: 'در مرحله تسویه حساب یا بخش اکانت‌های من، اطلاعات اکانت Riot Games خود را ثبت نمایید.',
+        placeholderKey: 'CREW_ACTIVATION_INFO',
+      },
+      {
+        num: '۳',
+        title: 'شارژ رسمی زیر ۱۵ دقیقه',
+        text: 'کارشناسان تایتان بسته انتخابی را از طریق درگاه رسمی مطابق ریجن اکانت شما شارژ می‌کنند.',
+      },
+      {
+        num: '۴',
+        title: 'ورود به بازی و خرید از استور',
+        text: 'به محض دریافت اعلان تکمیل سفارش، وارد VALORANT شوید و از موجودی جدید VP خود استفاده کنید.',
+      },
+    ],
+  },
+  priceDelivery: {
+    kicker: 'شفافیت قیمت و تحویل',
+    title: 'قیمت روز ولورانت پوینت و زمان تحویل در تایتان',
+    tile1Label: 'قیمت بسته انتخابی',
+    tile1SubWhenNoDiscount: 'برای دیدن قیمت سایر مقادیر، بسته را از بالای صفحه تغییر دهید',
+    tile2Label: 'میانگین زمان تحویل',
+    tile2Value: 'کمتر از ۱۵ دقیقه',
+    tile2Sub: 'پردازش فوری پس از ثبت نهایی سفارش در ساعات کاری',
+    tile3Label: 'ریجن و پلتفرم قابل شارژ',
+    tile3Value: 'ترکیه · اروپا · گلوبال (PC / PS5 / Xbox)',
+    tile3Sub: 'شارژ مستقیم و امن روی اکانت اصلی Riot Games',
+    guideNoteBefore: 'برای آشنایی با نکات امنیتی حساب رایوت، ',
+    guideLinkLabel: 'مرکز آموزش و راهنماهای تایتان',
+    guideLinkHref: '/guides',
+    guideNoteAfter: ' را مشاهده کنید.',
+  },
+  comparison: {
+    kicker: 'راهنمای تعرفه استور بازی',
+    title: 'هر اسکین، چاقو یا بتل‌پس در بازی Valorant چند VP قیمت دارد؟',
+    p1: 'آیتم‌های فروشگاه ولورانت در ۵ رده قیمتی استاندارد (Select، Deluxe، Premium، Exclusive و Ultra) عرضه می‌شوند. جدول زیر به شما کمک می‌کند دقیقاً بسته متناسب با آیتم دلخواهتان را انتخاب کنید.',
+    p2BeforeVbucks: 'می‌توانید سایر آیتم‌ها را در ',
+    shopLinkLabel: 'فروشگاه ولورانت تایتان',
+    shopLinkHref: '/store/valorant',
+    p2BetweenLinks: ' ببینید و در ',
+    vbucksLinkLabel: 'تورنومنت‌های آنلاین تایتان',
+    vbucksLinkHref: '/tournaments',
+    p2BeforeEpic: ' رقابت کنید. اخبار رسمی فصل جدید در ',
+    epicLinkLabel: 'سایت رسمی PlayValorant',
+    epicLinkHref: 'https://playvalorant.com',
+    p2AfterEpic: ' در دسترس است.',
+    tableHeader: 'تعرفه رسمی آیتم‌ها در فروشگاه داخل بازی VALORANT',
+    rows: [
+      { label: 'بتل‌پس کامل هر اکت (۵۰ تایر + نایف فصل)', value: '۱٬۰۰۰ VP' },
+      { label: 'اسکین‌های Select و Deluxe', value: '۸۷۵ تا ۱٬۲۷۵ VP' },
+      { label: 'اسکین‌های Premium (Reaver، Prime، Ion)', value: '۱٬۷۷۵ VP' },
+      { label: 'اسکین‌های Exclusive و Ultra (Kuronami، Araxys)', value: '۲٬۱۷۵ تا ۲٬۴۷۵ VP' },
+      { label: 'چاقوها، کارامبیت و باترفلای نایف (Melee)', value: '۳٬۵۵۰ تا ۵٬۳۵۰ VP' },
+      { label: 'باندل کامل استور (همراه با نایف رایگان)', value: '۷٬۱۰۰ تا ۸٬۷۰۰ VP' },
+    ],
+    total: {
+      label: 'پیشنهاد پرفروش برای تک‌اسکین یا بتل‌پس',
+      value: 'بسته ۱٬۷۰۰ و ۲٬۹۲۵ VP',
+    },
+  },
+  support: {
+    kicker: 'گارانتی و امنیت اکانت',
+    title: 'تضمین سلامت اکانت Riot Games و پشتیبانی ۲۴ ساعته',
+    pBeforeTerms:
+      'تمامی سفارش‌های ولورانت پوینت در تایتان از روش‌های رسمی پرداخت انجام شده و بدون خطر بن شدن یا کسر امتیاز هستند. در صورت بروز هرگونه مشکل فنی در شارژ، وجه پرداختی شما تحت ضمانت تایتان بازگردانده شده و ',
+    termsLinkLabel: 'پشتیبانی ۲۴ ساعته تایتان',
+    termsLinkHref: '/support',
+    pAfterTerms: ' در تمام مراحل پاسخگوی شماست.',
+  },
+  relatedHeader: {
+    kicker: 'مسیرهای پیشنهادی',
+    title: 'سایر بخش‌ها و محصولات محبوب در تایتان',
+  },
+  relatedLinks: [
+    { label: 'فروشگاه محصولات ولورانت', href: '/store/valorant' },
+    { label: 'تورنومنت‌های آنلاین تایتان', href: '/tournaments' },
+    { label: 'خرید وی‌باکس فورتنایت', href: '/product/fortnite-vbucks' },
+    { label: 'خرید سی‌پی کالاف دیوتی موبایل', href: '/product/cod-points' },
+    { label: 'مرکز آموزش و راهنما', href: '/guides' },
+    { label: 'پشتیبانی آنلاین', href: '/support' },
+  ],
+  faqHeader: {
+    kicker: 'پرسش‌های پرتکرار',
+    title: 'سؤالات متداول درباره خرید و شارژ ولورانت پوینت (VP)',
+    subtitle: 'پاسخ کوتاه و دقیق به پرتکرارترین پرسش‌های پلیرهای ولورانت.',
+  },
+  faqItems: [
+    {
+      id: 'vp-faq-1',
+      question: 'چطور مقدار ولورانت پوینت موردنظرم را انتخاب کنم؟',
+      answer:
+        'از بخش «انتخاب بسته» در بالای صفحه یا از کارت‌های راهنمای بسته در همین توضیحات، یکی از مقادیر ۳۷۵ تا ۸٬۹۰۰ VP را انتخاب کرده و خرید خود را ثبت کنید.',
+    },
+    {
+      id: 'vp-faq-2',
+      question: 'شارژ ولورانت پوینت در تایتان چقدر طول می‌کشد؟',
+      answer:
+        'سفارش‌های VP به طور میانگین در کمتر از ۱۵ دقیقه پس از ثبت نهایی سفارش به صورت مستقیم روی اکانت Riot Games شما شارژ می‌شوند.',
+    },
+    {
+      id: 'vp-faq-3',
+      question: 'برای خرید بتل‌پس ولورانت کدام بسته VP مناسب است؟',
+      answer:
+        'بتل‌پس هر اکت ۱٬۰۰۰ VP قیمت دارد. اگر موجودی قبلی دارید بسته‌های ۳۷۵ یا ۸۲۵ VP کافی است، و اگر موجودی ندارید بسته ۱٬۷۰۰ VP بهترین انتخاب است که ۷۰۰ پوینت هم برایتان ذخیره می‌کند.',
+    },
+    {
+      id: 'vp-faq-4',
+      question: 'برای خرید اسکین‌های Kuronami، Reaver یا Prime چقدر VP لازم است؟',
+      answer:
+        'اسکین‌های Premium مثل Reaver و Prime قیمت ۱٬۷۷۵ VP و اسکین‌های Exclusive مثل Kuronami بین ۲٬۱۷۵ تا ۲٬۳۷۵ VP قیمت دارند؛ بنابراین بسته ۲٬۹۲۵ VP بهترین گزینه است.',
+    },
+    {
+      id: 'vp-faq-5',
+      question: 'از کجا بفهمم ریجن اکانت ولورانت من ترکیه یا اروپاست؟',
+      answer:
+        'وارد سایت account.riotgames.com شوید و در بخش Personal Information گزینه Country/Region را ببینید، یا داخل بازی واحد پول نمایش‌داده‌شده در صفحه خرید VP را بررسی کنید.',
+    },
+    {
+      id: 'vp-faq-6',
+      question: 'آیا شارژ مستقیم VP امن است و خطر بن شدن ندارد؟',
+      answer:
+        'بله؛ تمامی شارژها از درگاه رسمی Riot Games انجام می‌شوند و هیچ‌گونه ریسک بن شدن یا منفی شدن موجودی برای اکانت شما وجود ندارد.',
+    },
+    {
+      id: 'vp-faq-7',
+      question: 'تفاوت ولورانت پوینت (VP) با رادیانیت پوینت (RP) چیست؟',
+      answer:
+        'با VP خودِ اسکین‌ها، چاقوها و بتل‌پس را می‌خرید؛ اما Radianite Points برای ارتقای افکت، فینیشر و رنگ‌بندی اسکین‌ها کاربرد دارد که بهترین راه دریافت آن تکمیل بتل‌پس ۱٬۰۰۰ پوینتی است.',
+    },
+    {
+      id: 'vp-faq-8',
+      question: 'آیا موجودی VP تاریخ انقضا دارد یا روی PS5 و Xbox هم کار می‌کند؟',
+      answer:
+        'خیر، VP دائمی است و منقضی نمی‌شود. همچنین به لطف کیف پول مشترک Riot، موجودی VP و اسکین‌های شما روی PC، PS5 و Xbox یکسان است.',
+    },
+  ],
+  seoTopics: [
+    'خرید ولورانت پوینت ارزان',
+    'شارژ فوری VP ولورانت',
+    'قیمت ولورانت پوینت ترکیه',
+    'خرید بتل پس ولورانت',
+    'خرید ۳۷۵ ولورانت پوینت',
+    'خرید ۸۲۵ ولورانت پوینت',
+    'خرید ۱۷۰۰ ولورانت پوینت',
+    'خرید ۲۹۲۵ ولورانت پوینت',
+    'خرید ۴۳۲۵ ولورانت پوینت',
+    'خرید ۸۹۰۰ ولورانت پوینت',
+    'خرید اسکین Kuronami و Reaver',
+    'نایت مارکت ولورانت',
+  ],
+};
+
 export const ALL_FORTNITE_BOT_TEMPLATES: FortniteBotTemplate[] = [
   FORTNITE_CREW_BOT_TEMPLATE,
   FORTNITE_VBUCKS_BOT_TEMPLATE,
   FORTNITE_BATTLE_PASS_BOT_TEMPLATE,
   FORTNITE_STARTER_PACK_BOT_TEMPLATE,
   FORTNITE_FINAL_RECKONING_BOT_TEMPLATE,
+  VALORANT_POINTS_BOT_TEMPLATE,
 ];
 
 const FORTNITE_BOT_SLUGS = new Set<string>(
