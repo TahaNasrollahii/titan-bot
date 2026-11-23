@@ -1,5 +1,3 @@
-import { useId } from 'react';
-
 import type { CrewIconName } from './content';
 
 interface CrewIconProps {
@@ -15,7 +13,6 @@ export function CrewIcon({
   stroke = '#f2b84b',
   strokeWidth = 1.6,
 }: CrewIconProps) {
-  const uid = useId().replace(/:/g, '');
   const common = {
     width: size,
     height: size,
@@ -92,157 +89,58 @@ export function CrewIcon({
       );
     case 'vp-emblem':
       return (
-        <svg {...common} viewBox="0 0 32 32">
-          <defs>
-            <linearGradient id={`vp-${uid}`} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor={stroke} stopOpacity="0.34" />
-              <stop offset="100%" stopColor={stroke} stopOpacity="0.06" />
-            </linearGradient>
-          </defs>
-          <polygon
-            points="16,2.5 27.5,8.5 27.5,23.5 16,29.5 4.5,23.5 4.5,8.5"
-            fill={`url(#vp-${uid})`}
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-          />
-          <path
-            d="M8.5 10.2v5.6l6.1 7.7h3.3L8.5 10.2z"
-            fill={stroke}
-            fillOpacity="0.88"
-            stroke="none"
-          />
-          <path
-            d="M23.5 10.2v5.6l-3.9 4.9h-3.4l7.3-10.5z"
-            fill={stroke}
-            fillOpacity="0.62"
-            stroke="none"
-          />
+        <svg {...common}>
+          <polygon points="12 2 21 7 21 17 12 22 3 17 3 7" />
+          <path d="M6.5 8v4l4.5 5.5h2.3L6.5 8z" />
+          <path d="M17.5 8v4l-2.8 3.4h-2.3L17.5 8z" />
         </svg>
       );
     case 'vp-skins':
       return (
-        <svg {...common} viewBox="0 0 32 32">
-          <defs>
-            <radialGradient id={`sk-${uid}`} cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor={stroke} stopOpacity="0.32" />
-              <stop offset="100%" stopColor={stroke} stopOpacity="0" />
-            </radialGradient>
-          </defs>
-          <circle
-            cx="16"
-            cy="16"
-            r="11"
-            fill={`url(#sk-${uid})`}
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-            strokeDasharray="4 2.5"
-          />
-          <path
-            d="M16 5.5 18.4 13.6 26.5 16 18.4 18.4 16 26.5 13.6 18.4 5.5 16 13.6 13.6Z"
-            fill={stroke}
-            fillOpacity="0.24"
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-          />
-          <circle cx="16" cy="16" r="2.3" fill={stroke} stroke="none" />
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="m12 3 2.1 6.9L21 12l-6.9 2.1L12 21l-2.1-6.9L3 12l6.9-2.1z" />
         </svg>
       );
     case 'vp-battlepass':
       return (
-        <svg {...common} viewBox="0 0 32 32">
-          <defs>
-            <linearGradient id={`bp-${uid}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={stroke} stopOpacity="0.32" />
-              <stop offset="100%" stopColor={stroke} stopOpacity="0.05" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M16 3 27 8v9.5C27 23.4 22.2 27.6 16 29.5 9.8 27.6 5 23.4 5 17.5V8L16 3Z"
-            fill={`url(#bp-${uid})`}
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-          />
-          <path d="m10.5 16.5 5.5-5 5.5 5" stroke={stroke} strokeWidth={strokeWidth * 1.15} />
-          <path d="m10.5 21.2 5.5-5 5.5 5" stroke={stroke} strokeWidth={strokeWidth * 1.15} strokeOpacity="0.7" />
-          <circle cx="16" cy="8.2" r="1.5" fill={stroke} stroke="none" />
+        <svg {...common}>
+          <path d="M12 2 20 6v6.5c0 4.5-3.4 8-8 9.5-4.6-1.5-8-5-8-9.5V6l8-4z" />
+          <path d="m8.5 12.5 3.5-3.2 3.5 3.2" />
+          <path d="m8.5 16.2 3.5-3.2 3.5 3.2" />
         </svg>
       );
     case 'vp-nightmarket':
       return (
-        <svg {...common} viewBox="0 0 32 32">
-          <defs>
-            <linearGradient id={`nm-${uid}`} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor={stroke} stopOpacity="0.3" />
-              <stop offset="100%" stopColor={stroke} stopOpacity="0.06" />
-            </linearGradient>
-          </defs>
-          <rect
-            x="7"
-            y="3.5"
-            width="18"
-            height="25"
-            rx="3.2"
-            transform="rotate(-6 16 16)"
-            fill={`url(#nm-${uid})`}
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-          />
-          <polygon
-            points="16,9.5 20.5,16 16,22.5 11.5,16"
-            fill={stroke}
-            fillOpacity="0.28"
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-          />
-          <circle cx="23.5" cy="7.5" r="2" fill={stroke} stroke="none" />
+        <svg {...common}>
+          <rect x="5" y="2.5" width="14" height="19" rx="2.5" />
+          <polygon points="12 7.5 15.5 12 12 16.5 8.5 12" />
+          <path d="M8 5.5h.01" />
+          <path d="M16 18.5h.01" />
         </svg>
       );
     case 'vp-melee':
       return (
-        <svg {...common} viewBox="0 0 32 32">
-          <defs>
-            <linearGradient id={`ml-${uid}`} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor={stroke} stopOpacity="0.38" />
-              <stop offset="100%" stopColor={stroke} stopOpacity="0.08" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M25.5 5.5C18.5 6.8 13.2 11.8 11.5 18.2l3.8 2.3c2.4-4.8 6.1-8.5 10.2-15Z"
-            fill={`url(#ml-${uid})`}
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-          />
-          <circle cx="10.2" cy="23.5" r="3.4" stroke={stroke} strokeWidth={strokeWidth * 1.1} fill={stroke} fillOpacity="0.16" />
-          <path d="M12.2 19.2 14.8 21" stroke={stroke} strokeWidth={strokeWidth * 1.2} />
+        <svg {...common}>
+          <path d="M19.5 4.5c-5.2 1-9.2 4.8-10.5 9.8l3 1.8c1.8-3.8 4.5-6.6 7.5-11.6z" />
+          <circle cx="7.5" cy="18.5" r="2.6" />
+          <path d="m9.2 15.2 2.2 1.4" />
         </svg>
       );
     case 'vp-packages':
       return (
-        <svg {...common} viewBox="0 0 32 32">
-          <defs>
-            <linearGradient id={`pk-${uid}`} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor={stroke} stopOpacity="0.34" />
-              <stop offset="100%" stopColor={stroke} stopOpacity="0.06" />
-            </linearGradient>
-          </defs>
-          <polygon
-            points="16,4 26,9.5 16,15 6,9.5"
-            fill={`url(#pk-${uid})`}
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-          />
-          <path d="M6 15.2 16 20.8l10-5.6" stroke={stroke} strokeWidth={strokeWidth} />
-          <path d="M6 20.8 16 26.5l10-5.7" stroke={stroke} strokeWidth={strokeWidth} strokeOpacity="0.72" />
+        <svg {...common}>
+          <polygon points="12 3 21 8 12 13 3 8" />
+          <path d="m3 12.5 9 5 9-5" />
+          <path d="m3 16.8 9 5 9-5" />
         </svg>
       );
     case 'vp-region':
       return (
-        <svg {...common} viewBox="0 0 32 32">
-          <circle cx="15" cy="16" r="10.5" stroke={stroke} strokeWidth={strokeWidth} fill={stroke} fillOpacity="0.1" />
-          <ellipse cx="15" cy="16" rx="4.8" ry="10.5" stroke={stroke} strokeWidth={strokeWidth * 0.9} />
-          <path d="M4.8 16h20.4" stroke={stroke} strokeWidth={strokeWidth * 0.9} />
-          <circle cx="23.5" cy="22.5" r="4.8" fill="#0f1923" stroke={stroke} strokeWidth={strokeWidth} />
-          <path d="m21.5 22.5 1.4 1.5 2.8-2.9" stroke={stroke} strokeWidth={strokeWidth * 1.15} />
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <ellipse cx="12" cy="12" rx="4" ry="9" />
+          <path d="M3.5 12h17" />
         </svg>
       );
   }

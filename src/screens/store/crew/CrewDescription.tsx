@@ -95,9 +95,6 @@ export function CrewBotDescription({
     }
   };
 
-  const isValorant = template.theme === 'valorant';
-  const accentColor = isValorant ? '#ff4655' : '#f2b84b';
-
   const renderSmartLink = (href: string, label: string, secondary = false) => {
     const cls = `cbot__lnk${secondary ? ' cbot__lnk--sec' : ''}`;
     if (href.startsWith('#')) {
@@ -124,12 +121,7 @@ export function CrewBotDescription({
   };
 
   return (
-    <div
-      id="crew-bot-root"
-      className={`cbot${isValorant ? ' cbot--valorant' : ''} ${
-        !expanded ? 'cbot--collapsed' : ''
-      }`}
-    >
+    <div id="crew-bot-root" className={`cbot ${!expanded ? 'cbot--collapsed' : ''}`}>
       {/* 1. HERO + CAROUSEL */}
       <div className="cbot__hero">
         <div className="cbot__carousel">
@@ -157,6 +149,7 @@ export function CrewBotDescription({
                   <a
                     key={item.id}
                     href={`#${item.id}`}
+                    data-front={abs === 0 ? 'true' : undefined}
                     className="cbot__card"
                     onClick={e => handleCardClick(e, i, item.id)}
                     style={{
@@ -172,7 +165,7 @@ export function CrewBotDescription({
                         background: item.grad,
                         border:
                           abs === 0
-                            ? `1px solid ${accentColor}a8`
+                            ? '1px solid rgba(242,184,75,0.65)'
                             : '1px solid rgba(255,255,255,0.14)',
                       }}
                     >
@@ -251,7 +244,7 @@ export function CrewBotDescription({
                       className="cbot__dot-bar"
                       style={{
                         width: isCurrent ? '22px' : '7px',
-                        background: isCurrent ? accentColor : 'rgba(255,255,255,0.22)',
+                        background: isCurrent ? '#f2b84b' : 'rgba(255,255,255,0.22)',
                       }}
                     />
                   </button>
