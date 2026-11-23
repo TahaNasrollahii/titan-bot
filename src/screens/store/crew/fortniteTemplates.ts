@@ -837,6 +837,8 @@ export const FORTNITE_STARTER_PACK_BOT_TEMPLATE: FortniteBotTemplate = {
       glow: 'rgba(92,200,255,0.45)',
       ink: '#a8e3ff',
       icon: 'coin',
+      image: '/images/starter-pack/vbucks.webp',
+      imageAlt: 'آیکون ۶۰۰ وی‌باکس در استارتر پک فورتنایت',
     },
     {
       id: 'b-1',
@@ -853,6 +855,8 @@ export const FORTNITE_STARTER_PACK_BOT_TEMPLATE: FortniteBotTemplate = {
       glow: 'rgba(242,184,75,0.45)',
       ink: '#ffd88a',
       icon: 'gift',
+      image: '/images/starter-pack/outfit.webp',
+      imageAlt: 'اسکین اختصاصی استارتر پک فورتنایت',
     },
     {
       id: 'b-2',
@@ -869,6 +873,8 @@ export const FORTNITE_STARTER_PACK_BOT_TEMPLATE: FortniteBotTemplate = {
       glow: 'rgba(255,210,63,0.45)',
       ink: '#ffe899',
       icon: 'cube',
+      image: '/images/starter-pack/lego-style.webp',
+      imageAlt: 'نسخه استایل لگو (LEGO Style) اسکین استارتر پک فورتنایت',
     },
     {
       id: 'b-3',
@@ -885,6 +891,8 @@ export const FORTNITE_STARTER_PACK_BOT_TEMPLATE: FortniteBotTemplate = {
       glow: 'rgba(196,122,255,0.45)',
       ink: '#e0bcff',
       icon: 'medal',
+      image: '/images/starter-pack/back-bling.webp',
+      imageAlt: 'بک‌بلینگ اختصاصی استارتر پک فورتنایت',
     },
     {
       id: 'b-4',
@@ -901,6 +909,8 @@ export const FORTNITE_STARTER_PACK_BOT_TEMPLATE: FortniteBotTemplate = {
       glow: 'rgba(63,255,224,0.45)',
       ink: '#a8fff0',
       icon: 'bolt',
+      image: '/images/starter-pack/pickaxe.webp',
+      imageAlt: 'پیک‌اکس اختصاصی استارتر پک فورتنایت',
     },
     {
       id: 'b-5',
@@ -1380,6 +1390,11 @@ export function getFortniteBotTemplate(
   if (product) {
     return {
       ...FORTNITE_STARTER_PACK_BOT_TEMPLATE,
+      benefitBlocks: FORTNITE_STARTER_PACK_BOT_TEMPLATE.benefitBlocks.map(block =>
+        block.id === 'b-0'
+          ? block
+          : { ...block, image: undefined, imageAlt: undefined },
+      ),
       slugs: [product.slug],
       defaultPriceToman: product.price || 589000,
       defaultOriginalPriceToman:
