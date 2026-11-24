@@ -277,6 +277,72 @@ export const DEFAULT_VALORANT_POINTS_PRODUCT_DETAIL: Product = {
   gallery: [],
 };
 
+export const DEFAULT_COD_POINTS_PRODUCT_DETAIL: Product = {
+  id: 7,
+  slug: 'cod-points',
+  title: 'خرید سی‌پی کالاف دیوتی موبایل (COD Points)',
+  subtitle:
+    'شارژ مستقیم و سریع سی‌پی کالاف دیوتی موبایل (CP) در بسته‌های ۲۰۰ تا ۵٬۰۰۰ سی‌پی برای بتل‌پس، گردونه‌های متیک و لجندری',
+  image: 'https://35tmectztpibboo6.public.blob.vercel-storage.com/products/Molten-Gold-Lightning-King.webp',
+  imageAlt: 'خرید سی‌پی کالاف دیوتی موبایل (COD Points / CP) با تحویل سریع از فروشگاه تایتان',
+  sku: 'TITAN-COD-CP',
+  mpn: 'COD-POINTS',
+  price: 99000,
+  originalPrice: 111000,
+  discountPercent: 11,
+  hasVariants: true,
+  priceMax: 1890000,
+  rating: 4.8,
+  reviewCount: 5,
+  badges: ['bestseller', 'discount'],
+  inStock: true,
+  vendor: 'Activision',
+  deliveryType: 'account',
+  credentialType: 'email_password',
+  game: {
+    slug: 'call-of-duty',
+    title: 'کالاف دیوتی موبایل',
+    titleEn: 'Call of Duty Mobile',
+    iconImage: '/images/categories/callof-v2.webp',
+    accentColor: '#f59e0b',
+  },
+  category: { slug: 'game-currency', name: 'ارز بازی' },
+  platforms: [
+    { slug: 'mobile', name: 'Mobile', icon: null },
+    { slug: 'pc', name: 'PC', icon: null },
+    { slug: 'playstation', name: 'PlayStation', icon: null },
+    { slug: 'xbox', name: 'Xbox', icon: null },
+  ],
+  isWishlisted: false,
+  description: '',
+  deliveryInfo: 'شارژ مستقیم روی اکانت اکتیویژن (کمتر از ۱۵ دقیقه)',
+  requiresGameAccount: true,
+  stock: null,
+  features: [
+    { title: 'تضمین سلامت اکانت', description: 'بدون خطر بن و CP منفی', icon: 'shield' },
+    { title: 'تحویل کمتر از ۱۵ دقیقه', description: 'شارژ مستقیم اکانت اکتیویژن', icon: 'flame' },
+    { title: 'پشتیبانی ۲۴ ساعته', description: 'چت آنلاین و تیکت', icon: 'chat' },
+  ],
+  tags: [
+    'شامل بسته‌های ۲۰۰ تا ۵٬۰۰۰ CP با بونوس',
+    'شارژ مستقیم اکانت اکتیویژن با رسید رسمی',
+    'تحویل فوری کمتر از ۱۵ دقیقه',
+    'تضمین ۱۰۰٪ عدم بن و منفی شدن CP',
+  ],
+  specs: {
+    region: 'گلوبال — تمام ریجن‌ها (ایران، هند، اروپا و آمریکا)',
+    delivery: 'کمتر از ۱۵ دقیقه',
+    activation: 'شارژ مستقیم روی اکانت Activision',
+  },
+  variants: [
+    { id: 25, label: '۲۰۰ CP', price: 99000, originalPrice: 111000, discountPercent: 11, inStock: true },
+    { id: 26, label: '۱,۱۰۰ CP', price: 490000, originalPrice: 549000, discountPercent: 11, inStock: true },
+    { id: 27, label: '۲,۴۰۰ CP', price: 950000, originalPrice: 1100000, discountPercent: 14, inStock: true },
+    { id: 28, label: '۵,۰۰۰ CP', price: 1890000, originalPrice: 2117000, discountPercent: 11, inStock: true },
+  ],
+  gallery: [],
+};
+
 export function sanitizeApiPayload<T>(input: T): T {
   if (input === null || input === undefined) return input;
   if (typeof input === 'string') {

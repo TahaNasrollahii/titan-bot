@@ -19,6 +19,24 @@ interface CrewBotDescriptionProps {
   onSelectVariant?: (variant: ProductVariant) => void;
 }
 
+function normalizeNumericTokens(input: string): string {
+  const asciiDigits = input
+    .replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x06f0))
+    .replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x0660));
+  return asciiDigits.replace(/(\d)[,٬،](?=\d{3}(?:\D|$))/g, '$1');
+}
+
+function matchesPackageVariant(label: string, matchKey: string): boolean {
+  if (label.includes(matchKey)) return true;
+  const normLabel = normalizeNumericTokens(label);
+  const normKey = normalizeNumericTokens(matchKey).trim();
+  if (!normKey) return false;
+  if (/^\d+$/.test(normKey)) {
+    return new RegExp(`(^|\\D)${normKey}(\\D|$)`).test(normLabel);
+  }
+  return normLabel.toLowerCase().includes(normKey.toLowerCase());
+}
+
 export function CrewBotDescription({
   product,
   selectedVariant = null,
@@ -375,7 +393,7 @@ export function CrewBotDescription({
             <div className="cbot__pkg-grid">
               {template.packageGuide.items.map(pkg => {
                 const matchedVariant = product.variants.find(v =>
-                  v.label.includes(pkg.matchKey),
+                  matchesPackageVariant(v.label, pkg.matchKey),
                 );
                 const isSelected = Boolean(
                   matchedVariant && selectedVariant?.id === matchedVariant.id,
@@ -490,7 +508,7 @@ export function CrewBotDescription({
         </section>
 
         {/* 6. COMPARISON */}
-        <section id="vp-comparison" className="cbot__sec">
+        <section id={template.comparison.sectionId || 'vp-comparison'} className="cbot__sec">
           <div className="cbot__sec-head">
             <span className="cbot__kicker">{template.comparison.kicker}</span>
             <h3 className="cbot__h2">{template.comparison.title}</h3>

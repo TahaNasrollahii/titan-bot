@@ -143,5 +143,58 @@ export function CrewIcon({
           <path d="M3.5 12h17" />
         </svg>
       );
+    case 'cod-cp':
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="6" />
+          <polygon points="12 7.5 13.4 10.6 16.8 11 14.2 13.2 14.9 16.5 12 14.8 9.1 16.5 9.8 13.2 7.2 11 10.6 10.6" />
+        </svg>
+      );
+    case 'cod-luckydraw':
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="3.2" />
+          <path d="M12 3v3.5" />
+          <path d="M12 17.5V21" />
+          <path d="M3 12h3.5" />
+          <path d="M17.5 12H21" />
+          <path d="m5.6 5.6 2.5 2.5" />
+          <path d="m15.9 15.9 2.5 2.5" />
+        </svg>
+      );
+    case 'cod-battlepass':
+      return (
+        <svg {...common}>
+          <polygon points="12 2.5 19.5 6 19.5 13 12 21.5 4.5 13 4.5 6" />
+          <path d="m8.2 10.5 3.8 3 3.8-3" />
+          <path d="m8.2 14.2 3.8 3 3.8-3" />
+        </svg>
+      );
+    case 'cod-mythic':
+      return (
+        <svg {...common}>
+          <polygon points="12 2 18.5 8.5 16 21 8 21 5.5 8.5" />
+          <polygon points="12 6.5 15 10.5 12 17.5 9 10.5" />
+          <path d="M5.5 8.5h13" />
+        </svg>
+      );
+    case 'cod-packages':
+      return (
+        <svg {...common}>
+          <rect x="3.5" y="4" width="17" height="5" rx="1.4" />
+          <rect x="3.5" y="10.5" width="17" height="5" rx="1.4" />
+          <path d="M6.5 18.5h11" />
+          <path d="M9 21h6" />
+        </svg>
+      );
+    case 'cod-activision':
+      return (
+        <svg {...common}>
+          <path d="M12 2.5 19.5 5.8v6.2c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V5.8L12 2.5z" />
+          <path d="m8.8 12.2 2.2 2.2 4.4-4.5" />
+        </svg>
+      );
   }
 }

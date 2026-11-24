@@ -15,7 +15,13 @@ export type CrewIconName =
   | 'vp-nightmarket'
   | 'vp-melee'
   | 'vp-packages'
-  | 'vp-region';
+  | 'vp-region'
+  | 'cod-cp'
+  | 'cod-luckydraw'
+  | 'cod-battlepass'
+  | 'cod-mythic'
+  | 'cod-packages'
+  | 'cod-activision';
 
 export interface CrewBenefitBlock {
   id: string;
